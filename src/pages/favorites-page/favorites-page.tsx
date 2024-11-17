@@ -1,8 +1,12 @@
+import { Helmet } from 'react-helmet-async';
 import OfferCard, { OfferCardVariant } from '../../components/offer-card/offer-card';
 
 function FavoritesPage(): JSX.Element {
   return (
     <div className="page">
+      <Helmet>
+        <title>6 cities: favorites</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
