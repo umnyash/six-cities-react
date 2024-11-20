@@ -1,7 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import OfferCard, { OfferCardVariant } from '../../components/offer-card/offer-card';
+import { Offers } from '../../types/offers';
+import OffersList, { OffersListVariant } from '../../components/offers-list/offers-list';
 
-function FavoritesPage(): JSX.Element {
+type FavoritesPageProps = {
+  favoriteOffers: Offers;
+}
+
+function FavoritesPage({ favoriteOffers }: FavoritesPageProps): JSX.Element {
   return (
     <div className="page">
       <Helmet>
@@ -49,10 +54,7 @@ function FavoritesPage(): JSX.Element {
                     </a>
                   </div>
                 </div>
-                <div className="favorites__places">
-                  <OfferCard variant={OfferCardVariant.Compact} />
-                  <OfferCard variant={OfferCardVariant.Compact} />
-                </div>
+                <OffersList offers={favoriteOffers.slice(2)} variant={OffersListVariant.Column} />
               </li>
 
               <li className="favorites__locations-items">
@@ -63,9 +65,7 @@ function FavoritesPage(): JSX.Element {
                     </a>
                   </div>
                 </div>
-                <div className="favorites__places">
-                  <OfferCard variant={OfferCardVariant.Compact} />
-                </div>
+                <OffersList offers={favoriteOffers.slice(1, 2)} variant={OffersListVariant.Column} />
               </li>
             </ul>
           </section>

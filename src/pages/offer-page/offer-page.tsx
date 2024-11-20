@@ -1,7 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import OfferCard from '../../components/offer-card/offer-card';
+import { Offers } from '../../types/offers';
+import OffersList from '../../components/offers-list/offers-list';
 
-function OfferPage(): JSX.Element {
+type OfferPageProps = {
+  nearbyOffers: Offers;
+}
+
+function OfferPage({ nearbyOffers }: OfferPageProps): JSX.Element {
   return (
     <div className="page">
       <Helmet>
@@ -236,11 +241,7 @@ function OfferPage(): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              <OfferCard />
-              <OfferCard />
-              <OfferCard />
-            </div>
+            <OffersList offers={nearbyOffers.slice(0, 3)} />
           </section>
         </div>
       </main>
