@@ -1,10 +1,6 @@
 import clsx from 'clsx';
 import { CardOffer } from '../../types/offers';
-
-enum OfferCardVariant {
-  Default = 'default',
-  Compact = 'compact',
-}
+import { OfferCardVariant } from '../../types/offer-card-variant';
 
 type OfferCardProps = {
   offer: CardOffer;
@@ -98,7 +94,5 @@ function OfferCard({ offer, variant = OfferCardVariant.Default }: OfferCardProps
     </article>
   );
 }
-
-export { OfferCardVariant };
 
 export default OfferCard;

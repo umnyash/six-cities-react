@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Offers } from '../../types/offers';
-import OffersList, { OffersListVariant } from '../../components/offers-list/offers-list';
+import OffersList from '../../components/offers-list/offers-list';
+import { OffersListVariant } from '../../types/offers-list-variant';
 
 type FavoritesPageProps = {
   favoriteOffers: Offers;

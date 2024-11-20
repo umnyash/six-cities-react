@@ -1,12 +1,8 @@
 import clsx from 'clsx';
 import { Offers } from '../../types/offers';
-import OfferCard, { OfferCardVariant } from '../offer-card/offer-card';
-
-enum OffersListVariant {
-  Column = 'column',
-  Rows = 'rows',
-  CenteredRows = 'centered-rows',
-}
+import OfferCard from '../offer-card/offer-card';
+import { OfferCardVariant } from '../../types/offer-card-variant';
+import { OffersListVariant } from '../../types/offers-list-variant';
 
 type OffersListProps = {
   offers: Offers;
@@ -30,7 +26,5 @@ function OffersList({ offers, variant = OffersListVariant.CenteredRows }: Offers
     </div>
   );
 }
-
-export { OffersListVariant };
 
 export default OffersList;
