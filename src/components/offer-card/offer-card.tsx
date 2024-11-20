@@ -18,7 +18,12 @@ const imageSizes = {
   },
   [OfferCardVariant.Compact]: {
     width: 150,
-    height: 110
+    height: 110,
+    style: {
+      maxHeight: '110px',
+      objectFit: 'cover' as React.CSSProperties['objectFit'],
+      objectPosition: 'center' as React.CSSProperties['objectPosition'],
+    }
   }
 };
 
