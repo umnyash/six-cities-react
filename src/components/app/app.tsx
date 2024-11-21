@@ -3,12 +3,12 @@ import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
 
-import MainPage from '../../pages/main-page/main-page';
-import OfferPage from '../../pages/offer-page/offer-page';
-import LoginPage from '../../pages/login-page/login-page';
-import FavoritesPage from '../../pages/favorites-page/favorites-page';
-import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import PrivateRoute from '../private-route/private-route';
+import MainPage from '../../pages/main-page';
+import OfferPage from '../../pages/offer-page';
+import LoginPage from '../../pages/login-page';
+import FavoritesPage from '../../pages/favorites-page';
+import NotFoundPage from '../../pages/not-found-page';
+import PrivateRoute from '../private-route';
 
 type AppProps = {
   offersCount: number;

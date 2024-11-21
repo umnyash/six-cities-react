@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Offers } from '../../types/offers';
-import OffersList from '../../components/offers-list/offers-list';
+import OffersList from '../../components/offers-list';
 
 type OfferPageProps = {
   nearbyOffers: Offers;
