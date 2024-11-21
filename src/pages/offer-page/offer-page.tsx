@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Offers } from '../../types/offers';
 import OffersList from '../../components/offers-list';
+import Logo from '../../components/logo';
 
 type OfferPageProps = {
   nearbyOffers: Offers;
@@ -16,9 +17,7 @@ function OfferPage({ nearbyOffers }: OfferPageProps): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
