@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
+import { ROUTE_PARAM_ID, AppRoute } from '../../const';
 import { CardOffer } from '../../types/offers';
 import { OfferCardVariant } from '../../types/offer-card-variant';
 
@@ -42,6 +44,8 @@ function OfferCard(props: OfferCardProps): JSX.Element {
     isFavorite
   } = offer;
 
+  const link = AppRoute.Offer.replace(ROUTE_PARAM_ID, id);
+
   const handleCardMouseOver = setActiveCardId && (() => setActiveCardId(id));
   const handleCardMouseOut = setActiveCardId && (() => setActiveCardId(''));
 
@@ -78,9 +82,9 @@ function OfferCard(props: OfferCardProps): JSX.Element {
         </div>}
 
       <div className={cardImageWrapperClassName}>
-        <a href="#">
+        <Link to={link}>
           <img className="place-card__image" src={previewImage} {...imageSizes[variant]} alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className={cardInfoClassName}>
         <div className="place-card__price-wrapper">
@@ -102,7 +106,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={link}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

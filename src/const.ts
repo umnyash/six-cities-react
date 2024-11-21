@@ -1,3 +1,5 @@
+export const ROUTE_PARAM_ID = ':id';
+
 export const Cities = [
   'Paris',
   'Cologne',
@@ -11,7 +13,7 @@ export enum AppRoute {
   Login = '/login',
   Root = '/',
   Favorites = '/favorites',
-  Offer = '/offer/:id',
+  Offer = `/offer/${ROUTE_PARAM_ID}`,
 }
 
 export enum AuthorizationStatus {
