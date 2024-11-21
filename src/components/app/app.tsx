@@ -9,6 +9,7 @@ import LoginPage from '../../pages/login-page';
 import FavoritesPage from '../../pages/favorites-page';
 import NotFoundPage from '../../pages/not-found-page';
 import PrivateRoute from '../private-route';
+import AnonymousRoute from '../anonymous-route';
 
 type AppProps = {
   offersCount: number;
@@ -30,7 +31,11 @@ function App({ offersCount, offers }: AppProps): JSX.Element {
           />
           <Route
             path={AppRoute.Login}
-            element={<LoginPage />}
+            element={
+              <AnonymousRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+                <LoginPage />
+              </AnonymousRoute>
+            }
           />
           <Route
             path={AppRoute.Favorites}
