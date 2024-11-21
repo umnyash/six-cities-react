@@ -5,6 +5,7 @@ import { OfferCardVariant } from '../../types/offer-card-variant';
 type OfferCardProps = {
   offer: CardOffer;
   variant?: OfferCardVariant;
+  setActiveCardId?: (id: string) => void;
 }
 
 const imageSizes = {
@@ -23,8 +24,15 @@ const imageSizes = {
   }
 };
 
-function OfferCard({ offer, variant = OfferCardVariant.Default }: OfferCardProps): JSX.Element {
+function OfferCard(props: OfferCardProps): JSX.Element {
   const {
+    offer,
+    variant = OfferCardVariant.Default,
+    setActiveCardId
+  } = props;
+
+  const {
+    id,
     title,
     type,
     previewImage,
@@ -33,6 +41,9 @@ function OfferCard({ offer, variant = OfferCardVariant.Default }: OfferCardProps
     isPremium,
     isFavorite
   } = offer;
+
+  const handleCardMouseOver = setActiveCardId && (() => setActiveCardId(id));
+  const handleCardMouseOut = setActiveCardId && (() => setActiveCardId(''));
 
   const cardClassName = clsx(
     'place-card',
@@ -56,7 +67,11 @@ function OfferCard({ offer, variant = OfferCardVariant.Default }: OfferCardProps
   );
 
   return (
-    <article className={cardClassName}>
+    <article
+      className={cardClassName}
+      onMouseOver={handleCardMouseOver}
+      onMouseOut={handleCardMouseOut}
+    >
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>

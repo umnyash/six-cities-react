@@ -7,9 +7,16 @@ import { OffersListVariant } from '../../types/offers-list-variant';
 type OffersListProps = {
   offers: Offers;
   variant?: OffersListVariant;
+  setActiveCardId?: (id: string) => void;
 }
 
-function OffersList({ offers, variant = OffersListVariant.CenteredRows }: OffersListProps): JSX.Element {
+function OffersList(props: OffersListProps): JSX.Element {
+  const {
+    offers,
+    variant = OffersListVariant.CenteredRows,
+    setActiveCardId
+  } = props;
+
   const listClassName = clsx(
     variant === OffersListVariant.Column && 'favorites__places',
     variant === OffersListVariant.Rows && 'cities__places-list places__list tabs__content',
@@ -22,7 +29,14 @@ function OffersList({ offers, variant = OffersListVariant.CenteredRows }: Offers
 
   return (
     <div className={listClassName}>
-      {offers.map((offer) => <OfferCard key={offer.id} offer={offer} variant={cardVariant} />)}
+      {offers.map((offer) => (
+        <OfferCard
+          key={offer.id}
+          offer={offer}
+          variant={cardVariant}
+          setActiveCardId={setActiveCardId}
+        />
+      ))}
     </div>
   );
 }

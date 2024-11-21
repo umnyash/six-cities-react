@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import OffersList from '../../components/offers-list';
 import { Offers } from '../../types/offers';
 import { OffersListVariant } from '../../types/offers-list-variant';
@@ -8,6 +9,8 @@ type MainPageProps = {
 }
 
 function MainPage({ offers, offersCount }: MainPageProps): JSX.Element {
+  const setActiveCardId = useState('')[1];
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -97,7 +100,7 @@ function MainPage({ offers, offersCount }: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OffersList offers={offers} variant={OffersListVariant.Rows} />
+              <OffersList offers={offers} variant={OffersListVariant.Rows} setActiveCardId={setActiveCardId} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
