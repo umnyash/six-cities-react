@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Offers } from '../../types/offers';
-import OffersList from '../../components/offers-list';
-import { OffersListVariant } from '../../types/offers-list-variant';
+import FavoritesList from '../../components/favorites-list';
 
 type FavoritesPageProps = {
   favoriteOffers: Offers;
@@ -46,29 +45,7 @@ function FavoritesPage({ favoriteOffers }: FavoritesPageProps): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <OffersList offers={favoriteOffers.slice(2)} variant={OffersListVariant.Column} />
-              </li>
-
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Cologne</span>
-                    </a>
-                  </div>
-                </div>
-                <OffersList offers={favoriteOffers.slice(1, 2)} variant={OffersListVariant.Column} />
-              </li>
-            </ul>
+            <FavoritesList offers={favoriteOffers} />
           </section>
         </div>
       </main>
