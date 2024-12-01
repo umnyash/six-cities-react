@@ -10,16 +10,16 @@ export const offers: Offers = [
     rating: 1.6,
     price: 148,
     city: {
-      name: Cities[0],
+      name: Cities[3],
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 52.37454,
+        longitude: 4.897976,
         zoom: 13
       }
     },
     location: {
-      latitude: 48.868610000000004,
-      longitude: 2.342499,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     },
     isPremium: true,
@@ -33,16 +33,16 @@ export const offers: Offers = [
     rating: 4.8,
     price: 146,
     city: {
-      name: Cities[1],
+      name: Cities[3],
       location: {
-        latitude: 50.938361,
-        longitude: 6.959974,
+        latitude: 52.37454,
+        longitude: 4.897976,
         zoom: 13
       }
     },
     location: {
-      latitude: 50.932361,
-      longitude: 6.937974,
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     },
     isPremium: true,
@@ -64,8 +64,8 @@ export const offers: Offers = [
       }
     },
     location: {
-      latitude: 52.37454,
-      longitude: 4.881976,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 16
     },
     isPremium: false,
@@ -87,8 +87,8 @@ export const offers: Offers = [
       }
     },
     location: {
-      latitude: 52.37854,
-      longitude: 4.894976,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 16
     },
     isPremium: false,
