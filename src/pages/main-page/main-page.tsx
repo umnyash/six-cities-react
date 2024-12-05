@@ -5,6 +5,7 @@ import { Offers } from '../../types/offers';
 import { OffersListVariant } from '../../types/offers-list-variant';
 import OffersList from '../../components/offers-list';
 import Logo from '../../components/logo';
+import Map from '../../components/map';
 
 type MainPageProps = {
   offers: Offers;
@@ -104,7 +105,11 @@ function MainPage({ offers, offersCount }: MainPageProps): JSX.Element {
               <OffersList offers={offers} variant={OffersListVariant.Rows} setActiveCardId={setActiveCardId} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map
+                className="cities__map"
+                location={offers[0].city.location}
+                points={offers}
+              />
             </div>
           </div>
         </div>

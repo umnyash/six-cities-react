@@ -3,10 +3,15 @@ import { User } from './user';
 
 type CityName = typeof Cities[number];
 
-type Location = {
+export type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
+}
+
+type Point = {
+  id: string;
+  location: Omit<Location, 'zoom'>;
 }
 
 type City = {
@@ -42,3 +47,5 @@ export type PageOffer = BaseOffer & {
 }
 
 export type Offers = CardOffer[];
+
+export type Points = Point[];

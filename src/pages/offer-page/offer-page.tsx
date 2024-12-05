@@ -5,6 +5,7 @@ import { Offers } from '../../types/offers';
 import Logo from '../../components/logo';
 import ReviewForm from '../../components/review-form';
 import OffersList from '../../components/offers-list';
+import Map from '../../components/map';
 
 type OfferPageProps = {
   nearbyOffers: Offers;
@@ -193,7 +194,11 @@ function OfferPage({ nearbyOffers }: OfferPageProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <Map
+            className="offer__map"
+            points={nearbyOffers.slice(0, 3)}
+            location={nearbyOffers[0].city.location}
+          />
         </section>
         <div className="container">
           <section className="near-places places">
