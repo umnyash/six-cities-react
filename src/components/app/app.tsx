@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Offers } from '../../types/offers';
+import { Reviews } from '../../types/reviews';
 
 import MainPage from '../../pages/main-page';
 import OfferPage from '../../pages/offer-page';
@@ -14,9 +15,10 @@ import AnonymousRoute from '../anonymous-route';
 type AppProps = {
   offersCount: number;
   offers: Offers;
+  reviews: Reviews;
 }
 
-function App({ offersCount, offers }: AppProps): JSX.Element {
+function App({ offersCount, offers, reviews }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -27,7 +29,7 @@ function App({ offersCount, offers }: AppProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<OfferPage nearbyOffers={offers} />}
+            element={<OfferPage nearbyOffers={offers} reviews={reviews} />}
           />
           <Route
             path={AppRoute.Login}
