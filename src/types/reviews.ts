@@ -1,6 +1,6 @@
 import { User } from './user';
 
-type author = Pick<User, 'name' | 'avatarUrl' | 'isPro'>;
+type author = Pick<User, 'name' | 'avatarUrl'>;
 
 export type Review = {
   id: string;
