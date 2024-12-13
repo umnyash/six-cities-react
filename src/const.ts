@@ -1,6 +1,6 @@
 export const ROUTE_PARAM_ID = ':id';
 
-export const Cities = [
+export const CITIES = [
   'Paris',
   'Cologne',
   'Brussels',

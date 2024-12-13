@@ -1,5 +1,5 @@
 import { Offers } from '../types/offers';
-import { Cities, HousingType } from '../const';
+import { CITIES, HousingType } from '../const';
 
 export const offers: Offers = [
   {
@@ -10,7 +10,7 @@ export const offers: Offers = [
     rating: 1.6,
     price: 148,
     city: {
-      name: Cities[3],
+      name: CITIES[3],
       location: {
         latitude: 52.37454,
         longitude: 4.897976,
@@ -33,7 +33,7 @@ export const offers: Offers = [
     rating: 4.8,
     price: 146,
     city: {
-      name: Cities[3],
+      name: CITIES[3],
       location: {
         latitude: 52.37454,
         longitude: 4.897976,
@@ -56,7 +56,7 @@ export const offers: Offers = [
     rating: 4.1,
     price: 531,
     city: {
-      name: Cities[3],
+      name: CITIES[3],
       location: {
         latitude: 52.37454,
         longitude: 4.897976,
@@ -79,7 +79,7 @@ export const offers: Offers = [
     rating: 2.3,
     price: 339,
     city: {
-      name: Cities[3],
+      name: CITIES[3],
       location: {
         latitude: 52.37454,
         longitude: 4.897976,
@@ -102,7 +102,7 @@ export const offers: Offers = [
     rating: 4.7,
     price: 209,
     city: {
-      name: Cities[0],
+      name: CITIES[0],
       location: {
         latitude: 48.85661,
         longitude: 2.351499,
@@ -125,7 +125,7 @@ export const offers: Offers = [
     rating: 3.9,
     price: 458,
     city: {
-      name: Cities[0],
+      name: CITIES[0],
       location: {
         latitude: 48.85661,
         longitude: 2.351499,
@@ -148,7 +148,7 @@ export const offers: Offers = [
     rating: 4.3,
     price: 460,
     city: {
-      name: Cities[2],
+      name: CITIES[2],
       location: {
         latitude: 50.846557,
         longitude: 4.351697,
