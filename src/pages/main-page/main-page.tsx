@@ -1,21 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import useAppDispatch from '../../hooks/use-app-dispatch';
+import useAppSelector from '../../hooks/use-app-selector';
+import { setOffers } from '../../store/action';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { Offers } from '../../types/offers';
 import { OffersListVariant } from '../../types/offers-list-variant';
 import OffersList from '../../components/offers-list';
 import Logo from '../../components/logo';
 import Map from '../../components/map';
 import clsx from 'clsx';
+import { offers as offersData } from '../../mocks/offers';
 
 type MainPageProps = {
-  offers: Offers;
   offersCount: number;
 }
 
-function MainPage({ offers, offersCount }: MainPageProps): JSX.Element {
+function MainPage({ offersCount }: MainPageProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setOffers(offersData));
+  }, [dispatch]);
+
+  const offers = useAppSelector((state) => state.offers);
+  const isEmpty = !offers.length;
+
   const setActiveCardId = useState('')[1];
-  const isEmpty = false;
 
   const mainClassName = clsx(
     'page__main page__main--index',
