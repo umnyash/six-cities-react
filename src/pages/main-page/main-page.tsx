@@ -1,22 +1,18 @@
-import { useState, useEffect } from 'react';
+import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import CitiesList from '../../components/cities-list';
+import Logo from '../../components/logo';
+import Map from '../../components/map';
+import OffersList from '../../components/offers-list';
+import { AppRoute } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
-import { setOffers } from '../../store/action';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { OffersListVariant } from '../../types/offers-list-variant';
-import OffersList from '../../components/offers-list';
-import Logo from '../../components/logo';
-import CitiesList from '../../components/cities-list';
-import Map from '../../components/map';
-import clsx from 'clsx';
 import { offers as offersData } from '../../mocks/offers';
+import { setOffers } from '../../store/action';
+import { OffersListVariant } from '../../types/offers-list-variant';
 
-type MainPageProps = {
-  offersCount: number;
-}
-
-function MainPage({ offersCount }: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -25,18 +21,19 @@ function MainPage({ offersCount }: MainPageProps): JSX.Element {
 
   const offers = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.city);
-  const isEmpty = !offers.length;
+  const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
+  const filteredOffersCount = filteredOffers.length;
 
   const setActiveCardId = useState('')[1];
 
   const mainClassName = clsx(
     'page__main page__main--index',
-    isEmpty && 'page__main--index-empty'
+    !filteredOffersCount && 'page__main--index-empty'
   );
 
   const containerClassName = clsx(
     'cities__places-container container',
-    isEmpty && 'cities__places-container--empty'
+    !filteredOffersCount && 'cities__places-container--empty'
   );
 
   return (
@@ -77,19 +74,19 @@ function MainPage({ offersCount }: MainPageProps): JSX.Element {
         </div>
         <div className="cities">
           <div className={containerClassName}>
-            {isEmpty && (
+            {!filteredOffersCount && (
               <section className="cities__no-places">
                 <div className="cities__status-wrapper tabs__content">
                   <b className="cities__status">No places to stay available</b>
-                  <p className="cities__status-description">We could not find any property available at the moment in Dusseldorf</p>
+                  <p className="cities__status-description">We could not find any property available at the moment in {activeCity}</p>
                 </div>
               </section>
             )}
 
-            {!isEmpty && (
+            {filteredOffersCount && (
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offersCount} places to stay in Amsterdam</b>
+                <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>{' '}
                   <span className="places__sorting-type" tabIndex={0}>
@@ -105,16 +102,16 @@ function MainPage({ offersCount }: MainPageProps): JSX.Element {
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <OffersList offers={offers} variant={OffersListVariant.Rows} setActiveCardId={setActiveCardId} />
+                <OffersList offers={filteredOffers} variant={OffersListVariant.Rows} setActiveCardId={setActiveCardId} />
               </section>
             )}
 
             <div className="cities__right-section">
-              {!isEmpty && (
+              {filteredOffersCount && (
                 <Map
                   className="cities__map"
-                  location={offers[0].city.location}
-                  points={offers}
+                  location={filteredOffers[0].city.location}
+                  points={filteredOffers}
                 />
               )}
             </div>

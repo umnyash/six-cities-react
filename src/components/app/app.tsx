@@ -13,19 +13,18 @@ import PrivateRoute from '../private-route';
 import AnonymousRoute from '../anonymous-route';
 
 type AppProps = {
-  offersCount: number;
   offers: Offers;
   reviews: Reviews;
 }
 
-function App({ offersCount, offers, reviews }: AppProps): JSX.Element {
+function App({ offers, reviews }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offersCount={offersCount} />}
+            element={<MainPage />}
           />
           <Route
             path={AppRoute.Offer}
