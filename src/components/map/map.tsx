@@ -3,6 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import clsx from 'clsx';
 import { Location, Points } from '../../types/offers';
 import useMap from '../../hooks/use-map';
+import useMapView from '../../hooks/use-map-view';
 import useMapMarkers from '../../hooks/use-map-markers';
 
 type MapProps = {
@@ -17,6 +18,7 @@ function Map(props: MapProps): JSX.Element {
 
   const mapRef = useRef<HTMLElement | null>(null);
   const map = useMap(mapRef, location);
+  useMapView(map, location);
   useMapMarkers(map, points, activePointId);
 
   const mapClassName = clsx(
