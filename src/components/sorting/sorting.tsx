@@ -4,9 +4,10 @@ import { SortingOption } from '../../const';
 
 type SortingProps = {
   selectedOption: SortingOption;
+  onOptionClick: (option: SortingOption) => void;
 }
 
-function Sorting({ selectedOption }: SortingProps): JSX.Element {
+function Sorting({ selectedOption, onOptionClick }: SortingProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   const listClassName = clsx(
@@ -22,7 +23,7 @@ function Sorting({ selectedOption }: SortingProps): JSX.Element {
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>{' '}
       <span className="places__sorting-type" tabIndex={0} onClick={handleButtonClick}>
-        Popular
+        {selectedOption}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -38,6 +39,10 @@ function Sorting({ selectedOption }: SortingProps): JSX.Element {
             <li
               className={optionClassName}
               tabIndex={0}
+              onClick={() => {
+                onOptionClick(option);
+                setIsOpen(false);
+              }}
               key={option}
             >
               {option}

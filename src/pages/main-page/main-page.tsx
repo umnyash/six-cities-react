@@ -12,8 +12,25 @@ import useAppSelector from '../../hooks/use-app-selector';
 import { offers as offersData } from '../../mocks/offers';
 import { setOffers } from '../../store/action';
 import { OffersListVariant } from '../../types/offers-list-variant';
+import { Offers } from '../../types/offers';
+
+function sortOffers(offers: Offers, option: SortingOption) {
+  switch (option) {
+    case SortingOption.PriceAsc:
+      return offers.slice().sort((a, b) => a.price - b.price);
+    case SortingOption.PriceDesc:
+      return offers.slice().sort((a, b) => b.price - a.price);
+    case SortingOption.RatingDesc:
+      return offers.slice().sort((a, b) => b.rating - a.rating);
+    default:
+      return offers;
+  }
+}
 
 function MainPage(): JSX.Element {
+  const [sortingOption, setSelectedOption] = useState(SortingOption.Default);
+  const setActiveCardId = useState('')[1];
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -24,8 +41,7 @@ function MainPage(): JSX.Element {
   const activeCity = useAppSelector((state) => state.city);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const filteredOffersCount = filteredOffers.length;
-
-  const setActiveCardId = useState('')[1];
+  const filteredAndSortedOffers = sortOffers(filteredOffers, sortingOption);
 
   const mainClassName = clsx(
     'page__main page__main--index',
@@ -88,8 +104,8 @@ function MainPage(): JSX.Element {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
-                <Sorting selectedOption={SortingOption.Default} />
-                <OffersList offers={filteredOffers} variant={OffersListVariant.Rows} setActiveCardId={setActiveCardId} />
+                <Sorting selectedOption={sortingOption} onOptionClick={setSelectedOption} />
+                <OffersList offers={filteredAndSortedOffers} variant={OffersListVariant.Rows} setActiveCardId={setActiveCardId} />
               </section>
             )}
 
