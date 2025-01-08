@@ -29,7 +29,7 @@ function sortOffers(offers: Offers, option: SortingOption) {
 
 function MainPage(): JSX.Element {
   const [sortingOption, setSelectedOption] = useState(SortingOption.Default);
-  const setActiveCardId = useState('')[1];
+  const [activeCardId, setActiveCardId] = useState('');
 
   const dispatch = useAppDispatch();
 
@@ -115,6 +115,7 @@ function MainPage(): JSX.Element {
                   className="cities__map"
                   location={filteredOffers[0].city.location}
                   points={filteredOffers}
+                  activePointId={activeCardId}
                 />
               )}
             </div>
