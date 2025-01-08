@@ -28,3 +28,10 @@ export enum HousingType {
   House = 'House',
   Room = 'Room',
 }
+
+export enum SortingOption {
+  Default = 'Popular',
+  PriceAsc = 'Price: low to high',
+  PriceDesc = 'Price: high to low',
+  RatingDesc = 'Top rated first',
+}
