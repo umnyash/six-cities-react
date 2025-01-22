@@ -6,6 +6,7 @@ import Logo from '../../components/logo';
 import Sorting from '../../components/sorting';
 import Map from '../../components/map';
 import OffersList from '../../components/offers-list';
+import Spinner from '../../components/spinner';
 import { AppRoute, SortingOption } from '../../const';
 import useAppSelector from '../../hooks/use-app-selector';
 import { OffersListVariant } from '../../types/offers-list-variant';
@@ -28,6 +29,7 @@ function MainPage(): JSX.Element {
   const [sortingOption, setSelectedOption] = useState(SortingOption.Default);
   const [activeCardId, setActiveCardId] = useState('');
 
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersLoading);
   const offers = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.city);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
@@ -82,7 +84,9 @@ function MainPage(): JSX.Element {
         </div>
         <div className="cities">
           <div className={containerClassName}>
-            {!filteredOffersCount && (
+            {isOffersDataLoading && <Spinner />}
+
+            {!isOffersDataLoading && !filteredOffersCount && (
               <section className="cities__no-places">
                 <div className="cities__status-wrapper tabs__content">
                   <b className="cities__status">No places to stay available</b>
@@ -91,7 +95,7 @@ function MainPage(): JSX.Element {
               </section>
             )}
 
-            {filteredOffersCount && (
+            {!isOffersDataLoading && filteredOffersCount && (
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
@@ -101,7 +105,7 @@ function MainPage(): JSX.Element {
             )}
 
             <div className="cities__right-section">
-              {filteredOffersCount && (
+              {!isOffersDataLoading && filteredOffersCount && (
                 <Map
                   className="cities__map"
                   location={filteredOffers[0].city.location}
