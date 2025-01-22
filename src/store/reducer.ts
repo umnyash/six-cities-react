@@ -3,10 +3,12 @@ import { setOffers, setCity } from './actions';
 import { Offers, CityName } from '../types/offers';
 import { CITIES } from '../const';
 
-const initialState: {
+type InitialState = {
   offers: Offers;
   city: CityName;
-} = {
+}
+
+const initialState: InitialState = {
   offers: [],
   city: CITIES[0],
 };
