@@ -10,7 +10,7 @@ import { AppRoute, SortingOption } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import { offers as offersData } from '../../mocks/offers';
-import { setOffers } from '../../store/action';
+import { setOffers } from '../../store/actions';
 import { OffersListVariant } from '../../types/offers-list-variant';
 import { Offers } from '../../types/offers';
 
