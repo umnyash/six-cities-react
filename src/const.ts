@@ -35,3 +35,7 @@ export enum SortingOption {
   PriceDesc = 'Price: high to low',
   RatingDesc = 'Top rated first',
 }
+
+export enum APIRoute {
+  Offers = '/offers',
+}
