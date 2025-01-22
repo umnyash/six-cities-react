@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CitiesList from '../../components/cities-list';
 import Logo from '../../components/logo';
@@ -7,10 +7,7 @@ import Sorting from '../../components/sorting';
 import Map from '../../components/map';
 import OffersList from '../../components/offers-list';
 import { AppRoute, SortingOption } from '../../const';
-import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
-import { offers as offersData } from '../../mocks/offers';
-import { setOffers } from '../../store/actions';
 import { OffersListVariant } from '../../types/offers-list-variant';
 import { Offers } from '../../types/offers';
 
@@ -30,12 +27,6 @@ function sortOffers(offers: Offers, option: SortingOption) {
 function MainPage(): JSX.Element {
   const [sortingOption, setSelectedOption] = useState(SortingOption.Default);
   const [activeCardId, setActiveCardId] = useState('');
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setOffers(offersData));
-  }, [dispatch]);
 
   const offers = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.city);
