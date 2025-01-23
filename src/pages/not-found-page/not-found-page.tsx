@@ -40,7 +40,7 @@ function NotFoundPage(): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites" style={{ padding: '100px 20px', textAlign: 'center' }}>
             <h1 className="favorites__title">404 Not Found</h1>
-            <a className="form__submit button" href="main.html">Go to Homepage</a>
+            <Link className="form__submit button" to={AppRoute.Root}>Go to Homepage</Link>
           </section>
         </div>
       </main>
