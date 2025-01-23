@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
 
@@ -33,7 +33,7 @@ function App({ offers, reviews }: AppProps): JSX.Element {
           <Route
             path={AppRoute.Login}
             element={
-              <AnonymousRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <AnonymousRoute>
                 <LoginPage />
               </AnonymousRoute>
             }
@@ -41,7 +41,7 @@ function App({ offers, reviews }: AppProps): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute>
                 <FavoritesPage favoriteOffers={offers} />
               </PrivateRoute>
             }

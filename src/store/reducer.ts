@@ -1,15 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { setOffers, setOffersLoadingStatus, setCity } from './actions';
 import { Offers, CityName } from '../types/offers';
-import { CITIES } from '../const';
+import { CITIES, AuthorizationStatus } from '../const';
 
 type InitialState = {
+  authorizationStatus: AuthorizationStatus;
   offers: Offers;
   isOffersLoading: boolean;
   city: CityName;
 }
 
 const initialState: InitialState = {
+  authorizationStatus: AuthorizationStatus.Unknown,
   offers: [],
   isOffersLoading: false,
   city: CITIES[0],
