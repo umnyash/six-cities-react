@@ -5,3 +5,8 @@ export type User = {
   isPro: boolean;
   token: string;
 }
+
+export type AuthData = {
+  email: string;
+  password: string;
+}
