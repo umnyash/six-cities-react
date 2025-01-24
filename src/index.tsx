@@ -5,8 +5,9 @@ import App from './components/app';
 import { offers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import { store } from './store';
-import { fetchOffers } from './store/async-actions';
+import { checkUserAuth, fetchOffers } from './store/async-actions';
 
+store.dispatch(checkUserAuth());
 store.dispatch(fetchOffers());
 
 const root = ReactDOM.createRoot(
