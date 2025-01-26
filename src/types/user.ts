@@ -3,10 +3,15 @@ export type User = {
   email: string;
   avatarUrl: string;
   isPro: boolean;
-  token: string;
 }
+
+export type Host = Pick<User, 'name' | 'avatarUrl' | 'isPro'>;
 
 export type AuthData = {
   email: string;
   password: string;
+}
+
+export type AuthUser = User & {
+  token: string;
 }

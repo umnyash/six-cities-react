@@ -1,5 +1,5 @@
 import { CITIES, HousingType } from '../const';
-import { User } from './user';
+import { Host } from './user';
 
 export type CityName = typeof CITIES[number];
 
@@ -30,8 +30,6 @@ type BaseOffer = {
   isPremium: boolean;
   isFavorite: boolean;
 }
-
-type Host = Pick<User, 'name' | 'avatarUrl' | 'isPro'>;
 
 export type CardOffer = BaseOffer & {
   previewImage: string;
