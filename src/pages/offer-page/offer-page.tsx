@@ -1,15 +1,15 @@
 import { Helmet } from 'react-helmet-async';
-import { Offers } from '../../types/offers';
+import { Offers as OffersData } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
 import Logo from '../../components/logo';
 import UserNavigation from '../../components/user-navigation';
 import ReviewForm from '../../components/review-form';
-import OffersList from '../../components/offers-list';
+import Offers from '../../components/offers';
 import ReviewsList from '../../components/reviews-list';
 import Map from '../../components/map';
 
 type OfferPageProps = {
-  nearbyOffers: Offers;
+  nearbyOffers: OffersData;
   reviews: Reviews;
 }
 
@@ -166,10 +166,7 @@ function OfferPage({ nearbyOffers, reviews }: OfferPageProps): JSX.Element {
           />
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersList offers={nearbyOffers.slice(0, 3)} />
-          </section>
+          <Offers heading="Other places in the neighbourhood" offers={nearbyOffers.slice(0, 3)} />
         </div>
       </main>
     </div>
