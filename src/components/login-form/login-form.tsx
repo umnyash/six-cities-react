@@ -1,4 +1,6 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
+import useAppDispatch from '../../hooks/use-app-dispatch';
+import { loginUser } from '../../store/async-actions';
 
 function LoginForm(): JSX.Element {
   const [formData, setFormData] = useState({
@@ -6,13 +8,20 @@ function LoginForm(): JSX.Element {
     password: '',
   });
 
+  const dispatch = useAppDispatch();
+
   const handleFieldChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    dispatch(loginUser(formData));
+  };
+
   return (
-    <form className="login__form form" action="#" method="post">
+    <form className="login__form form" action="#" method="post" onSubmit={handleFormSubmit}>
       <div className="login__input-wrapper form__input-wrapper">
         <label className="visually-hidden" htmlFor="email">E-mail</label>
         <input
