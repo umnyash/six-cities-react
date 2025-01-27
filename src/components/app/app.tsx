@@ -3,7 +3,10 @@ import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute } from '../../const';
 import { Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
+import useAppSelector from '../../hooks/use-app-selector';
+import { AuthorizationStatus } from '../../const';
 
+import LoadingPage from '../../pages/loading-page';
 import MainPage from '../../pages/main-page';
 import OfferPage from '../../pages/offer-page';
 import LoginPage from '../../pages/login-page';
@@ -18,6 +21,16 @@ type AppProps = {
 }
 
 function App({ offers, reviews }: AppProps): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
+    return (
+      <HelmetProvider>
+        <LoadingPage />
+      </HelmetProvider>
+    );
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>
