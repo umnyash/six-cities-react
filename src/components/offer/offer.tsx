@@ -1,7 +1,6 @@
 import { PageOffer, Offers } from '../../types/offers';
-import { Reviews } from '../../types/reviews';
-import ReviewsList from '../reviews-list';
-import ReviewForm from '../review-form';
+import { Reviews as ReviewsData } from '../../types/reviews';
+import Reviews from '../reviews';
 import Map from '../map';
 import clsx from 'clsx';
 import { roundOffRating, capitalizeFirstLetter } from '../../util';
@@ -9,7 +8,7 @@ import { roundOffRating, capitalizeFirstLetter } from '../../util';
 type OfferProps = {
   offer: PageOffer;
   nearbyOffers: Offers;
-  reviews: Reviews;
+  reviews: ReviewsData;
 }
 
 function Offer({ offer, nearbyOffers, reviews }: OfferProps): JSX.Element {
@@ -110,11 +109,7 @@ function Offer({ offer, nearbyOffers, reviews }: OfferProps): JSX.Element {
               <p className="offer__text">{description}</p>
             </div>
           </div>
-          <section className="offer__reviews reviews">
-            <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-            <ReviewsList reviews={reviews} />
-            <ReviewForm />
-          </section>
+          <Reviews reviews={reviews} />
         </div>
       </div>
       <Map
