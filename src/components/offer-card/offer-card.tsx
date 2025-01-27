@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { ROUTE_PARAM_ID, AppRoute } from '../../const';
 import { CardOffer } from '../../types/offers';
 import { OfferCardVariant } from '../../types/offer-card-variant';
+import { roundOffRating } from '../../util';
 
 type OfferCardProps = {
   offer: CardOffer;
@@ -101,7 +102,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${Math.round(rating) * 20}%` }} />
+            <span style={{ width: `${roundOffRating(rating) * 20}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
