@@ -3,8 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AuthData, AuthUser } from '../types/user';
 import { Offers } from '../types/offers';
-import { APIRoute, AuthorizationStatus } from '../const';
-import { setAuthorizationStatus, setOffers, setOffersLoadingStatus } from './actions';
+import { APIRoute, API_ROUTE_PARAM_ID, AuthorizationStatus } from '../const';
+import { setAuthorizationStatus, setOffers, setOffersLoadingStatus, setNearbyOffers } from './actions';
 import { saveToken, dropToken } from '../services/token';
 
 type ThunkAPI = {
@@ -51,4 +51,13 @@ export const fetchOffers = createAsyncThunk<void, undefined, ThunkAPI>(
     dispatch(setOffers(data));
     dispatch(setOffersLoadingStatus(false));
   },
+);
+
+export const fetchNearbyOffers = createAsyncThunk<void, string, ThunkAPI>(
+  'offers/fetchNearby',
+  async (offerId, { dispatch, extra: api }) => {
+    const apiRoute = APIRoute.NearbyOffers.replace(API_ROUTE_PARAM_ID, offerId);
+    const { data } = await api.get<Offers>(apiRoute);
+    dispatch(setNearbyOffers(data));
+  }
 );

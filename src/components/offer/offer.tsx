@@ -114,8 +114,9 @@ function Offer({ offer, nearbyOffers, reviews }: OfferProps): JSX.Element {
       </div>
       <Map
         className="offer__map"
-        points={nearbyOffers.slice(0, 3)}
-        location={nearbyOffers[0].city.location}
+        location={offer.city.location}
+        points={[...nearbyOffers, offer]}
+        activePointId={offer.id}
       />
     </section>
   );

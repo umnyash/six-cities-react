@@ -1,4 +1,6 @@
 export const ROUTE_PARAM_ID = ':id';
+export const API_ROUTE_PARAM_ID = 'id';
+export const NEARBY_OFFERS_COUNT = 3;
 
 export const CITIES = [
   'Paris',
@@ -40,4 +42,5 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Offers = '/offers',
+  NearbyOffers = `/offers/${API_ROUTE_PARAM_ID}/nearby`,
 }

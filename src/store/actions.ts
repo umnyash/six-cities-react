@@ -6,5 +6,6 @@ export const setAuthorizationStatus = createAction<AuthorizationStatus>('user/se
 
 export const setOffers = createAction<Offers>('offers/set');
 export const setOffersLoadingStatus = createAction<boolean>('offers/setLoadingStatus');
+export const setNearbyOffers = createAction<Offers>('offers/setNearby');
 
 export const setCity = createAction<CityName>('catalog/setCity');

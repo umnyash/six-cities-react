@@ -1,7 +1,12 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Offers as OffersData } from '../../types/offers';
+import { NEARBY_OFFERS_COUNT } from '../../const';
 import { Reviews } from '../../types/reviews';
+import useAppDispatch from '../../hooks/use-app-dispatch';
+import useAppSelector from '../../hooks/use-app-selector';
+import { fetchNearbyOffers } from '../../store/async-actions';
+
 import Logo from '../../components/logo';
 import UserNavigation from '../../components/user-navigation';
 import Offers from '../../components/offers';
@@ -11,13 +16,20 @@ import LoadingPage from '../loading-page';
 import NotFoundPage from '../not-found-page';
 
 type OfferPageProps = {
-  nearbyOffers: OffersData;
   reviews: Reviews;
 }
 
-function OfferPage({ nearbyOffers, reviews }: OfferPageProps): JSX.Element {
+function OfferPage({ reviews }: OfferPageProps): JSX.Element {
   const offerId = useParams().id as string;
+  const dispatch = useAppDispatch();
+
   const offer = useOfferData(offerId);
+
+  useEffect(() => {
+    dispatch(fetchNearbyOffers(offerId));
+  }, [offerId, dispatch]);
+
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers).slice(0, NEARBY_OFFERS_COUNT);
 
   if (offer === undefined) {
     return <LoadingPage />;
@@ -48,7 +60,7 @@ function OfferPage({ nearbyOffers, reviews }: OfferPageProps): JSX.Element {
       <main className="page__main page__main--offer">
         <Offer offer={offer} nearbyOffers={nearbyOffers} reviews={reviews} />
         <div className="container">
-          <Offers heading="Other places in the neighbourhood" offers={nearbyOffers.slice(0, 3)} />
+          <Offers heading="Other places in the neighbourhood" offers={nearbyOffers} />
         </div>
       </main>
     </div>
