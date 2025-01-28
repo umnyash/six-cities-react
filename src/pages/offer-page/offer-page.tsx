@@ -6,6 +6,7 @@ import { Reviews } from '../../types/reviews';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import { fetchNearbyOffers } from '../../store/async-actions';
+import { getRandomArrayItems } from '../../util';
 
 import Logo from '../../components/logo';
 import UserNavigation from '../../components/user-navigation';
@@ -29,7 +30,10 @@ function OfferPage({ reviews }: OfferPageProps): JSX.Element {
     dispatch(fetchNearbyOffers(offerId));
   }, [offerId, dispatch]);
 
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers).slice(0, NEARBY_OFFERS_COUNT);
+  const nearbyOffers = getRandomArrayItems(
+    useAppSelector((state) => state.nearbyOffers),
+    NEARBY_OFFERS_COUNT
+  );
 
   if (offer === undefined) {
     return <LoadingPage />;
