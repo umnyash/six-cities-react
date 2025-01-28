@@ -1,11 +1,9 @@
-import { User } from './user';
-
-type author = Pick<User, 'name' | 'avatarUrl'>;
+import { Author } from './user';
 
 export type Review = {
   id: string;
   date: string;
-  user: author;
+  user: Author;
   comment: string;
   rating: number;
 }

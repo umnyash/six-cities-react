@@ -1,5 +1,5 @@
 import { CITIES, HousingType } from '../const';
-import { Host } from './user';
+import { Author } from './user';
 
 export type CityName = typeof CITIES[number];
 
@@ -41,7 +41,7 @@ export type PageOffer = BaseOffer & {
   maxAdults: number;
   bedrooms: number;
   goods: string[];
-  host: Host;
+  host: Author;
 }
 
 export type Offers = CardOffer[];

@@ -5,7 +5,7 @@ export type User = {
   isPro: boolean;
 }
 
-export type Host = Pick<User, 'name' | 'avatarUrl' | 'isPro'>;
+export type Author = Pick<User, 'name' | 'avatarUrl' | 'isPro'>;
 
 export type AuthData = {
   email: string;
