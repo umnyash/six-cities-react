@@ -4,7 +4,7 @@ import { AppDispatch, State } from '../types/state';
 import { AuthData, AuthUser } from '../types/user';
 import { Offers } from '../types/offers';
 import { APIRoute, API_ROUTE_PARAM_ID, AuthorizationStatus } from '../const';
-import { setAuthorizationStatus, setOffers, setOffersLoadingStatus, setNearbyOffers } from './actions';
+import { setAuthorizationStatus, setUser, setOffers, setOffersLoadingStatus, setNearbyOffers } from './actions';
 import { saveToken, dropToken } from '../services/token';
 
 type ThunkAPI = {
@@ -28,9 +28,10 @@ export const checkUserAuth = createAsyncThunk<void, undefined, ThunkAPI>(
 export const loginUser = createAsyncThunk<void, AuthData, ThunkAPI>(
   'user/login',
   async (authData, { dispatch, extra: api }) => {
-    const { data: { token } } = await api.post<AuthUser>(APIRoute.Login, authData);
+    const { data: { token, ...user } } = await api.post<AuthUser>(APIRoute.Login, authData);
     saveToken(token);
     dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    dispatch(setUser(user));
   },
 );
 
@@ -40,6 +41,7 @@ export const logoutUser = createAsyncThunk<void, undefined, ThunkAPI>(
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    dispatch(setUser(null));
   },
 );
 
