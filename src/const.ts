@@ -1,4 +1,4 @@
-export const ROUTE_PARAM_ID = ':id';
+export const APP_ROUTE_PARAM_ID = ':id';
 export const API_ROUTE_PARAM_ID = 'id';
 export const NEARBY_OFFERS_COUNT = 3;
 
@@ -15,7 +15,7 @@ export enum AppRoute {
   Login = '/login',
   Root = '/',
   Favorites = '/favorites',
-  Offer = `/offer/${ROUTE_PARAM_ID}`,
+  Offer = `/offer/${APP_ROUTE_PARAM_ID}`,
 }
 
 export enum AuthorizationStatus {

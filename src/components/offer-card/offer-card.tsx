@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { ROUTE_PARAM_ID, AppRoute } from '../../const';
+import { AppRoute, APP_ROUTE_PARAM_ID } from '../../const';
 import { CardOffer } from '../../types/offers';
 import { OfferCardVariant } from '../../types/offer-card-variant';
 import { roundOffRating } from '../../util';
@@ -45,7 +45,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
     isFavorite
   } = offer;
 
-  const link = AppRoute.Offer.replace(ROUTE_PARAM_ID, id);
+  const link = AppRoute.Offer.replace(APP_ROUTE_PARAM_ID, id);
 
   const handleCardMouseOver = setActiveCardId && (() => setActiveCardId(id));
   const handleCardMouseOut = setActiveCardId && (() => setActiveCardId(''));
