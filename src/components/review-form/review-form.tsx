@@ -4,6 +4,7 @@ import { sendReview } from '../../store/async-actions';
 
 const RATINGS = ['terribly', 'badly', 'not bad', 'good', 'perfect'];
 const MIN_COMMENT_LENGTH = 50;
+const MAX_COMMENT_LENGTH = 300;
 
 type ReviewFormProps = {
   offerId: string;
@@ -65,12 +66,23 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span>
+          and describe your stay with at least <b className="reviews__text-amount">50</b>{' '}
+
+          {formData.comment.length > MAX_COMMENT_LENGTH && (
+            <>and no more than <b className="reviews__text-amount">300</b>{' '}</>
+          )}
+
+          <b className="reviews__text-amount">characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={Boolean(!formData.rating || formData.comment.length < MIN_COMMENT_LENGTH)}
+          disabled={
+            !formData.rating ||
+            formData.comment.length < MIN_COMMENT_LENGTH ||
+            formData.comment.length > MAX_COMMENT_LENGTH
+          }
         >
           Submit
         </button>
