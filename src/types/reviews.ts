@@ -1,11 +1,14 @@
 import { Author } from './user';
 
-export type Review = {
+export type ReviewContent = {
+  comment: string;
+  rating: number;
+}
+
+export type Review = ReviewContent & {
   id: string;
   date: string;
   user: Author;
-  comment: string;
-  rating: number;
 }
 
 export type Reviews = Review[];

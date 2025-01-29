@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AuthData, AuthUser } from '../types/user';
 import { Offers } from '../types/offers';
-import { Reviews } from '../types/reviews';
+import { Reviews, Review, ReviewContent } from '../types/reviews';
 import { APIRoute, API_ROUTE_PARAM_ID, AuthorizationStatus } from '../const';
 import { saveToken, dropToken } from '../services/token';
 
@@ -81,5 +81,22 @@ export const fetchReviews = createAsyncThunk<void, string, ThunkAPI>(
     const apiRoute = APIRoute.Reviews.replace(API_ROUTE_PARAM_ID, offerId);
     const { data } = await api.get<Reviews>(apiRoute);
     dispatch(setReviews(data));
+  }
+);
+
+export const sendReview = createAsyncThunk<
+  void,
+  {
+    offerId: string;
+    content: ReviewContent;
+  },
+  ThunkAPI
+>(
+  'review/send',
+  async ({ offerId, content }, { dispatch, getState, extra: api }) => {
+    const apiRoute = APIRoute.Reviews.replace(API_ROUTE_PARAM_ID, offerId);
+    const { data } = await api.post<Review>(apiRoute, content);
+    const reviews = getState().reviews;
+    dispatch(setReviews([data, ...reviews]));
   }
 );

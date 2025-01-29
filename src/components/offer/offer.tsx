@@ -13,6 +13,7 @@ type OfferProps = {
 
 function Offer({ offer, nearbyOffers, reviews }: OfferProps): JSX.Element {
   const {
+    id,
     title,
     type,
     price,
@@ -109,7 +110,7 @@ function Offer({ offer, nearbyOffers, reviews }: OfferProps): JSX.Element {
               <p className="offer__text">{description}</p>
             </div>
           </div>
-          <Reviews reviews={reviews} />
+          <Reviews offerId={id} reviews={reviews} />
         </div>
       </div>
       <Map

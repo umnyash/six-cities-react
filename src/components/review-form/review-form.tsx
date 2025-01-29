@@ -1,21 +1,35 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import useAppDispatch from '../../hooks/use-app-dispatch';
+import { sendReview } from '../../store/async-actions';
 
 const RATINGS = ['terribly', 'badly', 'not bad', 'good', 'perfect'];
 const MIN_COMMENT_LENGTH = 50;
 
-function ReviewForm(): JSX.Element {
+type ReviewFormProps = {
+  offerId: string;
+}
+
+function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   const [formData, setFormData] = useState({
     comment: '',
     rating: 0
   });
+
+  const dispatch = useAppDispatch();
 
   const handleFieldChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = evt.target;
     setFormData({ ...formData, [name]: name === 'rating' ? +value : value });
   };
 
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    dispatch(sendReview({ offerId, content: formData }));
+    setFormData({ comment: '', rating: 0 });
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {RATINGS.map((rating, index) => {

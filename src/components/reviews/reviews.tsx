@@ -6,6 +6,7 @@ import ReviewsList from '../reviews-list';
 import ReviewForm from '../review-form';
 
 type ReviewsProps = {
+  offerId: string;
   reviews: ReviewsData;
 }
 
@@ -15,7 +16,7 @@ function getLatestReviews(reviews: ReviewsData) {
     .slice(0, REVIEWS_MAX_COUNT);
 }
 
-function Reviews({ reviews }: ReviewsProps): JSX.Element {
+function Reviews({ offerId, reviews }: ReviewsProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const latestReviews = getLatestReviews(reviews);
 
@@ -26,7 +27,7 @@ function Reviews({ reviews }: ReviewsProps): JSX.Element {
       </h2>
       <ReviewsList reviews={latestReviews} />
 
-      {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
+      {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm offerId={offerId} />}
     </section>
   );
 }
