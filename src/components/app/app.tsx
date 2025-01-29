@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute } from '../../const';
 import { Offers } from '../../types/offers';
-import { Reviews } from '../../types/reviews';
 import useAppSelector from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../const';
 
@@ -17,10 +16,9 @@ import AnonymousRoute from '../anonymous-route';
 
 type AppProps = {
   offers: Offers;
-  reviews: Reviews;
 }
 
-function App({ offers, reviews }: AppProps): JSX.Element {
+function App({ offers }: AppProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
@@ -41,7 +39,7 @@ function App({ offers, reviews }: AppProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<OfferPage reviews={reviews} />}
+            element={<OfferPage />}
           />
           <Route
             path={AppRoute.Login}

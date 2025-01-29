@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { NEARBY_OFFERS_COUNT } from '../../const';
-import { Reviews } from '../../types/reviews';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
-import { fetchNearbyOffers } from '../../store/async-actions';
+import { fetchReviews, fetchNearbyOffers } from '../../store/async-actions';
 import { getRandomArrayItems } from '../../util';
 
 import Logo from '../../components/logo';
@@ -16,19 +15,18 @@ import useOfferData from '../../hooks/use-offer-data';
 import LoadingPage from '../loading-page';
 import NotFoundPage from '../not-found-page';
 
-type OfferPageProps = {
-  reviews: Reviews;
-}
-
-function OfferPage({ reviews }: OfferPageProps): JSX.Element {
+function OfferPage(): JSX.Element {
   const offerId = useParams().id as string;
   const dispatch = useAppDispatch();
 
   const offer = useOfferData(offerId);
 
   useEffect(() => {
+    dispatch(fetchReviews(offerId));
     dispatch(fetchNearbyOffers(offerId));
   }, [offerId, dispatch]);
+
+  const reviews = useAppSelector((state) => state.reviews);
 
   const nearbyOffers = getRandomArrayItems(
     useAppSelector((state) => state.nearbyOffers),

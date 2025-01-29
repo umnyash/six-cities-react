@@ -1,5 +1,6 @@
 export const APP_ROUTE_PARAM_ID = ':id';
 export const API_ROUTE_PARAM_ID = 'id';
+export const REVIEWS_MAX_COUNT = 10;
 export const NEARBY_OFFERS_COUNT = 3;
 
 export const CITIES = [
@@ -43,4 +44,5 @@ export enum APIRoute {
   Logout = '/logout',
   Offers = '/offers',
   NearbyOffers = `/offers/${API_ROUTE_PARAM_ID}/nearby`,
+  Reviews = `/comments/${API_ROUTE_PARAM_ID}`,
 }
