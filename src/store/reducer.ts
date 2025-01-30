@@ -10,6 +10,7 @@ import {
   setOffers,
   setOffersLoadingStatus,
   setNearbyOffers,
+  setFavorites,
   setReviews,
   setCity
 } from './actions';
@@ -21,6 +22,7 @@ type InitialState = {
   offers: Offers;
   isOffersLoading: boolean;
   nearbyOffers: Offers;
+  favorites: Offers;
   reviews: Reviews;
   city: CityName;
 }
@@ -31,6 +33,7 @@ const initialState: InitialState = {
   offers: [],
   isOffersLoading: false,
   nearbyOffers: [],
+  favorites: [],
   reviews: [],
   city: CITIES[0],
 };
@@ -51,6 +54,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setNearbyOffers, (state, action) => {
       state.nearbyOffers = action.payload;
+    })
+    .addCase(setFavorites, (state, action) => {
+      state.favorites = action.payload;
     })
     .addCase(setReviews, (state, action) => {
       state.reviews = action.payload;

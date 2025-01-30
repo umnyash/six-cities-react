@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute } from '../../const';
-import { Offers } from '../../types/offers';
 import useAppSelector from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../const';
 
@@ -14,11 +13,7 @@ import NotFoundPage from '../../pages/not-found-page';
 import PrivateRoute from '../private-route';
 import AnonymousRoute from '../anonymous-route';
 
-type AppProps = {
-  offers: Offers;
-}
-
-function App({ offers }: AppProps): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
@@ -53,7 +48,7 @@ function App({ offers }: AppProps): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute>
-                <FavoritesPage favoriteOffers={offers} />
+                <FavoritesPage />
               </PrivateRoute>
             }
           />

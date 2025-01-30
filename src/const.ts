@@ -44,5 +44,6 @@ export enum APIRoute {
   Logout = '/logout',
   Offers = '/offers',
   NearbyOffers = `/offers/${API_ROUTE_PARAM_ID}/nearby`,
+  Favorites = '/favorite',
   Reviews = `/comments/${API_ROUTE_PARAM_ID}`,
 }

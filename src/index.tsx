@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app';
 import { ToastContainer } from 'react-toastify';
-import { offers } from './mocks/offers';
 import { store } from './store';
-import { checkUserAuth, fetchOffers } from './store/async-actions';
+import { checkUserAuth, fetchFavorites, fetchOffers } from './store/async-actions';
 import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(checkUserAuth());
+store.dispatch(fetchFavorites());
 store.dispatch(fetchOffers());
 
 const root = ReactDOM.createRoot(
@@ -19,7 +19,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer />
-      <App offers={offers} />
+      <App />
     </Provider>
   </React.StrictMode>
 );

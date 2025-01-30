@@ -13,6 +13,7 @@ import {
   setOffers,
   setOffersLoadingStatus,
   setNearbyOffers,
+  setFavorites,
   setReviews,
 } from './actions';
 
@@ -72,6 +73,14 @@ export const fetchNearbyOffers = createAsyncThunk<void, string, ThunkAPI>(
     const apiRoute = APIRoute.NearbyOffers.replace(API_ROUTE_PARAM_ID, offerId);
     const { data } = await api.get<Offers>(apiRoute);
     dispatch(setNearbyOffers(data));
+  }
+);
+
+export const fetchFavorites = createAsyncThunk<void, undefined, ThunkAPI>(
+  'favorites/fetch',
+  async (_arg, { dispatch, extra: api }) => {
+    const { data } = await api.get<Offers>(APIRoute.Favorites);
+    dispatch(setFavorites(data));
   }
 );
 

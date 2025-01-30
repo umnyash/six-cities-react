@@ -1,16 +1,14 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import useAppSelector from '../../hooks/use-app-selector';
 import { AppRoute } from '../../const';
-import { Offers } from '../../types/offers';
 import FavoritesList from '../../components/favorites-list';
 import Logo from '../../components/logo';
 import UserNavigation from '../../components/user-navigation';
 
-type FavoritesPageProps = {
-  favoriteOffers: Offers;
-}
+function FavoritesPage(): JSX.Element {
+  const favorites = useAppSelector((state) => state.favorites);
 
-function FavoritesPage({ favoriteOffers }: FavoritesPageProps): JSX.Element {
   return (
     <div className="page">
       <Helmet>
@@ -33,7 +31,7 @@ function FavoritesPage({ favoriteOffers }: FavoritesPageProps): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesList offers={favoriteOffers} />
+            <FavoritesList offers={favorites} />
           </section>
         </div>
       </main>

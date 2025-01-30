@@ -8,6 +8,7 @@ import { logoutUser } from '../../store/async-actions';
 function UserNavigation(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const user = useAppSelector((state) => state.user);
+  const favorites = useAppSelector((state) => state.favorites);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   const profileRoute = isAuthorized ? AppRoute.Favorites : AppRoute.Login;
@@ -28,7 +29,7 @@ function UserNavigation(): JSX.Element {
           {isAuthorized && user && (
             <>
               <span className="header__user-name user__name">{user.email}</span>
-              <span className="header__favorite-count">3</span>
+              <span className="header__favorite-count">{favorites.length}</span>
             </>
           )}
 
