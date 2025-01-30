@@ -5,12 +5,24 @@ import { AppRoute } from '../../const';
 import Favorites from '../../components/favorites';
 import Logo from '../../components/logo';
 import UserNavigation from '../../components/user-navigation';
+import clsx from 'clsx';
 
 function FavoritesPage(): JSX.Element {
   const favorites = useAppSelector((state) => state.favorites);
+  const isEmpty = !favorites.length;
+
+  const pageClassName = clsx(
+    'page',
+    isEmpty && 'page--favorites-empty'
+  );
+
+  const mainClassName = clsx(
+    'page__main page__main--favorites',
+    isEmpty && 'page__main--favorites-empty'
+  );
 
   return (
-    <div className="page">
+    <div className={pageClassName}>
       <Helmet>
         <title>6 cities: favorites</title>
       </Helmet>
@@ -27,7 +39,7 @@ function FavoritesPage(): JSX.Element {
         </div>
       </header>
 
-      <main className="page__main page__main--favorites">
+      <main className={mainClassName}>
         <div className="page__favorites-container container">
           <Favorites offers={favorites} />
         </div>
