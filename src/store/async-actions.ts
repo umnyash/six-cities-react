@@ -4,7 +4,7 @@ import { AppDispatch, State } from '../types/state';
 import { AuthData, AuthUser } from '../types/user';
 import { Offers } from '../types/offers';
 import { Reviews, Review, ReviewContent } from '../types/reviews';
-import { APIRoute, API_ROUTE_PARAM_ID, AuthorizationStatus } from '../const';
+import { APIRoute, AuthorizationStatus } from '../const';
 import { saveToken, dropToken } from '../services/token';
 
 import {
@@ -70,7 +70,7 @@ export const fetchOffers = createAsyncThunk<void, undefined, ThunkAPI>(
 export const fetchNearbyOffers = createAsyncThunk<void, string, ThunkAPI>(
   'offers/fetchNearby',
   async (offerId, { dispatch, extra: api }) => {
-    const apiRoute = APIRoute.NearbyOffers.replace(API_ROUTE_PARAM_ID, offerId);
+    const apiRoute = `${APIRoute.Offers}/${offerId}/nearby`;
     const { data } = await api.get<Offers>(apiRoute);
     dispatch(setNearbyOffers(data));
   }
@@ -87,7 +87,7 @@ export const fetchFavorites = createAsyncThunk<void, undefined, ThunkAPI>(
 export const fetchReviews = createAsyncThunk<void, string, ThunkAPI>(
   'reviews/fetch',
   async (offerId, { dispatch, extra: api }) => {
-    const apiRoute = APIRoute.Reviews.replace(API_ROUTE_PARAM_ID, offerId);
+    const apiRoute = `${APIRoute.Reviews}/${offerId}`;
     const { data } = await api.get<Reviews>(apiRoute);
     dispatch(setReviews(data));
   }
@@ -103,7 +103,7 @@ export const sendReview = createAsyncThunk<
 >(
   'review/send',
   async ({ offerId, content }, { dispatch, getState, extra: api }) => {
-    const apiRoute = APIRoute.Reviews.replace(API_ROUTE_PARAM_ID, offerId);
+    const apiRoute = `${APIRoute.Reviews}/${offerId}`;
     const { data } = await api.post<Review>(apiRoute, content);
     const reviews = getState().reviews;
     dispatch(setReviews([data, ...reviews]));
