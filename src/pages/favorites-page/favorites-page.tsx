@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import useAppSelector from '../../hooks/use-app-selector';
 import { AppRoute } from '../../const';
-import FavoritesList from '../../components/favorites-list';
+import Favorites from '../../components/favorites';
 import Logo from '../../components/logo';
 import UserNavigation from '../../components/user-navigation';
 
@@ -29,10 +29,7 @@ function FavoritesPage(): JSX.Element {
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesList offers={favorites} />
-          </section>
+          <Favorites offers={favorites} />
         </div>
       </main>
       <footer className="footer container">
