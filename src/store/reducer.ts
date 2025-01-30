@@ -18,7 +18,7 @@ import {
 
 type InitialState = {
   authorizationStatus: AuthorizationStatus;
-  user: UserState | null;
+  user: UserState;
   offers: Offers;
   isOffersLoading: boolean;
   nearbyOffers: Offers;
