@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import useAppSelector from '../../hooks/use-app-selector';
-import { AppRoute } from '../../const';
 import Header from '../../components/header';
 import Favorites from '../../components/favorites';
+import Footer from '../../components/footer';
 import clsx from 'clsx';
 
 function FavoritesPage(): JSX.Element {
@@ -33,11 +32,8 @@ function FavoritesPage(): JSX.Element {
           <Favorites offers={favorites} />
         </div>
       </main>
-      <footer className="footer container">
-        <Link className="footer__logo-link" to={AppRoute.Root}>
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </Link>
-      </footer>
+
+      <Footer />
     </div>
   );
 }
