@@ -7,8 +7,7 @@ import useAppSelector from '../../hooks/use-app-selector';
 import { fetchReviews, fetchNearbyOffers } from '../../store/async-actions';
 import { getRandomArrayItems } from '../../util';
 
-import Logo from '../../components/logo';
-import UserNavigation from '../../components/user-navigation';
+import Header from '../../components/header';
 import Offers from '../../components/offers';
 import Offer from '../../components/offer';
 import useOfferData from '../../hooks/use-offer-data';
@@ -46,18 +45,8 @@ function OfferPage(): JSX.Element {
       <Helmet>
         <title>6 cities: offer</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <UserNavigation />
-            </nav>
-          </div>
-        </div>
-      </header>
+
+      <Header withUserNavigation />
 
       <main className="page__main page__main--offer">
         <Offer offer={offer} nearbyOffers={nearbyOffers} reviews={reviews} />

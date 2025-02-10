@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 import { useState } from 'react';
+import Header from '../../components/header';
 import CitiesList from '../../components/cities-list';
-import Logo from '../../components/logo';
-import UserNavigation from '../../components/user-navigation';
 import Sorting from '../../components/sorting';
 import Map from '../../components/map';
 import OffersList from '../../components/offers-list';
@@ -48,18 +47,7 @@ function MainPage(): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <UserNavigation />
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header withUserNavigation />
 
       <main className={mainClassName}>
         <h1 className="visually-hidden">Cities</h1>

@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { AppRoute } from '../../const';
-import Logo from '../../components/logo';
-import UserNavigation from '../../components/user-navigation';
+import Header from '../../components/header';
 
 function NotFoundPage(): JSX.Element {
   return (
@@ -10,18 +9,8 @@ function NotFoundPage(): JSX.Element {
       <Helmet>
         <title>6 cities: page not found</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <UserNavigation />
-            </nav>
-          </div>
-        </div>
-      </header>
+
+      <Header withUserNavigation />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
