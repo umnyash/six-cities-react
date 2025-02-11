@@ -1,15 +1,22 @@
-import { NavLink } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 function Logo(): JSX.Element {
-  const getClassName = ({ isActive }: { isActive: boolean }) => isActive
-    ? 'header__logo-link header__logo-link--active'
-    : 'header__logo-link';
+  const pathName = useLocation().pathname;
+  const isActive = pathName === AppRoute.Root as string;
+
+  if (isActive) {
+    return (
+      <a className="header__logo-link header__logo-link--active">
+        <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
+      </a>
+    );
+  }
 
   return (
-    <NavLink className={getClassName} to={AppRoute.Root}>
+    <Link className="header__logo-link" to={AppRoute.Root}>
       <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-    </NavLink>
+    </Link>
   );
 }
 
