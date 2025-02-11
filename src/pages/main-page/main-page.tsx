@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import CitiesList from '../../components/cities-list';
 import Sorting from '../../components/sorting';
@@ -47,6 +48,10 @@ function MainPage(): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>6 cities</title>
+      </Helmet>
+
       <Header withUserNavigation />
 
       <main className={mainClassName}>
