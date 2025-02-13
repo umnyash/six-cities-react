@@ -1,7 +1,5 @@
 import clsx from 'clsx';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import Header from '../../components/header';
 import CitiesList from '../../components/cities-list';
 import Sorting from '../../components/sorting';
 import Map from '../../components/map';
@@ -47,56 +45,48 @@ function MainPage(): JSX.Element {
   );
 
   return (
-    <div className="page page--gray page--main">
-      <Helmet>
-        <title>6 cities</title>
-      </Helmet>
+    <main className={mainClassName}>
+      <h1 className="visually-hidden">Cities</h1>
+      <div className="tabs">
+        <section className="locations container">
+          <CitiesList activeCity={activeCity} />
+        </section>
+      </div>
+      <div className="cities">
+        <div className={containerClassName}>
+          {isOffersDataLoading && <Spinner />}
 
-      <Header withUserNavigation />
+          {!isOffersDataLoading && !filteredOffersCount && (
+            <section className="cities__no-places">
+              <div className="cities__status-wrapper tabs__content">
+                <b className="cities__status">No places to stay available</b>
+                <p className="cities__status-description">We could not find any property available at the moment in {activeCity}</p>
+              </div>
+            </section>
+          )}
 
-      <main className={mainClassName}>
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <CitiesList activeCity={activeCity} />
-          </section>
-        </div>
-        <div className="cities">
-          <div className={containerClassName}>
-            {isOffersDataLoading && <Spinner />}
+          {!isOffersDataLoading && filteredOffersCount && (
+            <section className="cities__places places">
+              <h2 className="visually-hidden">Places</h2>
+              <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
+              <Sorting selectedOption={sortingOption} onOptionClick={setSelectedOption} />
+              <OffersList offers={filteredAndSortedOffers} variant={OffersListVariant.Rows} setActiveCardId={setActiveCardId} />
+            </section>
+          )}
 
-            {!isOffersDataLoading && !filteredOffersCount && (
-              <section className="cities__no-places">
-                <div className="cities__status-wrapper tabs__content">
-                  <b className="cities__status">No places to stay available</b>
-                  <p className="cities__status-description">We could not find any property available at the moment in {activeCity}</p>
-                </div>
-              </section>
-            )}
-
+          <div className="cities__right-section">
             {!isOffersDataLoading && filteredOffersCount && (
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
-                <Sorting selectedOption={sortingOption} onOptionClick={setSelectedOption} />
-                <OffersList offers={filteredAndSortedOffers} variant={OffersListVariant.Rows} setActiveCardId={setActiveCardId} />
-              </section>
+              <Map
+                className="cities__map"
+                location={filteredOffers[0].city.location}
+                points={filteredOffers}
+                activePointId={activeCardId}
+              />
             )}
-
-            <div className="cities__right-section">
-              {!isOffersDataLoading && filteredOffersCount && (
-                <Map
-                  className="cities__map"
-                  location={filteredOffers[0].city.location}
-                  points={filteredOffers}
-                  activePointId={activeCardId}
-                />
-              )}
-            </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
 

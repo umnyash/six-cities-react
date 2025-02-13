@@ -12,10 +12,18 @@ export const CITIES = [
 ] as const;
 
 export enum AppRoute {
-  Login = '/login',
   Root = '/',
+  Login = '/login',
   Favorites = '/favorites',
   Offer = `/offer/${APP_ROUTE_PARAM_ID}`,
+}
+
+export enum PageTitle {
+  Root = '6 cities',
+  Login = '6 cities: authorization',
+  Favorites = '6 cities: favorites',
+  Offer = '6 cities: offer',
+  NotFound = '6 cities: page not found',
 }
 
 export enum AuthorizationStatus {

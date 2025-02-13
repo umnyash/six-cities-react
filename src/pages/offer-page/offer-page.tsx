@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { NEARBY_OFFERS_COUNT } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import { fetchReviews, fetchNearbyOffers } from '../../store/async-actions';
 import { getRandomArrayItems } from '../../util';
 
-import Header from '../../components/header';
 import Offers from '../../components/offers';
 import Offer from '../../components/offer';
 import useOfferData from '../../hooks/use-offer-data';
@@ -41,20 +39,12 @@ function OfferPage(): JSX.Element {
   }
 
   return (
-    <div className="page">
-      <Helmet>
-        <title>6 cities: offer</title>
-      </Helmet>
-
-      <Header withUserNavigation />
-
-      <main className="page__main page__main--offer">
-        <Offer offer={offer} nearbyOffers={nearbyOffers} reviews={reviews} />
-        <div className="container">
-          <Offers heading="Other places in the neighbourhood" offers={nearbyOffers} />
-        </div>
-      </main>
-    </div>
+    <main className="page__main page__main--offer">
+      <Offer offer={offer} nearbyOffers={nearbyOffers} reviews={reviews} />
+      <div className="container">
+        <Offers heading="Other places in the neighbourhood" offers={nearbyOffers} />
+      </div>
+    </main>
   );
 }
 
