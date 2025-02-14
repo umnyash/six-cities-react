@@ -1,15 +1,13 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { AuthData, AuthUser } from '../types/user';
+import { AuthData, AuthUser, User } from '../types/user';
 import { Offers } from '../types/offers';
 import { Reviews, Review, ReviewContent } from '../types/reviews';
-import { APIRoute, AuthorizationStatus } from '../const';
+import { APIRoute, NameSpace } from '../const';
 import { saveToken, dropToken } from '../services/token';
 
 import {
-  setAuthorizationStatus,
-  setUser,
   setOffers,
   setOffersLoadingStatus,
   setNearbyOffers,
@@ -23,37 +21,28 @@ type ThunkAPI = {
   extra: AxiosInstance;
 }
 
-export const checkUserAuth = createAsyncThunk<void, undefined, ThunkAPI>(
-  'user/checkAuth',
-  async (_arg, { dispatch, extra: api }) => {
-    try {
-      const { data: { name, email, avatarUrl, isPro } } = await api.get<AuthUser>(APIRoute.Login);
-      const user = { name, email, avatarUrl, isPro };
-      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-      dispatch(setUser(user));
-    } catch {
-      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
-    }
+export const checkUserAuth = createAsyncThunk<User, undefined, ThunkAPI>(
+  `${NameSpace.User}/checkAuth`,
+  async (_arg, { extra: api }) => {
+    const { data: { name, email, avatarUrl, isPro } } = await api.get<AuthUser>(APIRoute.Login);
+    return { name, email, avatarUrl, isPro };
   },
 );
 
-export const loginUser = createAsyncThunk<void, AuthData, ThunkAPI>(
-  'user/login',
-  async (authData, { dispatch, extra: api }) => {
+export const loginUser = createAsyncThunk<User, AuthData, ThunkAPI>(
+  `${NameSpace.User}/login`,
+  async (authData, { extra: api }) => {
     const { data: { token, ...user } } = await api.post<AuthUser>(APIRoute.Login, authData);
     saveToken(token);
-    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-    dispatch(setUser(user));
+    return user;
   },
 );
 
 export const logoutUser = createAsyncThunk<void, undefined, ThunkAPI>(
-  'user/logout',
-  async (_arg, { dispatch, extra: api }) => {
+  `${NameSpace.User}/logout`,
+  async (_arg, { extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
-    dispatch(setUser(null));
   },
 );
 

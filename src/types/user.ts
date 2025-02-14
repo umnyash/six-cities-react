@@ -15,5 +15,3 @@ export type AuthData = {
 export type AuthUser = User & {
   token: string;
 }
-
-export type UserState = User | null;

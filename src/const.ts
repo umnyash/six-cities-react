@@ -53,3 +53,7 @@ export enum APIRoute {
   Favorites = '/favorite',
   Reviews = '/comments',
 }
+
+export enum NameSpace {
+  User = 'USER',
+}
