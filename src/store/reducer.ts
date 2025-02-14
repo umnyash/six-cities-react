@@ -1,7 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Offers, CityName } from '../types/offers';
+import { Offers } from '../types/offers';
 import { Reviews } from '../types/reviews';
-import { CITIES } from '../const';
 
 import {
   setOffers,
@@ -9,7 +8,6 @@ import {
   setNearbyOffers,
   setFavorites,
   setReviews,
-  setCity
 } from './actions';
 
 
@@ -19,7 +17,6 @@ type InitialState = {
   nearbyOffers: Offers;
   favorites: Offers;
   reviews: Reviews;
-  city: CityName;
 }
 
 const initialState: InitialState = {
@@ -28,7 +25,6 @@ const initialState: InitialState = {
   nearbyOffers: [],
   favorites: [],
   reviews: [],
-  city: CITIES[0],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -47,9 +43,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setReviews, (state, action) => {
       state.reviews = action.payload;
-    })
-    .addCase(setCity, (state, action) => {
-      state.city = action.payload;
     });
 });
 

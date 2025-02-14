@@ -1,5 +1,5 @@
 import useAppDispatch from '../../hooks/use-app-dispatch';
-import { setCity } from '../../store/actions';
+import { setCity } from '../../store/catalog/catalog.slice';
 import clsx from 'clsx';
 import { CityName } from '../../types/offers';
 import { CITIES } from '../../const';
