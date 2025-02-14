@@ -8,9 +8,6 @@ import { APIRoute, NameSpace } from '../const';
 import { saveToken, dropToken } from '../services/token';
 
 import {
-  setOffers,
-  setOffersLoadingStatus,
-  setNearbyOffers,
   setFavorites,
   setReviews,
 } from './actions';
@@ -46,22 +43,20 @@ export const logoutUser = createAsyncThunk<void, undefined, ThunkAPI>(
   },
 );
 
-export const fetchOffers = createAsyncThunk<void, undefined, ThunkAPI>(
-  'offers/fetch',
-  async (_arg, { dispatch, extra: api }) => {
-    dispatch(setOffersLoadingStatus(true));
+export const fetchOffers = createAsyncThunk<Offers, undefined, ThunkAPI>(
+  `${NameSpace.Offers}/fetch`,
+  async (_arg, { extra: api }) => {
     const { data } = await api.get<Offers>(APIRoute.Offers);
-    dispatch(setOffers(data));
-    dispatch(setOffersLoadingStatus(false));
+    return data;
   },
 );
 
-export const fetchNearbyOffers = createAsyncThunk<void, string, ThunkAPI>(
-  'offers/fetchNearby',
-  async (offerId, { dispatch, extra: api }) => {
+export const fetchNearbyOffers = createAsyncThunk<Offers, string, ThunkAPI>(
+  `${NameSpace.Offers}/fetchNearby`,
+  async (offerId, { extra: api }) => {
     const apiRoute = `${APIRoute.Offers}/${offerId}/nearby`;
     const { data } = await api.get<Offers>(apiRoute);
-    dispatch(setNearbyOffers(data));
+    return data;
   }
 );
 
