@@ -14,6 +14,10 @@ export type OffersState = {
   nearbyOffers: Offers;
 }
 
+export type FavoritesState = {
+  favorites: Offers;
+}
+
 export type CatalogState = {
   city: CityName;
 }

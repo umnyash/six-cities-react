@@ -8,7 +8,6 @@ import { APIRoute, NameSpace } from '../const';
 import { saveToken, dropToken } from '../services/token';
 
 import {
-  setFavorites,
   setReviews,
 } from './actions';
 
@@ -60,11 +59,11 @@ export const fetchNearbyOffers = createAsyncThunk<Offers, string, ThunkAPI>(
   }
 );
 
-export const fetchFavorites = createAsyncThunk<void, undefined, ThunkAPI>(
-  'favorites/fetch',
-  async (_arg, { dispatch, extra: api }) => {
+export const fetchFavorites = createAsyncThunk<Offers, undefined, ThunkAPI>(
+  `${NameSpace.Favorites}/fetch`,
+  async (_arg, { extra: api }) => {
     const { data } = await api.get<Offers>(APIRoute.Favorites);
-    dispatch(setFavorites(data));
+    return data;
   }
 );
 

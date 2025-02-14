@@ -57,5 +57,6 @@ export enum APIRoute {
 export enum NameSpace {
   User = 'USER',
   Offers = 'OFFERS',
+  Favorites = 'FAVORITES',
   Catalog = 'CATALOG',
 }
