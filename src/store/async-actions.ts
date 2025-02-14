@@ -1,19 +1,12 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, State } from '../types/state';
 import { AuthData, AuthUser, User } from '../types/user';
 import { Offers } from '../types/offers';
 import { Reviews, Review, ReviewContent } from '../types/reviews';
 import { APIRoute, NameSpace } from '../const';
 import { saveToken, dropToken } from '../services/token';
 
-import {
-  setReviews,
-} from './actions';
-
 type ThunkAPI = {
-  dispatch: AppDispatch;
-  state: State;
   extra: AxiosInstance;
 }
 
@@ -67,28 +60,27 @@ export const fetchFavorites = createAsyncThunk<Offers, undefined, ThunkAPI>(
   }
 );
 
-export const fetchReviews = createAsyncThunk<void, string, ThunkAPI>(
-  'reviews/fetch',
-  async (offerId, { dispatch, extra: api }) => {
+export const fetchReviews = createAsyncThunk<Reviews, string, ThunkAPI>(
+  `${NameSpace.Reviews}/fetch`,
+  async (offerId, { extra: api }) => {
     const apiRoute = `${APIRoute.Reviews}/${offerId}`;
     const { data } = await api.get<Reviews>(apiRoute);
-    dispatch(setReviews(data));
+    return data;
   }
 );
 
 export const sendReview = createAsyncThunk<
-  void,
+  Review,
   {
     offerId: string;
     content: ReviewContent;
   },
   ThunkAPI
 >(
-  'review/send',
-  async ({ offerId, content }, { dispatch, getState, extra: api }) => {
+  `${NameSpace.Reviews}/send`,
+  async ({ offerId, content }, { extra: api }) => {
     const apiRoute = `${APIRoute.Reviews}/${offerId}`;
     const { data } = await api.post<Review>(apiRoute, content);
-    const reviews = getState().reviews;
-    dispatch(setReviews([data, ...reviews]));
+    return data;
   }
 );

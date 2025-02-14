@@ -2,6 +2,7 @@ import { store } from '../store';
 import { AuthorizationStatus } from '../const';
 import { User } from './user';
 import { CityName, Offers } from './offers';
+import { Reviews } from './reviews';
 
 export type UserState = {
   authorizationStatus: AuthorizationStatus;
@@ -16,6 +17,10 @@ export type OffersState = {
 
 export type FavoritesState = {
   favorites: Offers;
+}
+
+export type ReviewsState = {
+  reviews: Reviews;
 }
 
 export type CatalogState = {
