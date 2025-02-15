@@ -1,6 +1,7 @@
 import { useMatch } from 'react-router-dom';
 import { AppRoute, PageTitle } from '../../const';
 import useAppSelector from '../../hooks/use-app-selector';
+import { getFavorites } from '../../store/favorites/favorites.selectors';
 
 const useLayoutSettings = () => {
   let pageTitle = PageTitle.Root;
@@ -8,7 +9,7 @@ const useLayoutSettings = () => {
   let withUserNavigation = true;
   let withFooter = false;
 
-  const favorites = useAppSelector((state) => state.favorites);
+  const favorites = useAppSelector(getFavorites);
 
   const isMainPage = !!useMatch(AppRoute.Root);
   const isLoginPage = !!useMatch(AppRoute.Login);

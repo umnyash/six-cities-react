@@ -1,9 +1,10 @@
 import useAppSelector from '../../hooks/use-app-selector';
+import { getFavorites } from '../../store/favorites/favorites.selectors';
 import Favorites from '../../components/favorites';
 import clsx from 'clsx';
 
 function FavoritesPage(): JSX.Element {
-  const favorites = useAppSelector((state) => state.favorites);
+  const favorites = useAppSelector(getFavorites);
   const isEmpty = !favorites.length;
 
   const mainClassName = clsx(

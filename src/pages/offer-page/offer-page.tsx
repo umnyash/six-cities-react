@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { NEARBY_OFFERS_COUNT } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
+import { getNearbyOffers } from '../../store/offers/offers.selectors';
+import { getReviews } from '../../store/reviews/reviews.selectors';
 import { fetchReviews, fetchNearbyOffers } from '../../store/async-actions';
 import { getRandomArrayItems } from '../../util';
 
@@ -23,10 +25,10 @@ function OfferPage(): JSX.Element {
     dispatch(fetchNearbyOffers(offerId));
   }, [offerId, dispatch]);
 
-  const reviews = useAppSelector((state) => state.reviews);
+  const reviews = useAppSelector(getReviews);
 
   const nearbyOffers = getRandomArrayItems(
-    useAppSelector((state) => state.nearbyOffers),
+    useAppSelector(getNearbyOffers),
     NEARBY_OFFERS_COUNT
   );
 

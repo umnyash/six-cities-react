@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute } from '../../const';
 import useAppSelector from '../../hooks/use-app-selector';
+import { getAuthorizationStatus } from '../../store/user/user.selectors';
 import { AuthorizationStatus } from '../../const';
 
 import Layout from '../layout';
@@ -15,7 +16,7 @@ import PrivateRoute from '../private-route';
 import AnonymousRoute from '../anonymous-route';
 
 function App(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return (

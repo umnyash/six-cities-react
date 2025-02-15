@@ -2,6 +2,7 @@ import useAppSelector from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../const';
 import { Reviews as ReviewsData } from '../../types/reviews';
 import { REVIEWS_MAX_COUNT } from '../../const';
+import { getAuthorizationStatus } from '../../store/user/user.selectors';
 import ReviewsList from '../reviews-list';
 import ReviewForm from '../review-form';
 
@@ -17,7 +18,7 @@ function getLatestReviews(reviews: ReviewsData) {
 }
 
 function Reviews({ offerId, reviews }: ReviewsProps): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const latestReviews = getLatestReviews(reviews);
 
   return (

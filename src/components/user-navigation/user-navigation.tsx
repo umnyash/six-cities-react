@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
+import { getAuthorizationStatus, getUser } from '../../store/user/user.selectors';
+import { getFavorites } from '../../store/favorites/favorites.selectors';
 import { logoutUser } from '../../store/async-actions';
 
 function UserNavigation(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const user = useAppSelector((state) => state.user);
-  const favorites = useAppSelector((state) => state.favorites);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
+  const favorites = useAppSelector(getFavorites);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   const profileRoute = isAuthorized ? AppRoute.Favorites : AppRoute.Login;
