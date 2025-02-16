@@ -26,6 +26,13 @@ export enum PageTitle {
   NotFound = '6 cities: page not found',
 }
 
+export enum LoadingStatus {
+  None = 'None',
+  Pending = 'Pending',
+  Success = 'Success',
+  Error = 'Error',
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',

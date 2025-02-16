@@ -1,5 +1,5 @@
 import { store } from '../store';
-import { AuthorizationStatus, SortingOption } from '../const';
+import { LoadingStatus, AuthorizationStatus, SortingOption } from '../const';
 import { User } from './user';
 import { CityName, Offers } from './offers';
 import { Reviews } from './reviews';
@@ -11,7 +11,7 @@ export type UserState = {
 
 export type OffersState = {
   allOffers: Offers;
-  isAllOffersLoading: boolean;
+  allOffersLoadingStatus: LoadingStatus;
   nearbyOffers: Offers;
 }
 

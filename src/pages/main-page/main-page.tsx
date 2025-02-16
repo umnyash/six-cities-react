@@ -5,7 +5,7 @@ import Sorting from '../../components/sorting';
 import Map from '../../components/map';
 import OffersList from '../../components/offers-list';
 import Spinner from '../../components/spinner';
-import { SortingOption } from '../../const';
+import { LoadingStatus, SortingOption } from '../../const';
 import useAppSelector from '../../hooks/use-app-selector';
 import { getAllOffers, getAllOffersLoadingStatus } from '../../store/offers/offers.selectors';
 import { getCity, getSorting } from '../../store/catalog/catalog.selectors';
@@ -28,7 +28,7 @@ function sortOffers(offers: Offers, option: SortingOption) {
 function MainPage(): JSX.Element {
   const [activeCardId, setActiveCardId] = useState('');
 
-  const isOffersDataLoading = useAppSelector(getAllOffersLoadingStatus);
+  const isOffersDataLoading = useAppSelector(getAllOffersLoadingStatus) === LoadingStatus.Pending;
   const offers = useAppSelector(getAllOffers);
   const activeCity = useAppSelector(getCity);
   const sortingOption = useAppSelector(getSorting);

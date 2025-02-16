@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
+import { NameSpace, LoadingStatus } from '../../const';
 import { OffersState } from '../../types/state';
 import { fetchAllOffers, fetchNearbyOffers } from '../async-actions';
 
 const initialState: OffersState = {
   allOffers: [],
-  isAllOffersLoading: false,
+  allOffersLoadingStatus: LoadingStatus.None,
   nearbyOffers: [],
 };
 
@@ -16,11 +16,11 @@ export const offers = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchAllOffers.pending, (state) => {
-        state.isAllOffersLoading = true;
+        state.allOffersLoadingStatus = LoadingStatus.Pending;
       })
       .addCase(fetchAllOffers.fulfilled, (state, action) => {
         state.allOffers = action.payload;
-        state.isAllOffersLoading = false;
+        state.allOffersLoadingStatus = LoadingStatus.Success;
       })
       .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
