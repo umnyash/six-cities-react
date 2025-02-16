@@ -3,7 +3,7 @@ import { NameSpace } from '../../const';
 
 const sliceName = NameSpace.Offers;
 
-export const getOffers = (state: State) => state[sliceName].offers;
-export const getOffersLoadingStatus = (state: State) => state[sliceName].isOffersLoading;
+export const getAllOffers = (state: State) => state[sliceName].allOffers;
+export const getAllOffersLoadingStatus = (state: State) => state[sliceName].isAllOffersLoading;
 
 export const getNearbyOffers = (state: State) => state[sliceName].nearbyOffers;

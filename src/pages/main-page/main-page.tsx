@@ -7,7 +7,7 @@ import OffersList from '../../components/offers-list';
 import Spinner from '../../components/spinner';
 import { SortingOption } from '../../const';
 import useAppSelector from '../../hooks/use-app-selector';
-import { getOffers, getOffersLoadingStatus } from '../../store/offers/offers.selectors';
+import { getAllOffers, getAllOffersLoadingStatus } from '../../store/offers/offers.selectors';
 import { getCity, getSorting } from '../../store/catalog/catalog.selectors';
 import { OffersListVariant } from '../../types/offers-list-variant';
 import { Offers } from '../../types/offers';
@@ -28,8 +28,8 @@ function sortOffers(offers: Offers, option: SortingOption) {
 function MainPage(): JSX.Element {
   const [activeCardId, setActiveCardId] = useState('');
 
-  const isOffersDataLoading = useAppSelector(getOffersLoadingStatus);
-  const offers = useAppSelector(getOffers);
+  const isOffersDataLoading = useAppSelector(getAllOffersLoadingStatus);
+  const offers = useAppSelector(getAllOffers);
   const activeCity = useAppSelector(getCity);
   const sortingOption = useAppSelector(getSorting);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);

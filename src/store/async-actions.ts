@@ -35,8 +35,8 @@ export const logoutUser = createAsyncThunk<void, undefined, ThunkAPI>(
   },
 );
 
-export const fetchOffers = createAsyncThunk<Offers, undefined, ThunkAPI>(
-  `${NameSpace.Offers}/fetch`,
+export const fetchAllOffers = createAsyncThunk<Offers, undefined, ThunkAPI>(
+  `${NameSpace.Offers}/fetchAll`,
   async (_arg, { extra: api }) => {
     const { data } = await api.get<Offers>(APIRoute.Offers);
     return data;

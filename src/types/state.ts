@@ -10,8 +10,8 @@ export type UserState = {
 }
 
 export type OffersState = {
-  offers: Offers;
-  isOffersLoading: boolean;
+  allOffers: Offers;
+  isAllOffersLoading: boolean;
   nearbyOffers: Offers;
 }
 
