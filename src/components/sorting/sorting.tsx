@@ -1,14 +1,17 @@
 import { useState } from 'react';
+import useAppDispatch from '../../hooks/use-app-dispatch';
 import { clsx } from 'clsx';
 import { SortingOption } from '../../const';
+import { setSorting } from '../../store/catalog/catalog.slice';
 
 type SortingProps = {
   selectedOption: SortingOption;
-  onOptionClick: (option: SortingOption) => void;
 }
 
-function Sorting({ selectedOption, onOptionClick }: SortingProps): JSX.Element {
+function Sorting({ selectedOption }: SortingProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   const listClassName = clsx(
     'places__options places__options--custom',
@@ -40,7 +43,7 @@ function Sorting({ selectedOption, onOptionClick }: SortingProps): JSX.Element {
               className={optionClassName}
               tabIndex={0}
               onClick={() => {
-                onOptionClick(option);
+                dispatch(setSorting(option));
                 setIsOpen(false);
               }}
               key={option}

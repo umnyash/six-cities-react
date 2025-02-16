@@ -8,7 +8,7 @@ import Spinner from '../../components/spinner';
 import { SortingOption } from '../../const';
 import useAppSelector from '../../hooks/use-app-selector';
 import { getOffers, getOffersLoadingStatus } from '../../store/offers/offers.selectors';
-import { getCity } from '../../store/catalog/catalog.selectors';
+import { getCity, getSorting } from '../../store/catalog/catalog.selectors';
 import { OffersListVariant } from '../../types/offers-list-variant';
 import { Offers } from '../../types/offers';
 
@@ -26,12 +26,12 @@ function sortOffers(offers: Offers, option: SortingOption) {
 }
 
 function MainPage(): JSX.Element {
-  const [sortingOption, setSelectedOption] = useState(SortingOption.Default);
   const [activeCardId, setActiveCardId] = useState('');
 
   const isOffersDataLoading = useAppSelector(getOffersLoadingStatus);
   const offers = useAppSelector(getOffers);
   const activeCity = useAppSelector(getCity);
+  const sortingOption = useAppSelector(getSorting);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const filteredOffersCount = filteredOffers.length;
   const filteredAndSortedOffers = sortOffers(filteredOffers, sortingOption);
@@ -71,7 +71,7 @@ function MainPage(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
-              <Sorting selectedOption={sortingOption} onOptionClick={setSelectedOption} />
+              <Sorting selectedOption={sortingOption} />
               <OffersList offers={filteredAndSortedOffers} variant={OffersListVariant.Rows} setActiveCardId={setActiveCardId} />
             </section>
           )}

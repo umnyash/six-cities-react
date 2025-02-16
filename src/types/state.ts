@@ -1,5 +1,5 @@
 import { store } from '../store';
-import { AuthorizationStatus } from '../const';
+import { AuthorizationStatus, SortingOption } from '../const';
 import { User } from './user';
 import { CityName, Offers } from './offers';
 import { Reviews } from './reviews';
@@ -25,6 +25,7 @@ export type ReviewsState = {
 
 export type CatalogState = {
   city: CityName;
+  sorting: SortingOption;
 }
 
 export type State = ReturnType<typeof store.getState>;
