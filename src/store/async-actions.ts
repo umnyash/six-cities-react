@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthData, AuthUser, User } from '../types/user';
-import { Offers } from '../types/offers';
+import { Offers, PageOffer } from '../types/offers';
 import { Reviews, Review, ReviewContent } from '../types/reviews';
 import { APIRoute, NameSpace } from '../const';
 import { saveToken, dropToken } from '../services/token';
@@ -48,6 +48,15 @@ export const fetchNearbyOffers = createAsyncThunk<Offers, string, ThunkAPI>(
   async (offerId, { extra: api }) => {
     const apiRoute = `${APIRoute.Offers}/${offerId}/nearby`;
     const { data } = await api.get<Offers>(apiRoute);
+    return data;
+  }
+);
+
+export const fetchOffer = createAsyncThunk<PageOffer, string, ThunkAPI>(
+  `${NameSpace.Offers}/fetchOne`,
+  async (offerId, { extra: api }) => {
+    const apiRoute = `${APIRoute.Offers}/${offerId}`;
+    const { data } = await api.get<PageOffer>(apiRoute);
     return data;
   }
 );

@@ -1,7 +1,7 @@
 import { store } from '../store';
 import { LoadingStatus, AuthorizationStatus, SortingOption } from '../const';
 import { User } from './user';
-import { CityName, Offers } from './offers';
+import { CityName, Offers, PageOffer } from './offers';
 import { Reviews } from './reviews';
 
 export type UserState = {
@@ -13,6 +13,8 @@ export type OffersState = {
   allOffers: Offers;
   allOffersLoadingStatus: LoadingStatus;
   nearbyOffers: Offers;
+  offer: PageOffer | null;
+  offerLoadingStatus: LoadingStatus;
 }
 
 export type FavoritesState = {

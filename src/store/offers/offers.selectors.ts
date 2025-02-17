@@ -7,3 +7,6 @@ export const getAllOffers = (state: State) => state[sliceName].allOffers;
 export const getAllOffersLoadingStatus = (state: State) => state[sliceName].allOffersLoadingStatus;
 
 export const getNearbyOffers = (state: State) => state[sliceName].nearbyOffers;
+
+export const getOffer = (state: State) => state[sliceName].offer;
+export const getOfferLoadingStatus = (state: State) => state[sliceName].offerLoadingStatus;
