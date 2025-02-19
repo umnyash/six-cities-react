@@ -2,8 +2,8 @@ import { PageOffer, Offers } from '../../types/offers';
 import { Reviews as ReviewsData } from '../../types/reviews';
 import Reviews from '../reviews';
 import Map from '../map';
-import clsx from 'clsx';
 import { roundOffRating, capitalizeFirstLetter } from '../../util';
+import FavoriteButton from '../favorite-button';
 
 type OfferProps = {
   offer: PageOffer;
@@ -32,11 +32,6 @@ function Offer({ offer, nearbyOffers, reviews }: OfferProps): JSX.Element {
     }
   } = offer;
 
-  const bookmarkButtonClassName = clsx(
-    'offer__bookmark-button button',
-    isFavorite && 'offer__bookmark-button--active'
-  );
-
   return (
     <section className="offer">
       <div className="offer__gallery-container container">
@@ -57,12 +52,7 @@ function Offer({ offer, nearbyOffers, reviews }: OfferProps): JSX.Element {
           )}
           <div className="offer__name-wrapper">
             <h1 className="offer__name">{title}</h1>
-            <button className={bookmarkButtonClassName} type="button">
-              <svg className="offer__bookmark-icon" width="31" height="33">
-                <use xlinkHref="#icon-bookmark"></use>
-              </svg>
-              <span className="visually-hidden">To bookmarks</span>
-            </button>
+            <FavoriteButton className="offer__bookmark-button" isActive={isFavorite} />
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">

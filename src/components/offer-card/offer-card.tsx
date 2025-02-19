@@ -4,6 +4,7 @@ import { AppRoute, APP_ROUTE_PARAM_ID } from '../../const';
 import { CardOffer } from '../../types/offers';
 import { OfferCardVariant } from '../../types/offer-card-variant';
 import { roundOffRating } from '../../util';
+import FavoriteButton from '../favorite-button';
 
 type OfferCardProps = {
   offer: CardOffer;
@@ -66,11 +67,6 @@ function OfferCard(props: OfferCardProps): JSX.Element {
     variant === OfferCardVariant.Compact && 'favorites__card-info'
   );
 
-  const bookmarkButtonClassName = clsx(
-    'place-card__bookmark-button button',
-    isFavorite && 'place-card__bookmark-button--active'
-  );
-
   return (
     <article
       className={cardClassName}
@@ -93,12 +89,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>{' '}
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={bookmarkButtonClassName} type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark" />
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <FavoriteButton className="place-card__bookmark-button" isActive={isFavorite} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
