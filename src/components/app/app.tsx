@@ -12,8 +12,7 @@ import OfferPage from '../../pages/offer-page';
 import LoginPage from '../../pages/login-page';
 import FavoritesPage from '../../pages/favorites-page';
 import NotFoundPage from '../../pages/not-found-page';
-import PrivateRoute from '../private-route';
-import AnonymousRoute from '../anonymous-route';
+import ExclusiveRoute from '../exclusive-route';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -42,17 +41,17 @@ function App(): JSX.Element {
             <Route
               path={AppRoute.Login}
               element={
-                <AnonymousRoute>
+                <ExclusiveRoute onlyFor={AuthorizationStatus.NoAuth}>
                   <LoginPage />
-                </AnonymousRoute>
+                </ExclusiveRoute>
               }
             />
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute>
+                <ExclusiveRoute onlyFor={AuthorizationStatus.Auth}>
                   <FavoritesPage />
-                </PrivateRoute>
+                </ExclusiveRoute>
               }
             />
             <Route
