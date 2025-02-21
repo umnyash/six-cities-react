@@ -1,9 +1,9 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthData, AuthUser, User } from '../types/user';
-import { Offers, PageOffer } from '../types/offers';
+import { Offers, CardOffer, PageOffer } from '../types/offers';
 import { Reviews, Review, ReviewContent } from '../types/reviews';
-import { APIRoute, NameSpace } from '../const';
+import { APIRoute, NameSpace, FavoriteStatus } from '../const';
 import { saveToken, dropToken } from '../services/token';
 
 type ThunkAPI = {
@@ -65,6 +65,22 @@ export const fetchFavorites = createAsyncThunk<Offers, undefined, ThunkAPI>(
   `${NameSpace.Favorites}/fetch`,
   async (_arg, { extra: api }) => {
     const { data } = await api.get<Offers>(APIRoute.Favorites);
+    return data;
+  }
+);
+
+export const changeFavoriteStatus = createAsyncThunk<
+  CardOffer,
+  {
+    offerId: string;
+    status: FavoriteStatus;
+  },
+  ThunkAPI
+>(
+  `${NameSpace.Favorites}/changeStatus`,
+  async ({ offerId, status }, { extra: api }) => {
+    const apiRoute = `${APIRoute.Favorites}/${offerId}/${status}`;
+    const { data } = await api.post<CardOffer>(apiRoute);
     return data;
   }
 );

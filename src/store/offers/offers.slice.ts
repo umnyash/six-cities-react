@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, LoadingStatus } from '../../const';
 import { OffersState } from '../../types/state';
-import { fetchAllOffers, fetchNearbyOffers, fetchOffer } from '../async-actions';
+import { CardOffer } from '../../types/offers';
+import { fetchAllOffers, fetchNearbyOffers, fetchOffer, changeFavoriteStatus } from '../async-actions';
 
 const initialState: OffersState = {
   allOffers: [],
@@ -9,6 +10,26 @@ const initialState: OffersState = {
   nearbyOffers: [],
   offer: null,
   offerLoadingStatus: LoadingStatus.None,
+};
+
+const updateFavoriteStatus = (state: OffersState, offer: CardOffer) => {
+  const foundOffer = state.allOffers.find((item) => item.id === offer.id);
+
+  if (foundOffer) {
+    foundOffer.isFavorite = offer.isFavorite;
+  } else {
+    throw new Error(`Offer with id ${offer.id} not found in all offers.`);
+  }
+
+  const nearbyFoundOffer = state.nearbyOffers.find((item) => item.id === offer.id);
+
+  if (nearbyFoundOffer) {
+    nearbyFoundOffer.isFavorite = offer.isFavorite;
+  }
+
+  if (state.offer?.id === offer.id) {
+    state.offer.isFavorite = offer.isFavorite;
+  }
 };
 
 export const offers = createSlice({
@@ -37,6 +58,9 @@ export const offers = createSlice({
       })
       .addCase(fetchOffer.rejected, (state) => {
         state.offerLoadingStatus = LoadingStatus.Error;
+      })
+      .addCase(changeFavoriteStatus.fulfilled, (state, action) => {
+        updateFavoriteStatus(state, action.payload);
       });
   },
 });

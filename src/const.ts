@@ -68,3 +68,8 @@ export enum NameSpace {
   Reviews = 'REVIEWS',
   Catalog = 'CATALOG',
 }
+
+export enum FavoriteStatus {
+  Off = 0,
+  On = 1,
+}

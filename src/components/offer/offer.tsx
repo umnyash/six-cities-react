@@ -52,7 +52,7 @@ function Offer({ offer, nearbyOffers, reviews }: OfferProps): JSX.Element {
           )}
           <div className="offer__name-wrapper">
             <h1 className="offer__name">{title}</h1>
-            <FavoriteButton className="offer__bookmark-button" isActive={isFavorite} />
+            <FavoriteButton offerId={id} className="offer__bookmark-button" isActive={isFavorite} />
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">
