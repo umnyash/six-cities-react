@@ -1,0 +1,21 @@
+.pending {
+  animation: button-pending 2s linear infinite;
+}
+
+@keyframes button-pending {
+  25% {
+    transform: scale(0.75);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  75% {
+    transform: scale(0.75);
+  }
+
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}

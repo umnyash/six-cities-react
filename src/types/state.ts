@@ -19,6 +19,7 @@ export type OffersState = {
 
 export type FavoritesState = {
   favorites: Offers;
+  changingOffersIds: string[];
 }
 
 export type ReviewsState = {

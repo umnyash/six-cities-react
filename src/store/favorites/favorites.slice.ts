@@ -5,7 +5,8 @@ import { Offers, CardOffer } from '../../types/offers';
 import { fetchFavorites, changeFavoriteStatus } from '../async-actions';
 
 const initialState: FavoritesState = {
-  favorites: []
+  favorites: [],
+  changingOffersIds: [],
 };
 
 const removeFavorite = (favorites: Offers, offerId: string) => {
@@ -26,6 +27,10 @@ const updateFavorites = (state: FavoritesState, offer: CardOffer) => {
   }
 };
 
+const removeChangingOfferId = (state: FavoritesState, offerId: string) => {
+  state.changingOffersIds = state.changingOffersIds.filter((item) => item !== offerId);
+};
+
 export const favorites = createSlice({
   name: NameSpace.Favorites,
   initialState,
@@ -35,8 +40,15 @@ export const favorites = createSlice({
       .addCase(fetchFavorites.fulfilled, (state, action) => {
         state.favorites = action.payload;
       })
+      .addCase(changeFavoriteStatus.pending, (state, action) => {
+        state.changingOffersIds.push(action.meta.arg.offerId);
+      })
       .addCase(changeFavoriteStatus.fulfilled, (state, action) => {
         updateFavorites(state, action.payload);
+        removeChangingOfferId(state, action.meta.arg.offerId);
+      })
+      .addCase(changeFavoriteStatus.rejected, (state, action) => {
+        removeChangingOfferId(state, action.meta.arg.offerId);
       });
   },
 });
