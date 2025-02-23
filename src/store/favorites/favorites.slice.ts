@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
+import { NameSpace, LoadingStatus } from '../../const';
 import { FavoritesState } from '../../types/state';
 import { Offers, CardOffer } from '../../types/offers';
 import { fetchFavorites, changeFavoriteStatus } from '../async-actions';
 
 const initialState: FavoritesState = {
   favorites: [],
+  loadingStatus: LoadingStatus.None,
   changingOffersIds: [],
 };
 
@@ -37,8 +38,12 @@ export const favorites = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
+      .addCase(fetchFavorites.pending, (state) => {
+        state.loadingStatus = LoadingStatus.Pending;
+      })
       .addCase(fetchFavorites.fulfilled, (state, action) => {
         state.favorites = action.payload;
+        state.loadingStatus = LoadingStatus.Success;
       })
       .addCase(changeFavoriteStatus.pending, (state, action) => {
         state.changingOffersIds.push(action.meta.arg.offerId);
