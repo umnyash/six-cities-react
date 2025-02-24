@@ -47,6 +47,9 @@ export const offers = createSlice({
         state.allOffers = action.payload;
         state.allOffersLoadingStatus = LoadingStatus.Success;
       })
+      .addCase(fetchAllOffers.rejected, (state) => {
+        state.allOffersLoadingStatus = LoadingStatus.Error;
+      })
       .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
       })

@@ -13,6 +13,7 @@ import { getCity, getSorting } from '../../store/catalog/catalog.selectors';
 import { OffersListVariant } from '../../types/offers-list-variant';
 import { Offers } from '../../types/offers';
 import { fetchAllOffers } from '../../store/async-actions';
+import Button from '../../components/button';
 
 function sortOffers(offers: Offers, option: SortingOption) {
   switch (option) {
@@ -31,7 +32,7 @@ function MainPage(): JSX.Element {
   const [activeCardId, setActiveCardId] = useState('');
   const dispatch = useAppDispatch();
 
-  const isOffersDataLoading = useAppSelector(getAllOffersLoadingStatus) === LoadingStatus.Pending;
+  const offersLoadingStatus = useAppSelector(getAllOffersLoadingStatus);
   const offers = useAppSelector(getAllOffers);
   const activeCity = useAppSelector(getCity);
   const sortingOption = useAppSelector(getSorting);
@@ -42,6 +43,10 @@ function MainPage(): JSX.Element {
   useEffect(() => {
     dispatch(fetchAllOffers());
   }, [dispatch]);
+
+  const handleLoadingButtonClick = () => {
+    dispatch(fetchAllOffers());
+  };
 
   const mainClassName = clsx(
     'page__main page__main--index',
@@ -63,9 +68,24 @@ function MainPage(): JSX.Element {
       </div>
       <div className="cities">
         <div className={containerClassName}>
-          {isOffersDataLoading && <Spinner />}
+          {offersLoadingStatus === LoadingStatus.Pending && <Spinner />}
 
-          {!isOffersDataLoading && !filteredOffersCount && (
+          {offersLoadingStatus === LoadingStatus.Error && (
+            <section className="cities__no-places">
+              <div className="cities__status-wrapper tabs__content">
+                <b className="cities__status">Something went wrong</b>
+                <p className="cities__status-description">We couldn&apos;t load the offers. Please try again later.</p>
+                <Button
+                  style={{ marginTop: '20px', minWidth: '200px' }}
+                  onClick={handleLoadingButtonClick}
+                >
+                  Try again
+                </Button>
+              </div>
+            </section>
+          )}
+
+          {offersLoadingStatus === LoadingStatus.Success && !filteredOffersCount && (
             <section className="cities__no-places">
               <div className="cities__status-wrapper tabs__content">
                 <b className="cities__status">No places to stay available</b>
@@ -74,7 +94,7 @@ function MainPage(): JSX.Element {
             </section>
           )}
 
-          {!isOffersDataLoading && filteredOffersCount && (
+          {offersLoadingStatus === LoadingStatus.Success && filteredOffersCount && (
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
@@ -84,7 +104,7 @@ function MainPage(): JSX.Element {
           )}
 
           <div className="cities__right-section">
-            {!isOffersDataLoading && filteredOffersCount && (
+            {offersLoadingStatus === LoadingStatus.Success && filteredOffersCount && (
               <Map
                 className="cities__map"
                 location={filteredOffers[0].city.location}
