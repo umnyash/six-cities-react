@@ -1,6 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { loginUser } from '../../store/async-actions';
+import Button from '../../components/button';
+import { ButtonType } from '../../types/button';
 
 function LoginForm(): JSX.Element {
   const [formData, setFormData] = useState({
@@ -50,7 +52,7 @@ function LoginForm(): JSX.Element {
           title="Пароль должен состоять минимум из одной буквы и цифры."
         />
       </div>
-      <button className="login__submit form__submit button" type="submit">Sign in</button>
+      <Button className="login__submit" type={ButtonType.Submit}>Sign in</Button>
     </form>
   );
 }

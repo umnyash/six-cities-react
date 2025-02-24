@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import Button from '../../components/button';
+import { ButtonType } from '../../types/button';
 
 function NotFoundPage(): JSX.Element {
   return (
@@ -7,7 +8,7 @@ function NotFoundPage(): JSX.Element {
       <div className="page__favorites-container container">
         <section className="favorites" style={{ padding: '100px 20px', textAlign: 'center' }}>
           <h1 className="favorites__title">404 Not Found</h1>
-          <Link className="form__submit button" to={AppRoute.Root}>Go to Homepage</Link>
+          <Button type={ButtonType.Route} to={AppRoute.Root}>Go to Homepage</Button>
         </section>
       </div>
     </main>
