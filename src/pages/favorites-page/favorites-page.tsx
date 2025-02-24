@@ -24,7 +24,7 @@ function FavoritesPage(): JSX.Element {
   return (
     <main className={mainClassName}>
       <div className="page__favorites-container container">
-        <Favorites offers={favorites} />
+        <Favorites offers={favorites} hasError={loadingStatus === LoadingStatus.Error} />
       </div>
     </main>
   );

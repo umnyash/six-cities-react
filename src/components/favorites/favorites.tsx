@@ -1,13 +1,22 @@
 import FavoritesList from '../favorites-list';
 import { Offers } from '../../types/offers';
 import clsx from 'clsx';
+import { fetchFavorites } from '../../store/async-actions';
+import useAppDispatch from '../../hooks/use-app-dispatch';
+import Button from '../button';
 
 type FavoritesProps = {
   offers: Offers;
+  hasError?: boolean;
 }
 
-function Favorites({ offers }: FavoritesProps): JSX.Element {
+function Favorites({ offers, hasError }: FavoritesProps): JSX.Element {
   const isEmpty = !offers.length;
+  const dispatch = useAppDispatch();
+
+  const handleLoadingButtonClick = () => {
+    dispatch(fetchFavorites());
+  };
 
   const sectionClassName = clsx(
     'favorites',
@@ -16,14 +25,30 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
 
   return (
     <section className={sectionClassName}>
-      {!isEmpty && (
+      {hasError && (
+        <>
+          <h1 className="visually-hidden">Favorites</h1>
+          <div className="favorites__status-wrapper" style={{ backgroundImage: 'none' }}>
+            <b className="favorites__status">Something went wrong.</b>
+            <p className="favorites__status-description" style={{ padding: 0 }}>We couldn&apos;t load the offers. Please try again later.</p>
+            <Button
+              style={{ marginTop: '20px', minWidth: '200px' }}
+              onClick={handleLoadingButtonClick}
+            >
+              Try again
+            </Button>
+          </div>
+        </>
+      )}
+
+      {!hasError && !isEmpty && (
         <>
           <h1 className="favorites__title">Saved listing</h1>
           <FavoritesList offers={offers} />
         </>
       )}
 
-      {isEmpty && (
+      {!hasError && isEmpty && (
         <>
           <h1 className="visually-hidden">Favorites (empty)</h1>
           <div className="favorites__status-wrapper">

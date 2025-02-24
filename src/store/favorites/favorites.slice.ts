@@ -45,6 +45,9 @@ export const favorites = createSlice({
         state.favorites = action.payload;
         state.loadingStatus = LoadingStatus.Success;
       })
+      .addCase(fetchFavorites.rejected, (state) => {
+        state.loadingStatus = LoadingStatus.Error;
+      })
       .addCase(changeFavoriteStatus.pending, (state, action) => {
         state.changingOffersIds.push(action.meta.arg.offerId);
       })
