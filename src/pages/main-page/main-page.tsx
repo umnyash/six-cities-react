@@ -1,16 +1,18 @@
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CitiesList from '../../components/cities-list';
 import Sorting from '../../components/sorting';
 import Map from '../../components/map';
 import OffersList from '../../components/offers-list';
 import Spinner from '../../components/spinner';
 import { LoadingStatus, SortingOption } from '../../const';
+import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import { getAllOffers, getAllOffersLoadingStatus } from '../../store/offers/offers.selectors';
 import { getCity, getSorting } from '../../store/catalog/catalog.selectors';
 import { OffersListVariant } from '../../types/offers-list-variant';
 import { Offers } from '../../types/offers';
+import { fetchAllOffers } from '../../store/async-actions';
 
 function sortOffers(offers: Offers, option: SortingOption) {
   switch (option) {
@@ -27,6 +29,7 @@ function sortOffers(offers: Offers, option: SortingOption) {
 
 function MainPage(): JSX.Element {
   const [activeCardId, setActiveCardId] = useState('');
+  const dispatch = useAppDispatch();
 
   const isOffersDataLoading = useAppSelector(getAllOffersLoadingStatus) === LoadingStatus.Pending;
   const offers = useAppSelector(getAllOffers);
@@ -35,6 +38,10 @@ function MainPage(): JSX.Element {
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const filteredOffersCount = filteredOffers.length;
   const filteredAndSortedOffers = sortOffers(filteredOffers, sortingOption);
+
+  useEffect(() => {
+    dispatch(fetchAllOffers());
+  }, [dispatch]);
 
   const mainClassName = clsx(
     'page__main page__main--index',

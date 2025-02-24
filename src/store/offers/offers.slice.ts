@@ -13,12 +13,14 @@ const initialState: OffersState = {
 };
 
 const updateFavoriteStatus = (state: OffersState, offer: CardOffer) => {
-  const foundOffer = state.allOffers.find((item) => item.id === offer.id);
+  if (state.allOffersLoadingStatus === LoadingStatus.Success) {
+    const foundOffer = state.allOffers.find((item) => item.id === offer.id);
 
-  if (foundOffer) {
-    foundOffer.isFavorite = offer.isFavorite;
-  } else {
-    throw new Error(`Offer with id ${offer.id} not found in all offers.`);
+    if (foundOffer) {
+      foundOffer.isFavorite = offer.isFavorite;
+    } else {
+      throw new Error(`Offer with id ${offer.id} not found in all offers.`);
+    }
   }
 
   const nearbyFoundOffer = state.nearbyOffers.find((item) => item.id === offer.id);
