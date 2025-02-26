@@ -1,14 +1,13 @@
 import { useState } from 'react';
+import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { clsx } from 'clsx';
 import { SortingOption } from '../../const';
 import { setSorting } from '../../store/offers/offers.slice';
+import { getSorting } from '../../store/offers/offers.selectors';
 
-type SortingProps = {
-  selectedOption: SortingOption;
-}
-
-function Sorting({ selectedOption }: SortingProps): JSX.Element {
+function Sorting(): JSX.Element {
+  const selectedOption = useAppSelector(getSorting);
   const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useAppDispatch();

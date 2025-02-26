@@ -8,7 +8,7 @@ import Spinner from '../../components/spinner';
 import { LoadingStatus } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
-import { getAllOffersLoadingStatus, getCity, getSorting, getAllOffersByCity, getSortedAllOffersByCity } from '../../store/offers/offers.selectors';
+import { getAllOffersLoadingStatus, getCity, getAllOffersByCity, getSortedAllOffersByCity } from '../../store/offers/offers.selectors';
 import { OffersListVariant } from '../../types/offers-list-variant';
 import { fetchAllOffers } from '../../store/async-actions';
 import Button from '../../components/button';
@@ -19,7 +19,6 @@ function MainPage(): JSX.Element {
 
   const offersLoadingStatus = useAppSelector(getAllOffersLoadingStatus);
   const activeCity = useAppSelector(getCity);
-  const sortingOption = useAppSelector(getSorting);
   const filteredOffers = useAppSelector(getAllOffersByCity);
   const filteredOffersCount = filteredOffers.length;
   const filteredAndSortedOffers = useAppSelector(getSortedAllOffersByCity);
@@ -82,7 +81,7 @@ function MainPage(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
-              <Sorting selectedOption={sortingOption} />
+              <Sorting />
               <OffersList offers={filteredAndSortedOffers} variant={OffersListVariant.Rows} setActiveCardId={setActiveCardId} />
             </section>
           )}
