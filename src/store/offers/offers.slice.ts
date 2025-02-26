@@ -1,12 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace, LoadingStatus } from '../../const';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NameSpace, LoadingStatus, CITIES, SortingOption } from '../../const';
 import { OffersState } from '../../types/state';
-import { CardOffer } from '../../types/offers';
+import { CardOffer, CityName } from '../../types/offers';
 import { fetchAllOffers, fetchNearbyOffers, fetchOffer, changeFavoriteStatus } from '../async-actions';
 
 const initialState: OffersState = {
   allOffers: [],
   allOffersLoadingStatus: LoadingStatus.None,
+  city: CITIES[0],
+  sorting: SortingOption.Default,
   nearbyOffers: [],
   offer: null,
   offerLoadingStatus: LoadingStatus.None,
@@ -37,7 +39,14 @@ const updateFavoriteStatus = (state: OffersState, offer: CardOffer) => {
 export const offers = createSlice({
   name: NameSpace.Offers,
   initialState,
-  reducers: {},
+  reducers: {
+    setCity: (state, action: PayloadAction<CityName>) => {
+      state.city = action.payload;
+    },
+    setSorting: (state, action: PayloadAction<SortingOption>) => {
+      state.sorting = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchAllOffers.pending, (state) => {
@@ -69,3 +78,5 @@ export const offers = createSlice({
       });
   },
 });
+
+export const { setCity, setSorting } = offers.actions;

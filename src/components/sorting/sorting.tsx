@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { clsx } from 'clsx';
 import { SortingOption } from '../../const';
-import { setSorting } from '../../store/catalog/catalog.slice';
+import { setSorting } from '../../store/offers/offers.slice';
 
 type SortingProps = {
   selectedOption: SortingOption;

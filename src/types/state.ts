@@ -12,6 +12,8 @@ export type UserState = {
 export type OffersState = {
   allOffers: Offers;
   allOffersLoadingStatus: LoadingStatus;
+  city: CityName;
+  sorting: SortingOption;
   nearbyOffers: Offers;
   offer: PageOffer | null;
   offerLoadingStatus: LoadingStatus;
