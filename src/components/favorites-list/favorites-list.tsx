@@ -1,13 +1,15 @@
 import { Offers } from '../../types/offers';
 import { OffersListVariant } from '../../types/offers-list-variant';
 import OffersList from '../offers-list';
+import { groupBy } from '../../util';
 
 type FavoritesListProps = {
   offers: Offers;
 }
 
 function FavoritesList({ offers }: FavoritesListProps): JSX.Element {
-  const cities = Array.from(new Set(offers.map((offer) => offer.city.name)));
+  const offersGroupedByCity = groupBy(offers, (offer) => offer.city.name);
+  const cities = Object.keys(offersGroupedByCity) as Array<keyof typeof offersGroupedByCity>;
 
   return (
     <ul className="favorites__list">
@@ -21,7 +23,7 @@ function FavoritesList({ offers }: FavoritesListProps): JSX.Element {
             </div>
           </div>
           <OffersList
-            offers={offers.filter((offer) => offer.city.name === city)}
+            offers={offersGroupedByCity[city] as Offers}
             variant={OffersListVariant.Column}
           />
         </li>
