@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, LoadingStatus } from '../../const';
 import { FavoritesState } from '../../types/state';
-import { Offers, CardOffer } from '../../types/offers';
+import { CardOffer } from '../../types/offers';
 import { fetchFavorites, changeFavoriteStatus } from '../async-actions';
+import { removeArrayItem } from '../../util';
 
 const initialState: FavoritesState = {
   favorites: [],
@@ -10,26 +11,12 @@ const initialState: FavoritesState = {
   changingOffersIds: [],
 };
 
-const removeFavorite = (favorites: Offers, offerId: string) => {
-  const removedOfferIndex = favorites.findIndex((item) => item.id === offerId);
-
-  if (removedOfferIndex === -1) {
-    throw new Error(`Offer with id ${offerId} not found in favorites.`);
-  }
-
-  favorites.splice(removedOfferIndex, 1);
-};
-
 const updateFavorites = (state: FavoritesState, offer: CardOffer) => {
   if (offer.isFavorite) {
     state.favorites.push(offer);
   } else {
-    removeFavorite(state.favorites, offer.id);
+    removeArrayItem(state.favorites, { id: offer.id });
   }
-};
-
-const removeChangingOfferId = (state: FavoritesState, offerId: string) => {
-  state.changingOffersIds = state.changingOffersIds.filter((item) => item !== offerId);
 };
 
 export const favorites = createSlice({
@@ -53,10 +40,10 @@ export const favorites = createSlice({
       })
       .addCase(changeFavoriteStatus.fulfilled, (state, action) => {
         updateFavorites(state, action.payload);
-        removeChangingOfferId(state, action.meta.arg.offerId);
+        removeArrayItem(state.changingOffersIds, action.meta.arg.offerId);
       })
       .addCase(changeFavoriteStatus.rejected, (state, action) => {
-        removeChangingOfferId(state, action.meta.arg.offerId);
+        removeArrayItem(state.changingOffersIds, action.meta.arg.offerId);
       });
   },
 });
