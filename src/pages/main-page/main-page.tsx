@@ -5,39 +5,24 @@ import Sorting from '../../components/sorting';
 import Map from '../../components/map';
 import OffersList from '../../components/offers-list';
 import Spinner from '../../components/spinner';
-import { LoadingStatus, SortingOption } from '../../const';
+import { LoadingStatus } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
-import { getAllOffers, getAllOffersLoadingStatus, getCity, getSorting } from '../../store/offers/offers.selectors';
+import { getAllOffersLoadingStatus, getCity, getSorting, getAllOffersByCity, getSortedAllOffersByCity } from '../../store/offers/offers.selectors';
 import { OffersListVariant } from '../../types/offers-list-variant';
-import { Offers } from '../../types/offers';
 import { fetchAllOffers } from '../../store/async-actions';
 import Button from '../../components/button';
-
-function sortOffers(offers: Offers, option: SortingOption) {
-  switch (option) {
-    case SortingOption.PriceAsc:
-      return offers.slice().sort((a, b) => a.price - b.price);
-    case SortingOption.PriceDesc:
-      return offers.slice().sort((a, b) => b.price - a.price);
-    case SortingOption.RatingDesc:
-      return offers.slice().sort((a, b) => b.rating - a.rating);
-    default:
-      return offers;
-  }
-}
 
 function MainPage(): JSX.Element {
   const [activeCardId, setActiveCardId] = useState('');
   const dispatch = useAppDispatch();
 
   const offersLoadingStatus = useAppSelector(getAllOffersLoadingStatus);
-  const offers = useAppSelector(getAllOffers);
   const activeCity = useAppSelector(getCity);
   const sortingOption = useAppSelector(getSorting);
-  const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
+  const filteredOffers = useAppSelector(getAllOffersByCity);
   const filteredOffersCount = filteredOffers.length;
-  const filteredAndSortedOffers = sortOffers(filteredOffers, sortingOption);
+  const filteredAndSortedOffers = useAppSelector(getSortedAllOffersByCity);
 
   useEffect(() => {
     dispatch(fetchAllOffers());
