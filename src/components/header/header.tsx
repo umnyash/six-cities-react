@@ -1,11 +1,12 @@
 import Logo from '../logo';
 import UserNavigation from '../user-navigation';
+import { memo } from 'react';
 
 type HeaderProps = {
   withUserNavigation?: boolean;
 }
 
-function Header({ withUserNavigation }: HeaderProps): JSX.Element {
+function HeaderComponent({ withUserNavigation }: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -24,5 +25,7 @@ function Header({ withUserNavigation }: HeaderProps): JSX.Element {
     </header>
   );
 }
+
+const Header = memo(HeaderComponent);
 
 export default Header;

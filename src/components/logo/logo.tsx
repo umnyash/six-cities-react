@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { memo } from 'react';
 
-function Logo(): JSX.Element {
+function LogoComponent(): JSX.Element {
   const pathName = useLocation().pathname;
   const isActive = pathName === AppRoute.Root as string;
 
@@ -19,5 +20,7 @@ function Logo(): JSX.Element {
     </Link>
   );
 }
+
+const Logo = memo(LogoComponent);
 
 export default Logo;
