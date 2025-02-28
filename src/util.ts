@@ -2,7 +2,7 @@ export const roundOffRating = (rating: number) => Math.round(rating);
 
 export const capitalizeFirstLetter = (string: string) => `${string[0].toUpperCase()}${string.slice(1)}`;
 
-export const getRandomInt = (from: number, to: number) => {
+export const normalizeIntRange = (from: number, to: number) => {
   const min = Math.ceil(Math.min(from, to));
   const max = Math.floor(Math.max(from, to));
 
@@ -10,7 +10,32 @@ export const getRandomInt = (from: number, to: number) => {
     throw new Error(`There are no integers in the provided range from ${from} to ${to}.`);
   }
 
+  return [min, max];
+};
+
+export const getRandomInt = (from: number, to: number) => {
+  const [min, max] = normalizeIntRange(from, to);
+
   return Math.floor(Math.random() * (max + 1 - min)) + min;
+};
+
+export const getUniqueRandomInts = (range: { from: number; to: number }, count: number) => {
+  const [min, max] = normalizeIntRange(range.from, range.to);
+  const rangeLength = max - min + 1;
+
+  if (rangeLength < count) {
+    throw new Error(
+      `The range from ${range.from} to ${range.to} contains only ${rangeLength} integers, which is less than the ${count} requested.`
+    );
+  }
+
+  const set: Set<number> = new Set();
+
+  while (set.size < count) {
+    set.add(getRandomInt(min, max));
+  }
+
+  return Array.from(set);
 };
 
 export const getRandomArrayItems = <T>(array: T[], count: number): T[] => {
