@@ -13,6 +13,7 @@ import LoginPage from '../../pages/login-page';
 import FavoritesPage from '../../pages/favorites-page';
 import NotFoundPage from '../../pages/not-found-page';
 import ExclusiveRoute from '../exclusive-route';
+import ScrollToTop from '../scrollToTop';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -28,6 +29,7 @@ function App(): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path={AppRoute.Root} element={<Layout />}>
             <Route
