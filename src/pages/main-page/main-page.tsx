@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import CitiesList from '../../components/cities-list';
 import Sorting from '../../components/sorting';
 import Map from '../../components/map';
@@ -15,6 +15,7 @@ import Button from '../../components/button';
 
 function MainPage(): JSX.Element {
   const [activeCardId, setActiveCardId] = useState('');
+  const offersSectionElementRef = useRef<HTMLElement | null>(null);
   const dispatch = useAppDispatch();
 
   const offersLoadingStatus = useAppSelector(getAllOffersLoadingStatus);
@@ -26,6 +27,12 @@ function MainPage(): JSX.Element {
   useEffect(() => {
     dispatch(fetchAllOffers());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (offersSectionElementRef.current) {
+      offersSectionElementRef.current.scrollTop = 0;
+    }
+  }, [activeCity]);
 
   const handleLoadingButtonClick = () => {
     dispatch(fetchAllOffers());
@@ -78,7 +85,7 @@ function MainPage(): JSX.Element {
           )}
 
           {offersLoadingStatus === LoadingStatus.Success && filteredOffersCount && (
-            <section className="cities__places places">
+            <section className="cities__places places" ref={offersSectionElementRef}>
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
               <Sorting />
