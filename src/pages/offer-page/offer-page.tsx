@@ -3,10 +3,14 @@ import { useParams } from 'react-router-dom';
 import { LoadingStatus, NEARBY_OFFERS_COUNT } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
-import { getNearbyOffers, getOffer, getOfferLoadingStatus } from '../../store/offers/offers.selectors';
+import useArrayRandomIndices from '../../hooks/use-array-random-indices';
 import { getReviews } from '../../store/reviews/reviews.selectors';
 import { fetchOffer, fetchReviews, fetchNearbyOffers } from '../../store/async-actions';
-import { getRandomArrayItems } from '../../util';
+
+import {
+  getNearbyOffers, getNearbyOffersLoadingStatus,
+  getOffer, getOfferLoadingStatus
+} from '../../store/offers/offers.selectors';
 
 import Offers from '../../components/offers';
 import Offer from '../../components/offer';
@@ -28,10 +32,18 @@ function OfferPage(): JSX.Element {
 
   const reviews = useAppSelector(getReviews);
 
-  const nearbyOffers = getRandomArrayItems(
-    useAppSelector(getNearbyOffers),
-    NEARBY_OFFERS_COUNT
+  const nearbyOffers = useAppSelector(getNearbyOffers);
+  const nearbyOffersLoadingStatus = useAppSelector(getNearbyOffersLoadingStatus);
+
+  const randomNearbyOffersIndices = useArrayRandomIndices(
+    nearbyOffers.length,
+    NEARBY_OFFERS_COUNT,
+    nearbyOffersLoadingStatus
   );
+
+  const randomNearbyOffers = nearbyOffers.length
+    ? randomNearbyOffersIndices.map((index) => nearbyOffers[index])
+    : [];
 
   if (offerLoadingStatus === LoadingStatus.Pending) {
     return <LoadingPage />;
@@ -40,9 +52,9 @@ function OfferPage(): JSX.Element {
   if (offerLoadingStatus === LoadingStatus.Success && offer) {
     return (
       <main className="page__main page__main--offer">
-        <Offer offer={offer} nearbyOffers={nearbyOffers} reviews={reviews} />
+        <Offer offer={offer} nearbyOffers={randomNearbyOffers} reviews={reviews} />
         <div className="container">
-          <Offers heading="Other places in the neighbourhood" offers={nearbyOffers} />
+          <Offers heading="Other places in the neighbourhood" offers={randomNearbyOffers} />
         </div>
       </main>
     );

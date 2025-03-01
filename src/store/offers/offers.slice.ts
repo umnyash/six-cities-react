@@ -10,6 +10,7 @@ const initialState: OffersState = {
   city: CITIES[0],
   sorting: SortingOption.Default,
   nearbyOffers: [],
+  nearbyOffersLoadingStatus: LoadingStatus.None,
   offer: null,
   offerLoadingStatus: LoadingStatus.None,
 };
@@ -59,9 +60,16 @@ export const offers = createSlice({
       .addCase(fetchAllOffers.rejected, (state) => {
         state.allOffersLoadingStatus = LoadingStatus.Error;
       })
+
+      .addCase(fetchNearbyOffers.pending, (state) => {
+        state.nearbyOffers = [];
+        state.nearbyOffersLoadingStatus = LoadingStatus.Pending;
+      })
       .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
+        state.nearbyOffersLoadingStatus = LoadingStatus.Success;
       })
+
       .addCase(fetchOffer.pending, (state) => {
         state.offer = null;
         state.offerLoadingStatus = LoadingStatus.Pending;
@@ -73,6 +81,7 @@ export const offers = createSlice({
       .addCase(fetchOffer.rejected, (state) => {
         state.offerLoadingStatus = LoadingStatus.Error;
       })
+
       .addCase(changeFavoriteStatus.fulfilled, (state, action) => {
         updateFavoriteStatus(state, action.payload);
       });

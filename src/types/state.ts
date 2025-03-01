@@ -15,6 +15,7 @@ export type OffersState = {
   city: CityName;
   sorting: SortingOption;
   nearbyOffers: Offers;
+  nearbyOffersLoadingStatus: LoadingStatus;
   offer: PageOffer | null;
   offerLoadingStatus: LoadingStatus;
 }

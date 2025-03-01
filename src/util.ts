@@ -38,20 +38,6 @@ export const getUniqueRandomInts = (range: { from: number; to: number }, count: 
   return Array.from(set);
 };
 
-export const getRandomArrayItems = <T>(array: T[], count: number): T[] => {
-  if (count >= array.length) {
-    return array;
-  }
-
-  const set: Set<T> = new Set();
-
-  while (set.size < count) {
-    set.add(array[getRandomInt(0, array.length - 1)]);
-  }
-
-  return Array.from(set);
-};
-
 export const removeArrayItem = <T>(array: Array<T>, removedItem: T | Partial<T>) => {
   let removedItemIndex: number;
 

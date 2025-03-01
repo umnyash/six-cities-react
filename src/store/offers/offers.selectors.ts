@@ -39,6 +39,7 @@ export const getSortedAllOffersByCity = createSelector(
 );
 
 export const getNearbyOffers = (state: State) => state[sliceName].nearbyOffers;
+export const getNearbyOffersLoadingStatus = (state: State) => state[sliceName].nearbyOffersLoadingStatus;
 
 export const getOffer = (state: State) => state[sliceName].offer;
 export const getOfferLoadingStatus = (state: State) => state[sliceName].offerLoadingStatus;
