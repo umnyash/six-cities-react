@@ -1,9 +1,7 @@
 import useAppSelector from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../const';
-import { Reviews as ReviewsData } from '../../types/reviews';
-import { REVIEWS_MAX_COUNT } from '../../const';
 import { getAuthorizationStatus } from '../../store/user/user.selectors';
-import { getReviews } from '../../store/reviews/reviews.selectors';
+import { getReviews, getLatestReviews } from '../../store/reviews/reviews.selectors';
 import ReviewsList from '../reviews-list';
 import ReviewForm from '../review-form';
 
@@ -11,16 +9,10 @@ type ReviewsProps = {
   offerId: string;
 }
 
-function getLatestReviews(reviews: ReviewsData) {
-  return reviews
-    .toSorted((a, b) => (a.date < b.date) ? 1 : -1)
-    .slice(0, REVIEWS_MAX_COUNT);
-}
-
 function Reviews({ offerId }: ReviewsProps): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const reviews = useAppSelector(getReviews);
-  const latestReviews = getLatestReviews(reviews);
+  const latestReviews = useAppSelector(getLatestReviews);
 
   return (
     <section className="offer__reviews reviews">
