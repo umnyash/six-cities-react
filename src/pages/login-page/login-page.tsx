@@ -1,3 +1,5 @@
+import { CITIES } from '../../const';
+import { getRandomArrayItem } from '../../util';
 import LoginForm from '../../components/login-form';
 
 function LoginPage(): JSX.Element {
@@ -11,7 +13,7 @@ function LoginPage(): JSX.Element {
         <section className="locations locations--login locations--current">
           <div className="locations__item">
             <a className="locations__item-link" href="#">
-              <span>Amsterdam</span>
+              <span>{getRandomArrayItem(CITIES)}</span>
             </a>
           </div>
         </section>
