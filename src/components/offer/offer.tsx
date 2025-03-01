@@ -1,5 +1,4 @@
 import { PageOffer, Offers } from '../../types/offers';
-import { Reviews as ReviewsData } from '../../types/reviews';
 import Reviews from '../reviews';
 import Map from '../map';
 import { roundOffRating, capitalizeFirstLetter } from '../../util';
@@ -8,10 +7,9 @@ import FavoriteButton from '../favorite-button';
 type OfferProps = {
   offer: PageOffer;
   nearbyOffers: Offers;
-  reviews: ReviewsData;
 }
 
-function Offer({ offer, nearbyOffers, reviews }: OfferProps): JSX.Element {
+function Offer({ offer, nearbyOffers }: OfferProps): JSX.Element {
   const {
     id,
     title,
@@ -100,7 +98,7 @@ function Offer({ offer, nearbyOffers, reviews }: OfferProps): JSX.Element {
               <p className="offer__text">{description}</p>
             </div>
           </div>
-          <Reviews offerId={id} reviews={reviews} />
+          <Reviews offerId={id} />
         </div>
       </div>
       <Map

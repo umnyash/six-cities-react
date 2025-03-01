@@ -4,7 +4,6 @@ import { LoadingStatus, NEARBY_OFFERS_COUNT } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import useArrayRandomIndices from '../../hooks/use-array-random-indices';
-import { getReviews } from '../../store/reviews/reviews.selectors';
 import { fetchOffer, fetchReviews, fetchNearbyOffers } from '../../store/async-actions';
 
 import {
@@ -30,8 +29,6 @@ function OfferPage(): JSX.Element {
     dispatch(fetchNearbyOffers(offerId));
   }, [offerId, dispatch]);
 
-  const reviews = useAppSelector(getReviews);
-
   const nearbyOffers = useAppSelector(getNearbyOffers);
   const nearbyOffersLoadingStatus = useAppSelector(getNearbyOffersLoadingStatus);
 
@@ -52,7 +49,7 @@ function OfferPage(): JSX.Element {
   if (offerLoadingStatus === LoadingStatus.Success && offer) {
     return (
       <main className="page__main page__main--offer">
-        <Offer offer={offer} nearbyOffers={randomNearbyOffers} reviews={reviews} />
+        <Offer offer={offer} nearbyOffers={randomNearbyOffers} />
         <div className="container">
           <Offers heading="Other places in the neighbourhood" offers={randomNearbyOffers} />
         </div>

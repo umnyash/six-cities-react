@@ -3,12 +3,12 @@ import { AuthorizationStatus } from '../../const';
 import { Reviews as ReviewsData } from '../../types/reviews';
 import { REVIEWS_MAX_COUNT } from '../../const';
 import { getAuthorizationStatus } from '../../store/user/user.selectors';
+import { getReviews } from '../../store/reviews/reviews.selectors';
 import ReviewsList from '../reviews-list';
 import ReviewForm from '../review-form';
 
 type ReviewsProps = {
   offerId: string;
-  reviews: ReviewsData;
 }
 
 function getLatestReviews(reviews: ReviewsData) {
@@ -17,8 +17,9 @@ function getLatestReviews(reviews: ReviewsData) {
     .slice(0, REVIEWS_MAX_COUNT);
 }
 
-function Reviews({ offerId, reviews }: ReviewsProps): JSX.Element {
+function Reviews({ offerId }: ReviewsProps): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const reviews = useAppSelector(getReviews);
   const latestReviews = getLatestReviews(reviews);
 
   return (
