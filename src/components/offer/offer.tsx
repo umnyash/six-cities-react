@@ -3,6 +3,7 @@ import Reviews from '../reviews';
 import Map from '../map';
 import { roundOffRating, capitalizeFirstLetter } from '../../util';
 import FavoriteButton from '../favorite-button';
+import clsx from 'clsx';
 
 type OfferProps = {
   offer: PageOffer;
@@ -29,6 +30,11 @@ function Offer({ offer, nearbyOffers }: OfferProps): JSX.Element {
       isPro
     }
   } = offer;
+
+  const hostAvatarWrapperClassName = clsx(
+    'offer__avatar-wrapper user__avatar-wrapper',
+    isPro && 'offer__avatar-wrapper--pro'
+  );
 
   return (
     <section className="offer">
@@ -88,7 +94,7 @@ function Offer({ offer, nearbyOffers }: OfferProps): JSX.Element {
           <div className="offer__host">
             <h2 className="offer__host-title">Meet the host</h2>
             <div className="offer__host-user user">
-              <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+              <div className={hostAvatarWrapperClassName}>
                 <img className="offer__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar" />
               </div>
               <span className="offer__user-name">{name}</span>
