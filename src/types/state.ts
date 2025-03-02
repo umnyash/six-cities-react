@@ -5,8 +5,9 @@ import { CityName, Offers, PageOffer } from './offers';
 import { Reviews } from './reviews';
 
 export type UserState = {
-  authorizationStatus: AuthorizationStatus;
   user: User | null;
+  authorizationStatus: AuthorizationStatus;
+  loggingInStatus: RequestStatus;
 }
 
 export type OffersState = {

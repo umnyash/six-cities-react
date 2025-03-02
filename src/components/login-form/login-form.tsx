@@ -1,5 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
+import { RequestStatus } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
+import useAppSelector from '../../hooks/use-app-selector';
+import { getLoggingInStatus } from '../../store/user/user.selectors';
 import { loginUser } from '../../store/async-actions';
 import Button from '../../components/button';
 import { ButtonType } from '../../types/button';
@@ -10,6 +13,7 @@ function LoginForm(): JSX.Element {
     password: '',
   });
 
+  const loggingInStatus = useAppSelector(getLoggingInStatus);
   const dispatch = useAppDispatch();
 
   const handleFieldChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -34,6 +38,7 @@ function LoginForm(): JSX.Element {
           value={formData.email}
           placeholder="Email"
           required
+          disabled={loggingInStatus === RequestStatus.Pending}
           onChange={handleFieldChange}
         />
       </div>
@@ -47,12 +52,19 @@ function LoginForm(): JSX.Element {
           value={formData.password}
           placeholder="Password"
           required
+          disabled={loggingInStatus === RequestStatus.Pending}
           onChange={handleFieldChange}
           pattern="(?=.*[a-zA-Z])(?=.*\d).*"
           title="Пароль должен состоять минимум из одной буквы и цифры."
         />
       </div>
-      <Button className="login__submit" type={ButtonType.Submit}>Sign in</Button>
+      <Button
+        className="login__submit"
+        type={ButtonType.Submit}
+        disabled={loggingInStatus === RequestStatus.Pending}
+      >
+        Sign in
+      </Button>
     </form>
   );
 }
