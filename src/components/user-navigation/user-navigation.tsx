@@ -1,6 +1,7 @@
 import { MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, Location } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { LocationState } from '../../types/location';
 import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { getAuthorizationStatus, getUser } from '../../store/user/user.selectors';
@@ -11,6 +12,7 @@ function UserNavigation(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const user = useAppSelector(getUser);
   const favorites = useAppSelector(getFavorites);
+  const location = useLocation() as Location<LocationState>;
 
   const dispatch = useAppDispatch();
 
@@ -31,7 +33,11 @@ function UserNavigation(): JSX.Element {
         )}
 
         {authorizationStatus === AuthorizationStatus.NoAuth && (
-          <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Login}>
+          <Link
+            className="header__nav-link header__nav-link--profile"
+            to={AppRoute.Login}
+            state={{ from: location.pathname }}
+          >
             <div className="header__avatar-wrapper user__avatar-wrapper" />
             <span className="header__login">Sign in</span>
           </Link>
