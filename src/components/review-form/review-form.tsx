@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import useAppDispatch from '../../hooks/use-app-dispatch';
-import { sendReview } from '../../store/async-actions';
+import { submitReview } from '../../store/async-actions';
 
 const RATINGS = ['terribly', 'badly', 'not bad', 'good', 'perfect'];
 const MIN_COMMENT_LENGTH = 50;
@@ -25,7 +25,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(sendReview({ offerId, content: formData }));
+    dispatch(submitReview({ offerId, content: formData }));
     setFormData({ comment: '', rating: 0 });
   };
 

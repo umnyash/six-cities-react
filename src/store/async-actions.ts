@@ -94,7 +94,7 @@ export const fetchReviews = createAsyncThunk<Reviews, string, ThunkAPI>(
   }
 );
 
-export const sendReview = createAsyncThunk<
+export const submitReview = createAsyncThunk<
   Review,
   {
     offerId: string;
@@ -102,7 +102,7 @@ export const sendReview = createAsyncThunk<
   },
   ThunkAPI
 >(
-  `${NameSpace.Reviews}/send`,
+  `${NameSpace.Reviews}/submit`,
   async ({ offerId, content }, { extra: api }) => {
     const apiRoute = `${APIRoute.Reviews}/${offerId}`;
     const { data } = await api.post<Review>(apiRoute, content);
