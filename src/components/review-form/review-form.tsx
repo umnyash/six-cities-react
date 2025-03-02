@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { RequestStatus } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
@@ -30,8 +30,13 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch(submitReview({ offerId, content: formData }));
-    setFormData({ comment: '', rating: 0 });
   };
+
+  useEffect(() => {
+    if (reviewSubmittingStatus === RequestStatus.Success) {
+      setFormData({ comment: '', rating: 0 });
+    }
+  }, [reviewSubmittingStatus]);
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
