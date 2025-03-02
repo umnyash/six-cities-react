@@ -1,5 +1,5 @@
 import { store } from '../store';
-import { LoadingStatus, AuthorizationStatus, SortingOption } from '../const';
+import { RequestStatus, AuthorizationStatus, SortingOption } from '../const';
 import { User } from './user';
 import { CityName, Offers, PageOffer } from './offers';
 import { Reviews } from './reviews';
@@ -11,18 +11,18 @@ export type UserState = {
 
 export type OffersState = {
   allOffers: Offers;
-  allOffersLoadingStatus: LoadingStatus;
+  allOffersLoadingStatus: RequestStatus;
   city: CityName;
   sorting: SortingOption;
   nearbyOffers: Offers;
-  nearbyOffersLoadingStatus: LoadingStatus;
+  nearbyOffersLoadingStatus: RequestStatus;
   offer: PageOffer | null;
-  offerLoadingStatus: LoadingStatus;
+  offerLoadingStatus: RequestStatus;
 }
 
 export type FavoritesState = {
   favorites: Offers;
-  loadingStatus: LoadingStatus;
+  loadingStatus: RequestStatus;
   changingOffersIds: string[];
 }
 

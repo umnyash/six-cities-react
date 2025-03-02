@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { LoadingStatus } from '../../const';
+import { RequestStatus } from '../../const';
 import { getUniqueRandomInts } from '../../util';
 
-function useArrayRandomIndices(arrayLength: number, count: number, loadingStatus: LoadingStatus) {
+function useArrayRandomIndices(arrayLength: number, count: number, loadingStatus: RequestStatus) {
   const [indices, setIndices] = useState<Array<number>>([]);
 
   useEffect(() => {
-    if (loadingStatus === LoadingStatus.Pending) {
+    if (loadingStatus === RequestStatus.Pending) {
       setIndices([]);
-    } else if (loadingStatus === LoadingStatus.Success && arrayLength) {
+    } else if (loadingStatus === RequestStatus.Success && arrayLength) {
       setIndices(
         getUniqueRandomInts({ from: 0, to: arrayLength - 1 }, Math.min(arrayLength, count))
       );

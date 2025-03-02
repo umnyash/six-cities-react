@@ -1,22 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace, LoadingStatus, CITIES, SortingOption } from '../../const';
+import { NameSpace, RequestStatus, CITIES, SortingOption } from '../../const';
 import { OffersState } from '../../types/state';
 import { CardOffer, CityName } from '../../types/offers';
 import { fetchAllOffers, fetchNearbyOffers, fetchOffer, changeFavoriteStatus } from '../async-actions';
 
 const initialState: OffersState = {
   allOffers: [],
-  allOffersLoadingStatus: LoadingStatus.None,
+  allOffersLoadingStatus: RequestStatus.None,
   city: CITIES[0],
   sorting: SortingOption.Default,
   nearbyOffers: [],
-  nearbyOffersLoadingStatus: LoadingStatus.None,
+  nearbyOffersLoadingStatus: RequestStatus.None,
   offer: null,
-  offerLoadingStatus: LoadingStatus.None,
+  offerLoadingStatus: RequestStatus.None,
 };
 
 const updateFavoriteStatus = (state: OffersState, offer: CardOffer) => {
-  if (state.allOffersLoadingStatus === LoadingStatus.Success) {
+  if (state.allOffersLoadingStatus === RequestStatus.Success) {
     const foundOffer = state.allOffers.find((item) => item.id === offer.id);
 
     if (foundOffer) {
@@ -51,35 +51,35 @@ export const offers = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchAllOffers.pending, (state) => {
-        state.allOffersLoadingStatus = LoadingStatus.Pending;
+        state.allOffersLoadingStatus = RequestStatus.Pending;
       })
       .addCase(fetchAllOffers.fulfilled, (state, action) => {
         state.allOffers = action.payload;
-        state.allOffersLoadingStatus = LoadingStatus.Success;
+        state.allOffersLoadingStatus = RequestStatus.Success;
       })
       .addCase(fetchAllOffers.rejected, (state) => {
-        state.allOffersLoadingStatus = LoadingStatus.Error;
+        state.allOffersLoadingStatus = RequestStatus.Error;
       })
 
       .addCase(fetchNearbyOffers.pending, (state) => {
         state.nearbyOffers = [];
-        state.nearbyOffersLoadingStatus = LoadingStatus.Pending;
+        state.nearbyOffersLoadingStatus = RequestStatus.Pending;
       })
       .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
-        state.nearbyOffersLoadingStatus = LoadingStatus.Success;
+        state.nearbyOffersLoadingStatus = RequestStatus.Success;
       })
 
       .addCase(fetchOffer.pending, (state) => {
         state.offer = null;
-        state.offerLoadingStatus = LoadingStatus.Pending;
+        state.offerLoadingStatus = RequestStatus.Pending;
       })
       .addCase(fetchOffer.fulfilled, (state, action) => {
         state.offer = action.payload;
-        state.offerLoadingStatus = LoadingStatus.Success;
+        state.offerLoadingStatus = RequestStatus.Success;
       })
       .addCase(fetchOffer.rejected, (state) => {
-        state.offerLoadingStatus = LoadingStatus.Error;
+        state.offerLoadingStatus = RequestStatus.Error;
       })
 
       .addCase(changeFavoriteStatus.fulfilled, (state, action) => {

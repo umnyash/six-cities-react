@@ -1,4 +1,4 @@
-import { LoadingStatus } from '../../const';
+import { RequestStatus } from '../../const';
 import useAppSelector from '../../hooks/use-app-selector';
 import { getFavorites } from '../../store/favorites/favorites.selectors';
 import Favorites from '../../components/favorites';
@@ -10,7 +10,7 @@ function FavoritesPage(): JSX.Element {
   const favorites = useAppSelector(getFavorites);
   const loadingStatus = useAppSelector(getFavoritesLoadingStatus);
 
-  if (loadingStatus === LoadingStatus.Pending) {
+  if (loadingStatus === RequestStatus.Pending) {
     return <LoadingPage />;
   }
 
@@ -24,7 +24,7 @@ function FavoritesPage(): JSX.Element {
   return (
     <main className={mainClassName}>
       <div className="page__favorites-container container">
-        <Favorites offers={favorites} hasError={loadingStatus === LoadingStatus.Error} />
+        <Favorites offers={favorites} hasError={loadingStatus === RequestStatus.Error} />
       </div>
     </main>
   );

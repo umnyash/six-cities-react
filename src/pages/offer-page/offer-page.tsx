@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { LoadingStatus, NEARBY_OFFERS_COUNT } from '../../const';
+import { RequestStatus, NEARBY_OFFERS_COUNT } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import useArrayRandomIndices from '../../hooks/use-array-random-indices';
@@ -42,11 +42,11 @@ function OfferPage(): JSX.Element {
     ? randomNearbyOffersIndices.map((index) => nearbyOffers[index])
     : [];
 
-  if (offerLoadingStatus === LoadingStatus.Pending) {
+  if (offerLoadingStatus === RequestStatus.Pending) {
     return <LoadingPage />;
   }
 
-  if (offerLoadingStatus === LoadingStatus.Success && offer) {
+  if (offerLoadingStatus === RequestStatus.Success && offer) {
     return (
       <main className="page__main page__main--offer">
         <Offer offer={offer} nearbyOffers={randomNearbyOffers} />

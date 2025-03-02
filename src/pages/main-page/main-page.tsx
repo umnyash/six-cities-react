@@ -5,7 +5,7 @@ import Sorting from '../../components/sorting';
 import Map from '../../components/map';
 import OffersList from '../../components/offers-list';
 import Spinner from '../../components/spinner';
-import { LoadingStatus } from '../../const';
+import { RequestStatus } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import { getAllOffersLoadingStatus, getCity, getAllOffersByCity, getSortedAllOffersByCity } from '../../store/offers/offers.selectors';
@@ -58,9 +58,9 @@ function MainPage(): JSX.Element {
       </div>
       <div className="cities">
         <div className={containerClassName}>
-          {offersLoadingStatus === LoadingStatus.Pending && <Spinner />}
+          {offersLoadingStatus === RequestStatus.Pending && <Spinner />}
 
-          {offersLoadingStatus === LoadingStatus.Error && (
+          {offersLoadingStatus === RequestStatus.Error && (
             <section className="cities__no-places">
               <div className="cities__status-wrapper tabs__content">
                 <b className="cities__status">Something went wrong</b>
@@ -75,7 +75,7 @@ function MainPage(): JSX.Element {
             </section>
           )}
 
-          {offersLoadingStatus === LoadingStatus.Success && !filteredOffersCount && (
+          {offersLoadingStatus === RequestStatus.Success && !filteredOffersCount && (
             <section className="cities__no-places">
               <div className="cities__status-wrapper tabs__content">
                 <b className="cities__status">No places to stay available</b>
@@ -84,7 +84,7 @@ function MainPage(): JSX.Element {
             </section>
           )}
 
-          {offersLoadingStatus === LoadingStatus.Success && filteredOffersCount && (
+          {offersLoadingStatus === RequestStatus.Success && filteredOffersCount && (
             <section className="cities__places places" ref={offersSectionElementRef}>
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
@@ -94,7 +94,7 @@ function MainPage(): JSX.Element {
           )}
 
           <div className="cities__right-section">
-            {offersLoadingStatus === LoadingStatus.Success && filteredOffersCount && (
+            {offersLoadingStatus === RequestStatus.Success && filteredOffersCount && (
               <Map
                 className="cities__map"
                 location={filteredOffers[0].city.location}
