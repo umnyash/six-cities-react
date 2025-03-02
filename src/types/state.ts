@@ -28,6 +28,7 @@ export type FavoritesState = {
 
 export type ReviewsState = {
   reviews: Reviews;
+  reviewSubmittingStatus: RequestStatus;
 }
 
 export type CatalogState = {

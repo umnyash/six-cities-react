@@ -12,3 +12,5 @@ export const getLatestReviews = createSelector(
     .toSorted((a, b) => (a.date < b.date) ? 1 : -1)
     .slice(0, REVIEWS_MAX_COUNT)
 );
+
+export const getReviewSubmittingStatus = (state: State) => state[sliceName].reviewSubmittingStatus;

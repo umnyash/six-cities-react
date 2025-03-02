@@ -1,5 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { RequestStatus } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
+import useAppSelector from '../../hooks/use-app-selector';
+import { getReviewSubmittingStatus } from '../../store/reviews/reviews.selectors';
 import { submitReview } from '../../store/async-actions';
 
 const RATINGS = ['terribly', 'badly', 'not bad', 'good', 'perfect'];
@@ -16,6 +19,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
     rating: 0
   });
 
+  const reviewSubmittingStatus = useAppSelector(getReviewSubmittingStatus);
   const dispatch = useAppDispatch();
 
   const handleFieldChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -46,6 +50,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
                 type="radio"
                 onChange={handleFieldChange}
                 checked={formData.rating === ratingValue}
+                disabled={reviewSubmittingStatus === RequestStatus.Pending}
               />
               <label htmlFor={`stars-${ratingValue}`} className="reviews__rating-label form__rating-label" title={rating}>
                 <svg className="form__star-image" width="37" height="33">
@@ -62,6 +67,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         name="comment"
         value={formData.comment}
         placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={reviewSubmittingStatus === RequestStatus.Pending}
         onChange={handleFieldChange}
       />
       <div className="reviews__button-wrapper">
@@ -81,7 +87,8 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
           disabled={
             !formData.rating ||
             formData.comment.length < MIN_COMMENT_LENGTH ||
-            formData.comment.length > MAX_COMMENT_LENGTH
+            formData.comment.length > MAX_COMMENT_LENGTH ||
+            reviewSubmittingStatus === RequestStatus.Pending
           }
         >
           Submit
