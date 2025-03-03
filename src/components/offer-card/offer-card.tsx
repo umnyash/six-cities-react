@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { AppRoute, APP_ROUTE_PARAM_ID } from '../../const';
@@ -28,7 +29,7 @@ const imageSizes = {
   }
 };
 
-function OfferCard(props: OfferCardProps): JSX.Element {
+function OfferCardComponent(props: OfferCardProps): JSX.Element {
   const {
     offer,
     variant = OfferCardVariant.Default,
@@ -105,5 +106,7 @@ function OfferCard(props: OfferCardProps): JSX.Element {
     </article>
   );
 }
+
+const OfferCard = memo(OfferCardComponent);
 
 export default OfferCard;

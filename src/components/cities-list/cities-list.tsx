@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { setCity } from '../../store/offers/offers.slice';
 import clsx from 'clsx';
@@ -8,7 +9,7 @@ type CitiesListProps = {
   activeCity: CityName;
 };
 
-function CitiesList({ activeCity }: CitiesListProps): JSX.Element {
+function CitiesListComponent({ activeCity }: CitiesListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
@@ -39,5 +40,7 @@ function CitiesList({ activeCity }: CitiesListProps): JSX.Element {
     </ul>
   );
 }
+
+const CitiesList = memo(CitiesListComponent);
 
 export default CitiesList;

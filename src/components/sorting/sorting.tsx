@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { clsx } from 'clsx';
@@ -6,7 +6,7 @@ import { SortingOption } from '../../const';
 import { setSorting } from '../../store/offers/offers.slice';
 import { getSorting } from '../../store/offers/offers.selectors';
 
-function Sorting(): JSX.Element {
+function SortingComponent(): JSX.Element {
   const selectedOption = useAppSelector(getSorting);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -55,5 +55,7 @@ function Sorting(): JSX.Element {
     </form>
   );
 }
+
+const Sorting = memo(SortingComponent);
 
 export default Sorting;
