@@ -4,8 +4,7 @@ import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import { getLoggingInStatus } from '../../store/user/user.selectors';
 import { loginUser } from '../../store/async-actions';
-import Button from '../../components/button';
-import { ButtonType } from '../../types/button';
+import Button, { ButtonType } from '../../components/button';
 
 function LoginForm(): JSX.Element {
   const [formData, setFormData] = useState({

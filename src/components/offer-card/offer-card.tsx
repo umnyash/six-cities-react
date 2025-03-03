@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { AppRoute, APP_ROUTE_PARAM_ID } from '../../const';
 import { CardOffer } from '../../types/offers';
-import { OfferCardVariant } from '../../types/offer-card-variant';
+import { OfferCardVariant } from './const';
 import { roundOffRating } from '../../util';
 import FavoriteButton from '../favorite-button';
 

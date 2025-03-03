@@ -1,6 +1,5 @@
 import { Offers } from '../../types/offers';
-import { OffersListVariant } from '../../types/offers-list-variant';
-import OffersList from '../offers-list';
+import OffersList, { OffersListVariant } from '../offers-list';
 import { groupBy } from '../../util';
 
 type FavoritesListProps = {

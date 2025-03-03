@@ -3,13 +3,12 @@ import { useState, useEffect, useRef } from 'react';
 import CitiesList from '../../components/cities-list';
 import Sorting from '../../components/sorting';
 import Map from '../../components/map';
-import OffersList from '../../components/offers-list';
+import OffersList, { OffersListVariant } from '../../components/offers-list';
 import Spinner from '../../components/spinner';
 import { RequestStatus } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import { getAllOffersLoadingStatus, getCity, getAllOffersByCity, getSortedAllOffersByCity } from '../../store/offers/offers.selectors';
-import { OffersListVariant } from '../../types/offers-list-variant';
 import { fetchAllOffers } from '../../store/async-actions';
 import Button from '../../components/button';
 

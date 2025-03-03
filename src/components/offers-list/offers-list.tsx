@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 import { Offers } from '../../types/offers';
-import OfferCard from '../offer-card';
-import { OfferCardVariant } from '../../types/offer-card-variant';
-import { OffersListVariant } from '../../types/offers-list-variant';
+import OfferCard, { OfferCardVariant } from '../offer-card';
+import { OffersListVariant } from './const';
 
 type OffersListProps = {
   offers: Offers;

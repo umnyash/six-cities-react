@@ -1,6 +1,5 @@
 import { AppRoute } from '../../const';
-import Button from '../../components/button';
-import { ButtonType } from '../../types/button';
+import Button, { ButtonType } from '../../components/button';
 
 function NotFoundPage(): JSX.Element {
   return (
