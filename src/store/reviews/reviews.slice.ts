@@ -25,7 +25,7 @@ export const reviews = createSlice({
         state.reviewSubmittingStatus = RequestStatus.Pending;
       })
       .addCase(submitReview.fulfilled, (state, action) => {
-        state.reviews = [action.payload, ...state.reviews];
+        state.reviews.push(action.payload);
         state.reviewSubmittingStatus = RequestStatus.Success;
       })
       .addCase(submitReview.rejected, (state) => {
