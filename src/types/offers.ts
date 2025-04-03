@@ -19,7 +19,7 @@ type City = {
   location: Location;
 }
 
-type BaseOffer = {
+export type BaseOffer = {
   id: string;
   title: string;
   type: HousingType;
