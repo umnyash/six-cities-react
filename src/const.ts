@@ -67,7 +67,6 @@ export enum NameSpace {
   Offers = 'OFFERS',
   Favorites = 'FAVORITES',
   Reviews = 'REVIEWS',
-  Catalog = 'CATALOG',
 }
 
 export enum FavoriteStatus {
