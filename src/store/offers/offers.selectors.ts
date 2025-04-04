@@ -4,12 +4,13 @@ import { NameSpace, SortingOption } from '../../const';
 import { groupBy } from '../../util';
 
 const sliceName = NameSpace.Offers;
+type StateSlice = Pick<State, NameSpace.Offers>;
 
-const getAllOffers = (state: State) => state[sliceName].allOffers;
+const getAllOffers = (state: StateSlice) => state[sliceName].allOffers;
 
-export const getAllOffersLoadingStatus = (state: State) => state[sliceName].allOffersLoadingStatus;
-export const getCity = (state: State) => state[sliceName].city;
-export const getSorting = (state: State) => state[sliceName].sorting;
+export const getAllOffersLoadingStatus = (state: StateSlice) => state[sliceName].allOffersLoadingStatus;
+export const getCity = (state: StateSlice) => state[sliceName].city;
+export const getSorting = (state: StateSlice) => state[sliceName].sorting;
 
 const getAllOffersGroupedByCity = createSelector(
   [getAllOffers],
@@ -38,8 +39,8 @@ export const getSortedAllOffersByCity = createSelector(
   }
 );
 
-export const getNearbyOffers = (state: State) => state[sliceName].nearbyOffers;
-export const getNearbyOffersLoadingStatus = (state: State) => state[sliceName].nearbyOffersLoadingStatus;
+export const getNearbyOffers = (state: StateSlice) => state[sliceName].nearbyOffers;
+export const getNearbyOffersLoadingStatus = (state: StateSlice) => state[sliceName].nearbyOffersLoadingStatus;
 
-export const getOffer = (state: State) => state[sliceName].offer;
-export const getOfferLoadingStatus = (state: State) => state[sliceName].offerLoadingStatus;
+export const getOffer = (state: StateSlice) => state[sliceName].offer;
+export const getOfferLoadingStatus = (state: StateSlice) => state[sliceName].offerLoadingStatus;

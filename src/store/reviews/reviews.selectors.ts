@@ -3,8 +3,9 @@ import { State } from '../../types/state';
 import { NameSpace, REVIEWS_MAX_COUNT } from '../../const';
 
 const sliceName = NameSpace.Reviews;
+type StateSlice = Pick<State, NameSpace.Reviews>;
 
-export const getReviews = (state: State) => state[sliceName].reviews;
+export const getReviews = (state: StateSlice) => state[sliceName].reviews;
 
 export const getLatestReviews = createSelector(
   [getReviews],
@@ -13,4 +14,4 @@ export const getLatestReviews = createSelector(
     .slice(0, REVIEWS_MAX_COUNT)
 );
 
-export const getReviewSubmittingStatus = (state: State) => state[sliceName].reviewSubmittingStatus;
+export const getReviewSubmittingStatus = (state: StateSlice) => state[sliceName].reviewSubmittingStatus;
