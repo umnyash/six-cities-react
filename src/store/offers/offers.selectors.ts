@@ -6,13 +6,13 @@ import { groupBy } from '../../util';
 const sliceName = NameSpace.Offers;
 type StateSlice = Pick<State, NameSpace.Offers>;
 
-const getAllOffers = (state: StateSlice) => state[sliceName].allOffers;
+export const getAllOffers = (state: StateSlice) => state[sliceName].allOffers;
 
 export const getAllOffersLoadingStatus = (state: StateSlice) => state[sliceName].allOffersLoadingStatus;
 export const getCity = (state: StateSlice) => state[sliceName].city;
 export const getSorting = (state: StateSlice) => state[sliceName].sorting;
 
-const getAllOffersGroupedByCity = createSelector(
+export const getAllOffersGroupedByCity = createSelector(
   [getAllOffers],
   (offers) => groupBy(offers, (offer) => offer.city.name)
 );
