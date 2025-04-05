@@ -1,4 +1,5 @@
 export const APP_ROUTE_PARAM_ID = ':id';
+export const OFFER_PHOTOS_MAX_COUNT = 6;
 export const REVIEWS_MAX_COUNT = 10;
 export const NEARBY_OFFERS_COUNT = 3;
 

@@ -3,6 +3,7 @@ import Reviews from '../reviews';
 import Map from '../map';
 import { roundOffRating, capitalizeFirstLetter } from '../../util';
 import FavoriteButton from '../favorite-button';
+import { OFFER_PHOTOS_MAX_COUNT } from '../../const';
 import clsx from 'clsx';
 
 type OfferProps = {
@@ -40,7 +41,7 @@ function Offer({ offer, nearbyOffers }: OfferProps): JSX.Element {
     <section className="offer">
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
-          {images.map((image) => (
+          {images.slice(0, OFFER_PHOTOS_MAX_COUNT).map((image) => (
             <div className="offer__image-wrapper" key={image}>
               <img className="offer__image" src={image} alt="Photo studio" />
             </div>
