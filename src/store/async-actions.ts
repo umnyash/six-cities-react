@@ -5,6 +5,7 @@ import { Offers, CardOffer, PageOffer } from '../types/offers';
 import { Reviews, Review, ReviewContent } from '../types/reviews';
 import { APIRoute, NameSpace, FavoriteStatus } from '../const';
 import { saveToken, dropToken } from '../services/token';
+import { omit } from '../util';
 
 type ThunkAPI = {
   extra: AxiosInstance;
@@ -13,8 +14,9 @@ type ThunkAPI = {
 export const checkUserAuth = createAsyncThunk<User, undefined, ThunkAPI>(
   `${NameSpace.User}/checkAuth`,
   async (_arg, { extra: api }) => {
-    const { data: { name, email, avatarUrl, isPro } } = await api.get<AuthUser>(APIRoute.Login);
-    return { name, email, avatarUrl, isPro };
+    const { data } = await api.get<AuthUser>(APIRoute.Login);
+    const user = omit(data, 'token');
+    return user;
   },
 );
 

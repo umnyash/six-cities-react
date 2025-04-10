@@ -6,7 +6,8 @@ import {
   getUniqueRandomInts,
   getRandomArrayItem,
   removeArrayItem,
-  groupBy
+  groupBy,
+  omit,
 } from './util';
 
 import { getMockOffers } from './mocks/util';
@@ -287,8 +288,6 @@ describe('Util functions', () => {
   });
 
   describe('Function: omit', () => {
-    const omit = () => { };
-
     it('should return a new object without the passed keys', () => {
       const initialObject = {
         avatar: 'photo.jpg',
