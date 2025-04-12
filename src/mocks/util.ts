@@ -1,3 +1,4 @@
+import { Action } from 'redux';
 import { Offers, BaseOffer, CardOffer, PageOffer, CityName } from '../types/offers';
 import { Author, User, AuthUser } from '../types/user';
 import { Reviews, Review } from '../types/reviews';
@@ -105,3 +106,5 @@ export const getMockReview = (): Review => ({
 
 export const getMockReviews = (count: number): Reviews =>
   Array.from({ length: count }, () => getMockReview());
+
+export const extractActionsTypes = (actions: Array<Action<string>>) => actions.map(({ type }) => type);
