@@ -1,7 +1,7 @@
 import { RequestStatus, FavoriteStatus } from '../../const';
 import { FavoritesState } from '../../types/state';
 import { fetchFavorites, changeFavoriteStatus } from '../async-actions';
-import { getMockOffers, getMockCardOffer } from '../../mocks/util';
+import { getMockOffers, getMockCardOffer } from '../../mocks/data';
 import { favorites } from './favorites.slice';
 
 describe('Favorites slice', () => {

@@ -1,5 +1,5 @@
 import { NameSpace, RequestStatus, CITIES, SortingOption } from '../../const';
-import { getMockOffers, getMockCity } from '../../mocks/util';
+import { getMockOffers, getMockCity } from '../../mocks/data';
 
 import {
   getAllOffers,

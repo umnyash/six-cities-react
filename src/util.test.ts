@@ -10,7 +10,7 @@ import {
   omit,
 } from './util';
 
-import { getMockOffers } from './mocks/util';
+import { getMockOffers } from './mocks/data';
 import { Offers } from './types/offers';
 import { HousingType } from './const';
 

@@ -19,12 +19,12 @@ import {
 } from './async-actions';
 
 import { AppThunkDispatch } from '../mocks/types';
+import { extractActionsTypes } from '../mocks/util';
 import {
   getMockAuthUser,
   getMockOffers, getMockOffer,
-  getMockReviews, getMockReview,
-  extractActionsTypes
-} from '../mocks/util';
+  getMockReviews, getMockReview
+} from '../mocks/data';
 
 vi.mock('react-toastify', () => ({
   toast: {

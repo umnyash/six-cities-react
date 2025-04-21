@@ -2,7 +2,7 @@ import { RequestStatus, AuthorizationStatus } from '../../const';
 import { AuthData } from '../../types/user';
 import { UserState } from '../../types/state';
 import { user } from './user.slice';
-import { getMockUser } from '../../mocks/util';
+import { getMockUser } from '../../mocks/data';
 import { checkUserAuth, loginUser, logoutUser } from '../async-actions';
 
 describe('User slice', () => {

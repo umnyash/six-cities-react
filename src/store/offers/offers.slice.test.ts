@@ -1,7 +1,7 @@
 import { OffersState } from '../../types/state';
 import { offers, setCity, setSorting } from './offers.slice';
 import { RequestStatus, CITIES, SortingOption, FavoriteStatus } from '../../const';
-import { getMockOffers, getMockOffer, getMockCardOffer } from '../../mocks/util';
+import { getMockOffers, getMockOffer, getMockCardOffer } from '../../mocks/data';
 import { fetchAllOffers, fetchNearbyOffers, fetchOffer, changeFavoriteStatus } from '../async-actions';
 
 describe('Offers slice', () => {

@@ -1,7 +1,7 @@
 import { RequestStatus } from '../../const';
 import { ReviewsState } from '../../types/state';
 import { reviews } from './reviews.slice';
-import { getMockReviews, getMockReview } from '../../mocks/util';
+import { getMockReviews, getMockReview } from '../../mocks/data';
 import { fetchReviews, submitReview } from '../async-actions';
 
 describe('Reviews slice', () => {
