@@ -42,12 +42,13 @@ function FavoriteButton({ offerId, className, isActive = false }: FavoriteButton
         className={buttonClassName}
         type="button"
         disabled={isPending}
+        aria-pressed={isActive}
         onClick={handleButtonClick}
       >
         <svg className="offer__bookmark-icon" width="100%" height="100%">
           <use xlinkHref="#icon-bookmark" />
         </svg>
-        <span className="visually-hidden">To bookmarks</span>
+        <span className="visually-hidden">{isActive ? 'Bookmarked' : 'Add to bookmarks'}</span>
       </button>
     );
   }
