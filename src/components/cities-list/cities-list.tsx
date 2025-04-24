@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, MouseEvent } from 'react';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { setCity } from '../../store/offers/offers.slice';
 import clsx from 'clsx';
@@ -11,6 +11,11 @@ type CitiesListProps = {
 
 function CitiesListComponent({ activeCity }: CitiesListProps): JSX.Element {
   const dispatch = useAppDispatch();
+
+  const getLinkClickHandler = (cityName: CityName) => (evt: MouseEvent) => {
+    evt.preventDefault();
+    dispatch(setCity(cityName));
+  };
 
   return (
     <ul className="locations__list tabs__list">
@@ -26,11 +31,7 @@ function CitiesListComponent({ activeCity }: CitiesListProps): JSX.Element {
           <li className="locations__item" key={cityName}>
             <a
               className={linkClassName}
-              {...(!isActive && { href: '#' })}
-              onClick={(evt) => {
-                evt.preventDefault();
-                dispatch(setCity(cityName));
-              }}
+              {...(!isActive && { href: '#', onClick: getLinkClickHandler(cityName) })}
             >
               <span>{cityName}</span>
             </a>
