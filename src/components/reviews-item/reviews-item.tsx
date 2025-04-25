@@ -1,4 +1,5 @@
 import { Review } from '../../types/reviews';
+import StarsIcon, { StarsIconSize } from '../stars-icon';
 
 type ReviewsItemProps = {
   review: Review;
@@ -24,10 +25,7 @@ function ReviewsItem({ review }: ReviewsItemProps): JSX.Element {
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">
-          <div className="reviews__stars rating__stars">
-            <span style={{ width: `${rating * 20}%` }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
+          <StarsIcon rating={rating} size={StarsIconSize.M} withHiddenValue />
         </div>
         <p className="reviews__text">{comment}</p>
         <time className="reviews__time" dateTime={date}>{formattedDate}</time>

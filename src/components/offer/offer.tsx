@@ -1,8 +1,9 @@
 import { PageOffer, Offers } from '../../types/offers';
 import Reviews from '../reviews';
 import Map from '../map';
-import { roundOffRating, capitalizeFirstLetter } from '../../util';
+import { capitalizeFirstLetter } from '../../util';
 import FavoriteButton from '../favorite-button';
+import StarsIcon, { StarsIconSize } from '../stars-icon';
 import { OFFER_PHOTOS_MAX_COUNT } from '../../const';
 import clsx from 'clsx';
 
@@ -60,10 +61,7 @@ function Offer({ offer, nearbyOffers }: OfferProps): JSX.Element {
             <FavoriteButton offerId={id} className="offer__bookmark-button" isActive={isFavorite} />
           </div>
           <div className="offer__rating rating">
-            <div className="offer__stars rating__stars">
-              <span style={{ width: `${roundOffRating(rating) * 20}%` }}></span>
-              <span className="visually-hidden">Rating</span>
-            </div>
+            <StarsIcon rating={rating} size={StarsIconSize.L} />
             <span className="offer__rating-value rating__value">{rating}</span>
           </div>
           <ul className="offer__features">

@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { AppRoute, APP_ROUTE_PARAM_ID } from '../../const';
 import { CardOffer } from '../../types/offers';
 import { OfferCardVariant } from './const';
-import { roundOffRating } from '../../util';
 import FavoriteButton from '../favorite-button';
+import StarsIcon from '../stars-icon';
 
 type OfferCardProps = {
   offer: CardOffer;
@@ -93,10 +93,7 @@ function OfferCardComponent(props: OfferCardProps): JSX.Element {
           <FavoriteButton offerId={id} className="place-card__bookmark-button" isActive={isFavorite} />
         </div>
         <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: `${roundOffRating(rating) * 20}%` }} />
-            <span className="visually-hidden">Rating</span>
-          </div>
+          <StarsIcon rating={rating} withHiddenValue />
         </div>
         <h2 className="place-card__name">
           <Link to={link}>{title}</Link>
