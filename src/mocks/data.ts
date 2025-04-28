@@ -95,12 +95,13 @@ export const getMockOffer = (preset: Partial<PageOffer> = {}): PageOffer => ({
   ...preset
 });
 
-export const getMockReview = (): Review => ({
+export const getMockReview = (preset: Partial<Review> = {}): Review => ({
   id: crypto.randomUUID(),
   date: faker.date.past().toISOString(),
   rating: getRandomRating(),
   comment: faker.lorem.paragraph(),
   user: getMockAuthor(),
+  ...preset
 });
 
 export const getMockReviews = (count: number): Reviews =>
