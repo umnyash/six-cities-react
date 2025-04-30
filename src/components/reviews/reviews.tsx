@@ -19,7 +19,8 @@ function Reviews({ offerId }: ReviewsProps): JSX.Element {
       <h2 className="reviews__title">
         Reviews &middot; <span className="reviews__amount">{reviews.length}</span>
       </h2>
-      <ReviewsList reviews={latestReviews} />
+
+      {!!reviews.length && <ReviewsList reviews={latestReviews} />}
 
       {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm offerId={offerId} />}
     </section>
