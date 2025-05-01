@@ -77,8 +77,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span>
-          and describe your stay with at least <b className="reviews__text-amount">50</b>{' '}
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50</b>{' '}
 
           {formData.comment.length > MAX_COMMENT_LENGTH && (
             <>and no more than <b className="reviews__text-amount">300</b>{' '}</>
