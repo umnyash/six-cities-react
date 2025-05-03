@@ -1,11 +1,11 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { RequestStatus } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import { getReviewSubmittingStatus } from '../../store/reviews/reviews.selectors';
 import { submitReview } from '../../store/async-actions';
+import StarsRating from '../stars-rating';
 
-const RATINGS = ['terribly', 'badly', 'not bad', 'good', 'perfect'];
 const MIN_COMMENT_LENGTH = 50;
 const MAX_COMMENT_LENGTH = 300;
 
@@ -41,31 +41,12 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
-        {RATINGS.map((rating, index) => {
-          const ratingValue = (index + 1);
-
-          return (
-            <React.Fragment key={rating}>
-              <input
-                className="form__rating-input visually-hidden"
-                name="rating"
-                value={ratingValue}
-                id={`stars-${ratingValue}`}
-                type="radio"
-                onChange={handleFieldChange}
-                checked={formData.rating === ratingValue}
-                disabled={reviewSubmittingStatus === RequestStatus.Pending}
-              />
-              <label htmlFor={`stars-${ratingValue}`} className="reviews__rating-label form__rating-label" title={rating}>
-                <svg className="form__star-image" width="37" height="33">
-                  <use xlinkHref="#icon-star" />
-                </svg>
-              </label>
-            </React.Fragment>
-          );
-        }).reverse()}
-      </div>
+      <StarsRating
+        value={formData.rating}
+        onChange={handleFieldChange}
+        disabled={reviewSubmittingStatus === RequestStatus.Pending}
+        className="reviews__rating-form"
+      />
       <textarea
         className="reviews__textarea form__textarea"
         id="comment"

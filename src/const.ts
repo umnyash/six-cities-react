@@ -12,6 +12,8 @@ export const CITIES = [
   'Dusseldorf'
 ] as const;
 
+export const RATINGS = ['terribly', 'badly', 'not bad', 'good', 'perfect'];
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
