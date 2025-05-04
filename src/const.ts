@@ -56,14 +56,6 @@ export enum SortingOption {
   RatingDesc = 'Top rated first',
 }
 
-export enum APIRoute {
-  Login = '/login',
-  Logout = '/logout',
-  Offers = '/offers',
-  Favorites = '/favorite',
-  Reviews = '/comments',
-}
-
 export enum NameSpace {
   User = 'USER',
   Offers = 'OFFERS',

@@ -5,11 +5,11 @@ import thunk from 'redux-thunk';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
 
-import { APIRoute, FavoriteStatus } from '../const';
+import { FavoriteStatus } from '../const';
 import { State } from '../types/state';
 import { AuthData, AuthUser } from '../types/user';
 import { omit } from '../util';
-import { createAPI } from '../services/api';
+import { createAPI, apiPaths } from '../services/api';
 import * as tokenStorage from '../services/token';
 import {
   checkUserAuth, loginUser, logoutUser,
@@ -49,7 +49,7 @@ describe('Async actions', () => {
 
   it('should call "toast.warn" with error message on network failure', async () => {
     const networkErrorMessage = /Network error/i;
-    mockAPIAdapter.onGet(APIRoute.Login).networkError();
+    mockAPIAdapter.onGet(apiPaths.login()).networkError();
 
     await store.dispatch(checkUserAuth());
 
@@ -62,7 +62,7 @@ describe('Async actions', () => {
       it('should dispatch "checkUserAuth.pending", "checkUserAuth.fulfilled" and return user data when server responds with 200', async () => {
         const mockAuthUser: AuthUser = getMockAuthUser();
         const mockUser = omit(mockAuthUser, 'token');
-        mockAPIAdapter.onGet(APIRoute.Login).reply(StatusCodes.OK, mockAuthUser);
+        mockAPIAdapter.onGet(apiPaths.login()).reply(StatusCodes.OK, mockAuthUser);
 
         await store.dispatch(checkUserAuth());
         const dispatchedActions = store.getActions();
@@ -77,7 +77,7 @@ describe('Async actions', () => {
       });
 
       it('should dispatch "checkUserAuth.pending" and "checkUserAuth.rejected" when server responds with 401', async () => {
-        mockAPIAdapter.onGet(APIRoute.Login).reply(StatusCodes.UNAUTHORIZED);
+        mockAPIAdapter.onGet(apiPaths.login()).reply(StatusCodes.UNAUTHORIZED);
 
         await store.dispatch(checkUserAuth());
         const actionsTypes = extractActionsTypes(store.getActions());
@@ -94,7 +94,7 @@ describe('Async actions', () => {
         const mockAuthData: AuthData = { email: 'test@test.com', password: 'abc123' };
         const mockAuthUser: AuthUser = getMockAuthUser();
         const mockUser = omit(mockAuthUser, 'token');
-        mockAPIAdapter.onPost(APIRoute.Login).reply(StatusCodes.CREATED, mockAuthUser);
+        mockAPIAdapter.onPost(apiPaths.login()).reply(StatusCodes.CREATED, mockAuthUser);
 
         await store.dispatch(loginUser(mockAuthData));
         const dispatchedActions = store.getActions();
@@ -111,7 +111,7 @@ describe('Async actions', () => {
       it('should call "saveToken" once with the received token on login', async () => {
         const mockAuthData: AuthData = { email: 'test@test.com', password: 'abc123' };
         const mockAuthUser: AuthUser = getMockAuthUser();
-        mockAPIAdapter.onPost(APIRoute.Login).reply(StatusCodes.CREATED, mockAuthUser);
+        mockAPIAdapter.onPost(apiPaths.login()).reply(StatusCodes.CREATED, mockAuthUser);
         const mockSaveToken = vi.spyOn(tokenStorage, 'saveToken');
 
         await store.dispatch(loginUser(mockAuthData));
@@ -122,7 +122,7 @@ describe('Async actions', () => {
 
       it('should dispatch "loginUser.pending" and "loginUser.rejected" when server responds with 400', async () => {
         const mockInvalidAuthData: AuthData = { email: 'test', password: '0000' };
-        mockAPIAdapter.onPost(APIRoute.Login).reply(StatusCodes.BAD_REQUEST);
+        mockAPIAdapter.onPost(apiPaths.login()).reply(StatusCodes.BAD_REQUEST);
 
         await store.dispatch(loginUser(mockInvalidAuthData));
         const actionsTypes = extractActionsTypes(store.getActions());
@@ -136,7 +136,7 @@ describe('Async actions', () => {
       it('should call "toast.warn" once with error message when server responds with 400', async () => {
         const mockInvalidAuthData: AuthData = { email: 'test', password: '0000' };
         const errorMessage = 'bad request';
-        mockAPIAdapter.onPost(APIRoute.Login).reply(StatusCodes.BAD_REQUEST, { message: errorMessage });
+        mockAPIAdapter.onPost(apiPaths.login()).reply(StatusCodes.BAD_REQUEST, { message: errorMessage });
 
         await store.dispatch(loginUser(mockInvalidAuthData));
 
@@ -147,7 +147,7 @@ describe('Async actions', () => {
 
     describe('logoutUser', () => {
       it('should dispatch "logoutUser.pending" and "logoutUser.fulfilled" when server responds with 204', async () => {
-        mockAPIAdapter.onDelete(APIRoute.Logout).reply(StatusCodes.NO_CONTENT);
+        mockAPIAdapter.onDelete(apiPaths.logout()).reply(StatusCodes.NO_CONTENT);
 
         await store.dispatch(logoutUser());
         const actionsTypes = extractActionsTypes(store.getActions());
@@ -159,7 +159,7 @@ describe('Async actions', () => {
       });
 
       it('should call "dropToken" once on logout', async () => {
-        mockAPIAdapter.onDelete(APIRoute.Logout).reply(StatusCodes.NO_CONTENT);
+        mockAPIAdapter.onDelete(apiPaths.logout()).reply(StatusCodes.NO_CONTENT);
         const mockDropToken = vi.spyOn(tokenStorage, 'dropToken');
 
         await store.dispatch(logoutUser());
@@ -173,7 +173,7 @@ describe('Async actions', () => {
     describe('fetchAllOffers', () => {
       it('should dispatch "fetchAllOffers.pending", "fetchAllOffers.fulfilled" and return offers array when server responds with 200', async () => {
         const mockOffers = getMockOffers(2);
-        mockAPIAdapter.onGet(APIRoute.Offers).reply(StatusCodes.OK, mockOffers);
+        mockAPIAdapter.onGet(apiPaths.offers()).reply(StatusCodes.OK, mockOffers);
 
         await store.dispatch(fetchAllOffers());
         const dispatchedActions = store.getActions();
@@ -191,7 +191,7 @@ describe('Async actions', () => {
     describe('fetchNearbyOffers', () => {
       it('should dispatch "fetchNearbyOffers.pending", "fetchNearbyOffers.fulfilled" and offers array when server responds with 200', async () => {
         const mockOffers = getMockOffers(2);
-        mockAPIAdapter.onGet(`${APIRoute.Offers}/existingOfferId/nearby`).reply(StatusCodes.OK, mockOffers);
+        mockAPIAdapter.onGet(apiPaths.nearbyOffers('existingOfferId')).reply(StatusCodes.OK, mockOffers);
 
         await store.dispatch(fetchNearbyOffers('existingOfferId'));
         const dispatchedAcitons = store.getActions();
@@ -206,7 +206,7 @@ describe('Async actions', () => {
       });
 
       it('should dispatch "fetchNearbyOffers.pending" and "fetchNearbyOffers.rejected" when server responds with 404', async () => {
-        mockAPIAdapter.onGet(`${APIRoute.Offers}/nonExistentOfferId/nearby`).reply(StatusCodes.NOT_FOUND);
+        mockAPIAdapter.onGet(apiPaths.nearbyOffers('nonExistentOfferId')).reply(StatusCodes.NOT_FOUND);
 
         await store.dispatch(fetchNearbyOffers('nonExistentOfferId'));
         const actionsTypes = extractActionsTypes(store.getActions());
@@ -221,7 +221,7 @@ describe('Async actions', () => {
     describe('fetchOffer', () => {
       it('should dispatch "fetchOffer.pending", "fetchOffer.fulfilled" and return offer data when server responds with 200', async () => {
         const mockOffer = getMockOffer();
-        mockAPIAdapter.onGet(`${APIRoute.Offers}/existingOfferId`).reply(StatusCodes.OK, mockOffer);
+        mockAPIAdapter.onGet(apiPaths.offer('existingOfferId')).reply(StatusCodes.OK, mockOffer);
 
         await store.dispatch(fetchOffer('existingOfferId'));
         const dispatchedActions = store.getActions();
@@ -236,7 +236,7 @@ describe('Async actions', () => {
       });
 
       it('should dispatch "fetchOffer.pending", "fetchOffer.rejected" when server responds with 404', async () => {
-        mockAPIAdapter.onGet(`${APIRoute.Offers}/nonExistentOfferId`).reply(StatusCodes.NOT_FOUND);
+        mockAPIAdapter.onGet(apiPaths.offer('nonExistentOfferId')).reply(StatusCodes.NOT_FOUND);
 
         await store.dispatch(fetchOffer('nonExistentOfferId'));
         const actionsTypes = extractActionsTypes(store.getActions());
@@ -253,7 +253,7 @@ describe('Async actions', () => {
     describe('fetchFavorites', () => {
       it('should dispatch "fetchFavorites.pending", "fetchFavorites.fulfilled" and return offers array when server responds with 200', async () => {
         const mockOffers = getMockOffers(2);
-        mockAPIAdapter.onGet(APIRoute.Favorites).reply(StatusCodes.OK, mockOffers);
+        mockAPIAdapter.onGet(apiPaths.favorites()).reply(StatusCodes.OK, mockOffers);
 
         await store.dispatch(fetchFavorites());
         const dispatchedActions = store.getActions();
@@ -268,7 +268,7 @@ describe('Async actions', () => {
       });
 
       it('should dispatch "fetchFavorites.pending" and "fetchFavorites.rejected" when server responds with 401', async () => {
-        mockAPIAdapter.onGet(APIRoute.Favorites).reply(StatusCodes.UNAUTHORIZED);
+        mockAPIAdapter.onGet(apiPaths.favorites()).reply(StatusCodes.UNAUTHORIZED);
 
         await store.dispatch(fetchFavorites());
         const actionsTypes = extractActionsTypes(store.getActions());
@@ -284,7 +284,8 @@ describe('Async actions', () => {
       it('should dispatch "changeFavoriteStatus.pending", "changeFavoriteStatus.fulfilled" and return offer data when offer is removed from favorites and server response 200', async () => {
         const mockOffer = getMockOffer({ isFavorite: true });
         const mockChangedOffer = { ...mockOffer, isFavorite: false };
-        mockAPIAdapter.onPost(`${APIRoute.Favorites}/existingOfferId/${FavoriteStatus.Off}`)
+        mockAPIAdapter
+          .onPost(apiPaths.favoriteStatus('existingOfferId', FavoriteStatus.Off))
           .reply(StatusCodes.CREATED, mockChangedOffer);
 
         await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.Off }));
@@ -302,7 +303,8 @@ describe('Async actions', () => {
       it('should dispatch "changeFavoriteStatus.pending", "changeFavoriteStatus.fulfilled" and return offer data when offer is added to favorites and server response 201', async () => {
         const mockOffer = getMockOffer({ isFavorite: false });
         const mockChangedOffer = { ...mockOffer, isFavorite: true };
-        mockAPIAdapter.onPost(`${APIRoute.Favorites}/existingOfferId/${FavoriteStatus.On}`)
+        mockAPIAdapter
+          .onPost(apiPaths.favoriteStatus('existingOfferId', FavoriteStatus.On))
           .reply(StatusCodes.CREATED, mockChangedOffer);
 
         await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.On }));
@@ -319,7 +321,8 @@ describe('Async actions', () => {
 
       it('should dispatch "changeFavoriteStatus.pending" and "changeFavoriteStatus.rejected" when server responds with 400', async () => {
         const wrongFavoriteStatus = 2 as FavoriteStatus;
-        mockAPIAdapter.onPost(`${APIRoute.Favorites}/existingOfferId/${wrongFavoriteStatus}`)
+        mockAPIAdapter
+          .onPost(apiPaths.favoriteStatus('existingOfferId', wrongFavoriteStatus))
           .reply(StatusCodes.BAD_REQUEST);
 
         await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: wrongFavoriteStatus }));
@@ -329,13 +332,13 @@ describe('Async actions', () => {
           changeFavoriteStatus.pending.type,
           changeFavoriteStatus.rejected.type,
         ]);
-
       });
 
       it('should call "toast.warn" once with error message when server responds with 400', async () => {
         const wrongFavoriteStatus = 2 as FavoriteStatus;
         const errorMessage = 'bad request';
-        mockAPIAdapter.onPost(`${APIRoute.Favorites}/existingOfferId/${wrongFavoriteStatus}`)
+        mockAPIAdapter
+          .onPost(apiPaths.favoriteStatus('existingOfferId', wrongFavoriteStatus))
           .reply(StatusCodes.BAD_REQUEST, { message: errorMessage });
 
         await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: wrongFavoriteStatus }));
@@ -345,7 +348,8 @@ describe('Async actions', () => {
       });
 
       it('should dispatch "changeFavoriteStatus.pending" and "changeFavoriteStatus.rejected" when server responds with 401', async () => {
-        mockAPIAdapter.onPost(`${APIRoute.Favorites}/existingOfferId/${FavoriteStatus.On}`)
+        mockAPIAdapter
+          .onPost(apiPaths.favoriteStatus('existingOfferId', FavoriteStatus.On))
           .reply(StatusCodes.UNAUTHORIZED);
 
         await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.On }));
@@ -358,7 +362,8 @@ describe('Async actions', () => {
       });
 
       it('should dispatch "changeFavoriteStatus.pending" and "changeFavoriteStatus.rejected" when server responds with 404', async () => {
-        mockAPIAdapter.onPost(`${APIRoute.Favorites}/nonExistentOfferId/${FavoriteStatus.On}`)
+        mockAPIAdapter
+          .onPost(apiPaths.favoriteStatus('nonExistentOfferId', FavoriteStatus.On))
           .reply(StatusCodes.NOT_FOUND);
 
         await store.dispatch(changeFavoriteStatus({ offerId: 'nonExistentOfferId', status: FavoriteStatus.On }));
@@ -373,7 +378,8 @@ describe('Async actions', () => {
       it('should dispatch "changeFavoriteStatus.pending", "changeFavoriteStatus.rejected" when server responds with 409', async () => {
         const currentFavoriteStatus = true;
         const targetFavoriteStatus = +currentFavoriteStatus;
-        mockAPIAdapter.onPost(`${APIRoute.Favorites}/existingOfferId/${targetFavoriteStatus}`)
+        mockAPIAdapter
+          .onPost(apiPaths.favoriteStatus('existingOfferId', targetFavoriteStatus))
           .reply(StatusCodes.CONFLICT);
 
         await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: targetFavoriteStatus }));
@@ -389,7 +395,8 @@ describe('Async actions', () => {
         const currentFavoriteStatus = true;
         const targetFavoriteStatus = +currentFavoriteStatus;
         const errorMessage = 'conflict';
-        mockAPIAdapter.onPost(`${APIRoute.Favorites}/existingOfferId/${targetFavoriteStatus}`)
+        mockAPIAdapter
+          .onPost(apiPaths.favoriteStatus('existingOfferId', targetFavoriteStatus))
           .reply(StatusCodes.CONFLICT, { message: errorMessage });
 
         await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: targetFavoriteStatus }));
@@ -404,7 +411,7 @@ describe('Async actions', () => {
     describe('fetchReviews', () => {
       it('should dispatch "fetchReviews.pending", "fetchReviews.fulfilled" and return reviews array when server responds with 200', async () => {
         const mockReviews = getMockReviews(2);
-        mockAPIAdapter.onGet(`${APIRoute.Reviews}/existingOfferId`).reply(StatusCodes.OK, mockReviews);
+        mockAPIAdapter.onGet(apiPaths.reviews('existingOfferId')).reply(StatusCodes.OK, mockReviews);
 
         await store.dispatch(fetchReviews('existingOfferId'));
         const dispatchedActions = store.getActions();
@@ -419,7 +426,7 @@ describe('Async actions', () => {
       });
 
       it('should dispatch "fetchReviews.pending" and "fetchReviews.rejected" when server responds with 404', async () => {
-        mockAPIAdapter.onGet(`${APIRoute.Reviews}/nonExistentOfferId`).reply(StatusCodes.NOT_FOUND);
+        mockAPIAdapter.onGet(apiPaths.reviews('nonExistentOfferId')).reply(StatusCodes.NOT_FOUND);
 
         await store.dispatch(fetchReviews('nonExistentOfferId'));
         const actionsTypes = extractActionsTypes(store.getActions());
@@ -435,7 +442,7 @@ describe('Async actions', () => {
       it('should dispatch "submitReview.pending", "submitReview.fulfilled" and return review when server responds with 201', async () => {
         const mockNewReview = getMockReview();
         const mockNewReviewContent = { rating: mockNewReview.rating, comment: mockNewReview.comment };
-        mockAPIAdapter.onPost(`${APIRoute.Reviews}/existingOfferId`).reply(StatusCodes.CREATED, mockNewReview);
+        mockAPIAdapter.onPost(apiPaths.reviews('existingOfferId')).reply(StatusCodes.CREATED, mockNewReview);
 
         await store.dispatch(submitReview({ offerId: 'existingOfferId', content: mockNewReviewContent }));
         const dispatchedActions = store.getActions();
@@ -451,7 +458,7 @@ describe('Async actions', () => {
 
       it('should dispatch "submitReview.pending" and "submitReview.rejected" when server responds with 400', async () => {
         const mockReviewContent = { rating: 0, comment: 'comment text with invalid length' };
-        mockAPIAdapter.onPost(`${APIRoute.Reviews}/nonExistentOfferId`).reply(StatusCodes.BAD_REQUEST);
+        mockAPIAdapter.onPost(apiPaths.reviews('nonExistentOfferId')).reply(StatusCodes.BAD_REQUEST);
 
         await store.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
         const actionsTypes = extractActionsTypes(store.getActions());
@@ -465,7 +472,8 @@ describe('Async actions', () => {
       it('should call "toast.warn" once with error message when server responds with 400', async () => {
         const mockReviewContent = { rating: 0, comment: 'comment text with invalid length' };
         const errorMessage = 'bad request';
-        mockAPIAdapter.onPost(`${APIRoute.Reviews}/nonExistentOfferId`)
+        mockAPIAdapter
+          .onPost(apiPaths.reviews('nonExistentOfferId'))
           .reply(StatusCodes.BAD_REQUEST, { message: errorMessage });
 
         await store.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
@@ -476,7 +484,7 @@ describe('Async actions', () => {
 
       it('should dispatch "submitReview.pending" and "submitReview.rejected" when server responds with 401', async () => {
         const mockReviewContent = { rating: 5, comment: 'comment text with valid length' };
-        mockAPIAdapter.onPost(`${APIRoute.Reviews}/nonExistentOfferId`).reply(StatusCodes.UNAUTHORIZED);
+        mockAPIAdapter.onPost(apiPaths.reviews('nonExistentOfferId')).reply(StatusCodes.UNAUTHORIZED);
 
         await store.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
         const actionsTypes = extractActionsTypes(store.getActions());
@@ -489,7 +497,7 @@ describe('Async actions', () => {
 
       it('should dispatch "submitReview.pending" and "submitReview.rejected" when server responds with 404', async () => {
         const mockReviewContent = { rating: 5, comment: 'comment text with valid length' };
-        mockAPIAdapter.onPost(`${APIRoute.Reviews}/nonExistentOfferId`).reply(StatusCodes.NOT_FOUND);
+        mockAPIAdapter.onPost(apiPaths.reviews('nonExistentOfferId')).reply(StatusCodes.NOT_FOUND);
 
         await store.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
         const actionsTypes = extractActionsTypes(store.getActions());

@@ -1,12 +1,12 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
-import { getToken } from './token';
+import { getToken } from '../token';
 
 const BACKEND_URL = 'https://16.design.htmlacademy.pro/six-cities';
 const REQUEST_TIMEOUT = 5000;
 
-type ErrorResponseData = {
+export type ErrorResponseData = {
   message: string;
 }
 
