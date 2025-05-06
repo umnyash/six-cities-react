@@ -1,4 +1,4 @@
-import { Offers, BaseOffer, CardOffer, PageOffer, CityName } from '../types/offers';
+import { Offers, BaseOffer, CardOffer, PageOffer, CityName, Points, Location } from '../types/offers';
 import { Author, User, AuthUser } from '../types/user';
 import { Reviews, Review } from '../types/reviews';
 import { faker } from '@faker-js/faker';
@@ -36,11 +36,23 @@ const getRandomBedroomsCount = () => getRandomInt(MockBedroomsCount.Min, MockBed
 const getImages = () => Array.from({ length: OFFER_PHOTOS_MAX_COUNT }, () => faker.system.filePath());
 const getGoods = () => faker.lorem.words().split(' ');
 
-const getRandomLocation = () => ({
+const getRandomCoordinates = () => ({
   latitude: faker.location.latitude(),
   longitude: faker.location.longitude(),
-  zoom: MOCK_ZOOM,
 });
+
+export const getRandomLocation = () => ({
+  zoom: MOCK_ZOOM,
+  ...getRandomCoordinates()
+});
+
+const getMockPoint = (location: Location = getRandomLocation()) => ({
+  id: crypto.randomUUID(),
+  location: location,
+});
+
+export const getMockPoints = (count: number, location?: Location): Points =>
+  Array.from({ length: count }, () => getMockPoint(location));
 
 export const getMockCity = (cityName?: CityName) => ({
   name: cityName ?? getRandomCityName(),
