@@ -32,9 +32,11 @@ function SortingComponent(): JSX.Element {
       </span>
       <ul className={listClassName}>
         {Object.values(SortingOption).map((option) => {
+          const isActive = option === selectedOption;
+
           const optionClassName = clsx(
             'places__option',
-            option === selectedOption && 'places__option--active'
+            isActive && 'places__option--active'
           );
 
           return (
@@ -42,7 +44,9 @@ function SortingComponent(): JSX.Element {
               className={optionClassName}
               tabIndex={0}
               onClick={() => {
-                dispatch(setSorting(option));
+                if (!isActive) {
+                  dispatch(setSorting(option));
+                }
                 setIsOpen(false);
               }}
               key={option}
