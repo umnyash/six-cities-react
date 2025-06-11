@@ -4,11 +4,10 @@ import { Provider } from 'react-redux';
 import App from './components/app';
 import { ToastContainer } from 'react-toastify';
 import { store } from './store';
-import { checkUserAuth, fetchFavorites } from './store/async-actions';
+import { checkUserAuth } from './store/async-actions';
 import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(checkUserAuth());
-store.dispatch(fetchFavorites());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
