@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import App from './components/app';
+import App from './components/app/app';
 import { ToastContainer } from 'react-toastify';
 import { store } from './store';
 import { checkUserAuth } from './store/async-actions';
