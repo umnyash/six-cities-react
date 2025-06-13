@@ -40,7 +40,7 @@ describe('Async actions', () => {
   let store: ReturnType<typeof mockStoreCreator>;
 
   beforeEach(() => {
-    store = mockStoreCreator({ OFFERS: { allOffers: [] } });
+    store = mockStoreCreator({ CATALOG: { offers: [] } });
   });
 
   afterEach(() => {

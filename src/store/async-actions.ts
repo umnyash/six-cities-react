@@ -39,7 +39,7 @@ export const logoutUser = createAsyncThunk<void, undefined, ThunkAPI>(
 );
 
 export const fetchAllOffers = createAsyncThunk<Offers, undefined, ThunkAPI>(
-  `${NameSpace.Offers}/fetchAll`,
+  `${NameSpace.Catalog}/fetch`,
   async (_arg, { extra: api }) => {
     const { data } = await api.get<Offers>(apiPaths.offers());
     return data;
@@ -47,7 +47,7 @@ export const fetchAllOffers = createAsyncThunk<Offers, undefined, ThunkAPI>(
 );
 
 export const fetchNearbyOffers = createAsyncThunk<Offers, string, ThunkAPI>(
-  `${NameSpace.Offers}/fetchNearby`,
+  `${NameSpace.NearbyOffers}/fetch`,
   async (offerId, { extra: api }) => {
     const { data } = await api.get<Offers>(apiPaths.nearbyOffers(offerId));
     return data;
@@ -55,7 +55,7 @@ export const fetchNearbyOffers = createAsyncThunk<Offers, string, ThunkAPI>(
 );
 
 export const fetchOffer = createAsyncThunk<PageOffer, string, ThunkAPI>(
-  `${NameSpace.Offers}/fetchOne`,
+  `${NameSpace.Offer}/fetch`,
   async (offerId, { extra: api }) => {
     const { data } = await api.get<PageOffer>(apiPaths.offer(offerId));
     return data;

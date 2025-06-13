@@ -8,7 +8,7 @@ import Spinner from '../../components/spinner';
 import { RequestStatus } from '../../const';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
-import { getAllOffersLoadingStatus, getCity, getAllOffersByCity, getSortedAllOffersByCity } from '../../store/offers/offers.selectors';
+import { getAllOffersLoadingStatus, getCity, getAllOffersByCity, getSortedAllOffersByCity } from '../../store/catalog/catalog.selectors';
 import { fetchAllOffers } from '../../store/async-actions';
 import Button from '../../components/button';
 

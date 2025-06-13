@@ -3,12 +3,12 @@ import { State } from '../../types/state';
 import { NameSpace, SortingOption } from '../../const';
 import { groupBy } from '../../util';
 
-const sliceName = NameSpace.Offers;
-type StateSlice = Pick<State, NameSpace.Offers>;
+const sliceName = NameSpace.Catalog;
+type StateSlice = Pick<State, NameSpace.Catalog>;
 
-export const getAllOffers = (state: StateSlice) => state[sliceName].allOffers;
+export const getAllOffers = (state: StateSlice) => state[sliceName].offers;
 
-export const getAllOffersLoadingStatus = (state: StateSlice) => state[sliceName].allOffersLoadingStatus;
+export const getAllOffersLoadingStatus = (state: StateSlice) => state[sliceName].loadingStatus;
 export const getCity = (state: StateSlice) => state[sliceName].city;
 export const getSorting = (state: StateSlice) => state[sliceName].sorting;
 
@@ -38,9 +38,3 @@ export const getSortedAllOffersByCity = createSelector(
     }
   }
 );
-
-export const getNearbyOffers = (state: StateSlice) => state[sliceName].nearbyOffers;
-export const getNearbyOffersLoadingStatus = (state: StateSlice) => state[sliceName].nearbyOffersLoadingStatus;
-
-export const getOffer = (state: StateSlice) => state[sliceName].offer;
-export const getOfferLoadingStatus = (state: StateSlice) => state[sliceName].offerLoadingStatus;

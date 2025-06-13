@@ -5,11 +5,8 @@ import useAppDispatch from '../../hooks/use-app-dispatch';
 import useAppSelector from '../../hooks/use-app-selector';
 import useArrayRandomIndices from '../../hooks/use-array-random-indices';
 import { fetchOffer, fetchReviews, fetchNearbyOffers } from '../../store/async-actions';
-
-import {
-  getNearbyOffers, getNearbyOffersLoadingStatus,
-  getOffer, getOfferLoadingStatus
-} from '../../store/offers/offers.selectors';
+import { getNearbyOffers, getNearbyOffersLoadingStatus } from '../../store/nearby-offers/nearby-offers.selectors';
+import { getOffer, getOfferLoadingStatus } from '../../store/offer/offer.selectors';
 
 import Offers from '../../components/offers';
 import Offer from '../../components/offer';
