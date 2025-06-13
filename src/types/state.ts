@@ -10,15 +10,21 @@ export type UserState = {
   loggingInStatus: RequestStatus;
 }
 
-export type OffersState = {
-  allOffers: Offers;
-  allOffersLoadingStatus: RequestStatus;
+export type CatalogState = {
+  offers: Offers;
+  loadingStatus: RequestStatus;
   city: CityName;
   sorting: SortingOption;
-  nearbyOffers: Offers;
-  nearbyOffersLoadingStatus: RequestStatus;
+}
+
+export type NearbyOffersState = {
+  offers: Offers;
+  loadingStatus: RequestStatus;
+}
+
+export type OfferState = {
   offer: PageOffer | null;
-  offerLoadingStatus: RequestStatus;
+  loadingStatus: RequestStatus;
 }
 
 export type FavoritesState = {
@@ -30,11 +36,6 @@ export type FavoritesState = {
 export type ReviewsState = {
   reviews: Reviews;
   reviewSubmittingStatus: RequestStatus;
-}
-
-export type CatalogState = {
-  city: CityName;
-  sorting: SortingOption;
 }
 
 export type State = ReturnType<typeof store.getState>;

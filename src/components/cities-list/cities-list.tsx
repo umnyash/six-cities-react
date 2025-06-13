@@ -1,6 +1,6 @@
 import { memo, MouseEvent } from 'react';
 import useAppDispatch from '../../hooks/use-app-dispatch';
-import { setCity } from '../../store/offers/offers.slice';
+import { setCity } from '../../store/catalog/catalog.slice';
 import clsx from 'clsx';
 import { CityName } from '../../types/offers';
 import { CITIES } from '../../const';

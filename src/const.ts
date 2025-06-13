@@ -58,7 +58,9 @@ export enum SortingOption {
 
 export enum NameSpace {
   User = 'USER',
-  Offers = 'OFFERS',
+  Catalog = 'CATALOG',
+  NearbyOffers = 'NEARBY_OFFERS',
+  Offer = 'OFFER',
   Favorites = 'FAVORITES',
   Reviews = 'REVIEWS',
 }

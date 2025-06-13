@@ -2,7 +2,7 @@ import { CITIES, AppRoute } from '../../const';
 import { getRandomArrayItem } from '../../util';
 import { CityName } from '../../types/offers';
 import useAppDispatch from '../../hooks/use-app-dispatch';
-import { setCity } from '../../store/offers/offers.slice';
+import { setCity } from '../../store/catalog/catalog.slice';
 import { Link } from 'react-router-dom';
 import LoginForm from '../../components/login-form';
 

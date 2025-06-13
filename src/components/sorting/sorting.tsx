@@ -3,8 +3,8 @@ import useAppSelector from '../../hooks/use-app-selector';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { clsx } from 'clsx';
 import { SortingOption } from '../../const';
-import { setSorting } from '../../store/offers/offers.slice';
-import { getSorting } from '../../store/offers/offers.selectors';
+import { setSorting } from '../../store/catalog/catalog.slice';
+import { getSorting } from '../../store/catalog/catalog.selectors';
 
 function SortingComponent(): JSX.Element {
   const selectedOption = useAppSelector(getSorting);

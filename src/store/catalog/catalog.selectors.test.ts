@@ -9,14 +9,10 @@ import {
   getAllOffersGroupedByCity,
   getAllOffersByCity,
   getSortedAllOffersByCity,
-  getNearbyOffers,
-  getNearbyOffersLoadingStatus,
-  getOffer,
-  getOfferLoadingStatus,
-} from './offers.selectors';
+} from './catalog.selectors';
 
-describe('Offers selectors', () => {
-  const nameSpace = NameSpace.Offers;
+describe('Catalog selectors', () => {
+  const nameSpace = NameSpace.Catalog;
   const activeCity = CITIES[0];
 
   const mockOffersForActiveCity = getMockOffers(4, {
@@ -27,28 +23,24 @@ describe('Offers selectors', () => {
 
   const state = {
     [nameSpace]: {
-      allOffers: mockAllOffers,
-      allOffersLoadingStatus: RequestStatus.Success,
+      offers: mockAllOffers,
+      loadingStatus: RequestStatus.Success,
       city: activeCity,
       sorting: SortingOption.Default,
-      nearbyOffers: getMockOffers(3),
-      nearbyOffersLoadingStatus: RequestStatus.Success,
-      offer: null,
-      offerLoadingStatus: RequestStatus.Success,
     }
   };
 
   describe('Simple selectors', () => {
-    it('should return all offers from state', () => {
-      const { allOffers } = state[nameSpace];
+    it('should return offers from state', () => {
+      const { offers } = state[nameSpace];
       const result = getAllOffers(state);
-      expect(result).toEqual(allOffers);
+      expect(result).toEqual(offers);
     });
 
-    it('should return all offers loading status from state', () => {
-      const { allOffersLoadingStatus } = state[nameSpace];
+    it('should return offers loading status from state', () => {
+      const { loadingStatus } = state[nameSpace];
       const result = getAllOffersLoadingStatus(state);
-      expect(result).toBe(allOffersLoadingStatus);
+      expect(result).toBe(loadingStatus);
     });
 
     it('should return city from state', () => {
@@ -61,30 +53,6 @@ describe('Offers selectors', () => {
       const { sorting } = state[nameSpace];
       const result = getSorting(state);
       expect(result).toBe(sorting);
-    });
-
-    it('should return nearby offers from state', () => {
-      const { nearbyOffers } = state[nameSpace];
-      const result = getNearbyOffers(state);
-      expect(result).toEqual(nearbyOffers);
-    });
-
-    it('should return nearby offers loading status from state', () => {
-      const { nearbyOffersLoadingStatus } = state[nameSpace];
-      const result = getNearbyOffersLoadingStatus(state);
-      expect(result).toBe(nearbyOffersLoadingStatus);
-    });
-
-    it('should return offer from state', () => {
-      const { offer } = state[nameSpace];
-      const result = getOffer(state);
-      expect(result).toEqual(offer);
-    });
-
-    it('should return offer loading status from state', () => {
-      const { offerLoadingStatus } = state[nameSpace];
-      const result = getOfferLoadingStatus(state);
-      expect(result).toEqual(offerLoadingStatus);
     });
   });
 
