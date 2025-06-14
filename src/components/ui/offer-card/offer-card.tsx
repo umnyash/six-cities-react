@@ -51,8 +51,8 @@ function OfferCardComponent(props: OfferCardProps): JSX.Element {
 
   const link = AppRoute.Offer.replace(APP_ROUTE_PARAM_ID, id);
 
-  const handleCardMouseOver = setActiveCardId && (() => setActiveCardId(id));
-  const handleCardMouseOut = setActiveCardId && (() => setActiveCardId(''));
+  const handleCardMouseEnter = setActiveCardId && (() => setActiveCardId(id));
+  const handleCardMouseLeave = setActiveCardId && (() => setActiveCardId(''));
 
   const cardClassName = clsx(
     'place-card',
@@ -73,8 +73,8 @@ function OfferCardComponent(props: OfferCardProps): JSX.Element {
   return (
     <article
       className={cardClassName}
-      onMouseOver={handleCardMouseOver}
-      onMouseOut={handleCardMouseOut}
+      onMouseEnter={handleCardMouseEnter}
+      onMouseLeave={handleCardMouseLeave}
     >
       {isPremium &&
         <div className="place-card__mark">
