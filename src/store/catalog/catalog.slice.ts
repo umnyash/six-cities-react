@@ -9,6 +9,7 @@ const initialState: CatalogState = {
   loadingStatus: RequestStatus.None,
   city: CITIES[0],
   sorting: SortingOption.Default,
+  activeOfferId: '',
 };
 
 const updateFavoriteStatus = (state: CatalogState, offer: CardOffer) => {
@@ -32,6 +33,9 @@ export const catalog = createSlice({
     },
     setSorting: (state, action: PayloadAction<SortingOption>) => {
       state.sorting = action.payload;
+    },
+    setActiveOfferId: (state, action: PayloadAction<string>) => {
+      state.activeOfferId = action.payload;
     }
   },
   extraReducers(builder) {
@@ -53,4 +57,4 @@ export const catalog = createSlice({
   },
 });
 
-export const { setCity, setSorting } = catalog.actions;
+export const { setCity, setSorting, setActiveOfferId } = catalog.actions;

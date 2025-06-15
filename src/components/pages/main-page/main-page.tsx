@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 
 import { RequestStatus } from '../../../const';
@@ -9,8 +9,10 @@ import {
   getAllOffersLoadingStatus,
   getCity,
   getAllOffersByCity,
-  getSortedAllOffersByCity
+  getSortedAllOffersByCity,
+  getActiveOfferId
 } from '../../../store/catalog/catalog.selectors';
+import { setActiveOfferId } from '../../../store/catalog/catalog.slice';
 
 import Button from '../../ui/button';
 import CitiesList from '../../ui/cities-list';
@@ -20,7 +22,6 @@ import Spinner from '../../ui/spinner';
 import OffersList, { OffersListVariant } from '../../ui/offers-list';
 
 function MainPage(): JSX.Element {
-  const [activeCardId, setActiveCardId] = useState('');
   const offersSectionElementRef = useRef<HTMLElement | null>(null);
   const dispatch = useAppDispatch();
 
@@ -29,6 +30,7 @@ function MainPage(): JSX.Element {
   const filteredOffers = useAppSelector(getAllOffersByCity);
   const filteredOffersCount = filteredOffers.length;
   const filteredAndSortedOffers = useAppSelector(getSortedAllOffersByCity);
+  const activeOfferId = useAppSelector(getActiveOfferId);
 
   useEffect(() => {
     dispatch(fetchAllOffers());
@@ -42,6 +44,10 @@ function MainPage(): JSX.Element {
 
   const handleLoadingButtonClick = () => {
     dispatch(fetchAllOffers());
+  };
+
+  const setCatalogActiveOfferId = (id: string) => {
+    dispatch(setActiveOfferId(id));
   };
 
   const mainClassName = clsx(
@@ -95,7 +101,7 @@ function MainPage(): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
               <Sorting />
-              <OffersList offers={filteredAndSortedOffers} variant={OffersListVariant.Rows} setActiveCardId={setActiveCardId} />
+              <OffersList offers={filteredAndSortedOffers} variant={OffersListVariant.Rows} setOfferId={setCatalogActiveOfferId} />
             </section>
           )}
 
@@ -105,7 +111,7 @@ function MainPage(): JSX.Element {
                 className="cities__map"
                 location={filteredOffers[0].city.location}
                 points={filteredOffers}
-                activePointId={activeCardId}
+                activePointId={activeOfferId}
               />
             )}
           </div>

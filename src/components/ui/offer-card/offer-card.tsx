@@ -12,7 +12,7 @@ import StarsIcon from '../stars-icon';
 type OfferCardProps = {
   offer: CardOffer;
   variant?: OfferCardVariant;
-  setActiveCardId?: (id: string) => void;
+  setOfferId?: (id: string) => void;
 }
 
 const imageSizes = {
@@ -35,7 +35,7 @@ function OfferCardComponent(props: OfferCardProps): JSX.Element {
   const {
     offer,
     variant = OfferCardVariant.Default,
-    setActiveCardId
+    setOfferId
   } = props;
 
   const {
@@ -51,8 +51,8 @@ function OfferCardComponent(props: OfferCardProps): JSX.Element {
 
   const link = AppRoute.Offer.replace(APP_ROUTE_PARAM_ID, id);
 
-  const handleCardMouseEnter = setActiveCardId && (() => setActiveCardId(id));
-  const handleCardMouseLeave = setActiveCardId && (() => setActiveCardId(''));
+  const handleCardMouseEnter = setOfferId && (() => setOfferId(id));
+  const handleCardMouseLeave = setOfferId && (() => setOfferId(''));
 
   const cardClassName = clsx(
     'place-card',

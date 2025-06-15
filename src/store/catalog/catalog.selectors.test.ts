@@ -9,6 +9,7 @@ import {
   getAllOffersGroupedByCity,
   getAllOffersByCity,
   getSortedAllOffersByCity,
+  getActiveOfferId,
 } from './catalog.selectors';
 
 describe('Catalog selectors', () => {
@@ -27,6 +28,7 @@ describe('Catalog selectors', () => {
       loadingStatus: RequestStatus.Success,
       city: activeCity,
       sorting: SortingOption.Default,
+      activeOfferId: 'd7cc86a5-ea62-4e5f-821c-5cb6318eb004',
     }
   };
 
@@ -53,6 +55,12 @@ describe('Catalog selectors', () => {
       const { sorting } = state[nameSpace];
       const result = getSorting(state);
       expect(result).toBe(sorting);
+    });
+
+    it('should return active offer ID from state', () => {
+      const { activeOfferId } = state[nameSpace];
+      const result = getActiveOfferId(state);
+      expect(result).toBe(activeOfferId);
     });
   });
 

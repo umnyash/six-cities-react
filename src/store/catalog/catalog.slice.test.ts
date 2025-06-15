@@ -1,5 +1,5 @@
 import { CatalogState } from '../../types/state';
-import { catalog, setCity, setSorting } from './catalog.slice';
+import { catalog, setCity, setSorting, setActiveOfferId } from './catalog.slice';
 import { RequestStatus, CITIES, SortingOption, FavoriteStatus } from '../../const';
 import { getMockOffers, getMockCardOffer } from '../../mocks/data';
 import { fetchAllOffers, changeFavoriteStatus } from '../async-actions';
@@ -11,6 +11,7 @@ describe('Catalog slice', () => {
       loadingStatus: RequestStatus.Success,
       city: CITIES[2],
       sorting: SortingOption.PriceAsc,
+      activeOfferId: '68a9fb53-f459-43be-b062-c23bc10d3067',
     };
     const unknownAction = { type: '' };
 
@@ -25,6 +26,7 @@ describe('Catalog slice', () => {
       loadingStatus: RequestStatus.None,
       city: CITIES[0],
       sorting: SortingOption.Default,
+      activeOfferId: '',
     };
     const unknownAction = { type: '' };
 
@@ -39,6 +41,7 @@ describe('Catalog slice', () => {
       loadingStatus: RequestStatus.None,
       city: CITIES[3],
       sorting: SortingOption.Default,
+      activeOfferId: '',
     };
 
     const result = catalog.reducer(undefined, setCity(CITIES[3]));
@@ -52,9 +55,24 @@ describe('Catalog slice', () => {
       loadingStatus: RequestStatus.None,
       city: CITIES[0],
       sorting: SortingOption.RatingDesc,
+      activeOfferId: '',
     };
 
     const result = catalog.reducer(undefined, setSorting(SortingOption.RatingDesc));
+
+    expect(result).toEqual(expectedState);
+  });
+
+  it('should change active offer id on "setActiveOfferId" action', () => {
+    const expectedState: CatalogState = {
+      offers: [],
+      loadingStatus: RequestStatus.None,
+      city: CITIES[0],
+      sorting: SortingOption.Default,
+      activeOfferId: 'c207bc3e-93ca-43e5-b9b9-e84476a946b6',
+    };
+
+    const result = catalog.reducer(undefined, setActiveOfferId('c207bc3e-93ca-43e5-b9b9-e84476a946b6'));
 
     expect(result).toEqual(expectedState);
   });
@@ -66,6 +84,7 @@ describe('Catalog slice', () => {
         loadingStatus: RequestStatus.Pending,
         city: CITIES[0],
         sorting: SortingOption.Default,
+        activeOfferId: '',
       };
 
       const result = catalog.reducer(undefined, fetchAllOffers.pending);
@@ -79,6 +98,7 @@ describe('Catalog slice', () => {
         loadingStatus: RequestStatus.Pending,
         city: CITIES[0],
         sorting: SortingOption.Default,
+        activeOfferId: '',
       };
       const mockOffers = getMockOffers(2);
       const expectedState: CatalogState = {
@@ -86,6 +106,7 @@ describe('Catalog slice', () => {
         loadingStatus: RequestStatus.Success,
         city: CITIES[0],
         sorting: SortingOption.Default,
+        activeOfferId: '',
       };
 
       const result = catalog.reducer(initialState, fetchAllOffers.fulfilled(
@@ -101,12 +122,14 @@ describe('Catalog slice', () => {
         loadingStatus: RequestStatus.Pending,
         city: CITIES[0],
         sorting: SortingOption.Default,
+        activeOfferId: '',
       };
       const expectedState: CatalogState = {
         offers: [],
         loadingStatus: RequestStatus.Error,
         city: CITIES[0],
         sorting: SortingOption.Default,
+        activeOfferId: '',
       };
 
       const result = catalog.reducer(initialState, fetchAllOffers.rejected);
@@ -124,6 +147,7 @@ describe('Catalog slice', () => {
         loadingStatus: RequestStatus.Success,
         city: CITIES[0],
         sorting: SortingOption.Default,
+        activeOfferId: '',
       };
       const mockTargetChangedOffer = { ...mockTargetOffer, isFavorite: true };
       const expectedState: CatalogState = {
@@ -131,6 +155,7 @@ describe('Catalog slice', () => {
         loadingStatus: RequestStatus.Success,
         city: CITIES[0],
         sorting: SortingOption.Default,
+        activeOfferId: '',
       };
 
       const result = catalog.reducer(initialState, changeFavoriteStatus.fulfilled(
@@ -147,6 +172,7 @@ describe('Catalog slice', () => {
         loadingStatus: RequestStatus.None,
         city: CITIES[0],
         sorting: SortingOption.Default,
+        activeOfferId: '',
       };
 
       expect(() => {

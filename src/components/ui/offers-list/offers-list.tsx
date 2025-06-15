@@ -8,14 +8,14 @@ import OfferCard, { OfferCardVariant } from '../offer-card';
 type OffersListProps = {
   offers: Offers;
   variant?: OffersListVariant;
-  setActiveCardId?: (id: string) => void;
+  setOfferId?: (id: string) => void;
 }
 
 function OffersList(props: OffersListProps): JSX.Element {
   const {
     offers,
     variant = OffersListVariant.CenteredRows,
-    setActiveCardId
+    setOfferId
   } = props;
 
   const listClassName = clsx(
@@ -35,7 +35,7 @@ function OffersList(props: OffersListProps): JSX.Element {
           key={offer.id}
           offer={offer}
           variant={cardVariant}
-          setActiveCardId={setActiveCardId}
+          setOfferId={setOfferId}
         />
       ))}
     </div>

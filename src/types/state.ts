@@ -15,6 +15,7 @@ export type CatalogState = {
   loadingStatus: RequestStatus;
   city: CityName;
   sorting: SortingOption;
+  activeOfferId: string;
 }
 
 export type NearbyOffersState = {
