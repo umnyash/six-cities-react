@@ -3,14 +3,13 @@ import clsx from 'clsx';
 
 import { CITIES } from '../../../const';
 import { CityName } from '../../../types/offers';
+import useAppSelector from '../../../hooks/use-app-selector';
 import useAppDispatch from '../../../hooks/use-app-dispatch';
+import { getCity } from '../../../store/catalog/catalog.selectors';
 import { setCity } from '../../../store/catalog/catalog.slice';
 
-type CitiesListProps = {
-  activeCity: CityName;
-};
-
-function CitiesListComponent({ activeCity }: CitiesListProps): JSX.Element {
+function CitiesListComponent(): JSX.Element {
+  const activeCity = useAppSelector(getCity);
   const dispatch = useAppDispatch();
 
   const getLinkClickHandler = (cityName: CityName) => (evt: MouseEvent) => {
