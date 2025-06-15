@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import clsx from 'clsx';
 
 import { RequestStatus } from '../../../const';
@@ -9,43 +9,28 @@ import {
   getAllOffersLoadingStatus,
   getCity,
   getAllOffersByCity,
-  getSortedAllOffersByCity,
 } from '../../../store/catalog/catalog.selectors';
-import { setActiveOfferId } from '../../../store/catalog/catalog.slice';
 
 import Button from '../../ui/button';
 import CatalogMap from '../../blocks/catalog-map';
+import CatalogOffers from '../../blocks/catalog-offers';
 import CitiesList from '../../ui/cities-list';
-import Sorting from '../../ui/sorting';
 import Spinner from '../../ui/spinner';
-import OffersList, { OffersListVariant } from '../../ui/offers-list';
 
 function MainPage(): JSX.Element {
-  const offersSectionElementRef = useRef<HTMLElement | null>(null);
   const dispatch = useAppDispatch();
 
   const offersLoadingStatus = useAppSelector(getAllOffersLoadingStatus);
   const activeCity = useAppSelector(getCity);
   const filteredOffers = useAppSelector(getAllOffersByCity);
   const filteredOffersCount = filteredOffers.length;
-  const filteredAndSortedOffers = useAppSelector(getSortedAllOffersByCity);
 
   useEffect(() => {
     dispatch(fetchAllOffers());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (offersSectionElementRef.current) {
-      offersSectionElementRef.current.scrollTop = 0;
-    }
-  }, [activeCity]);
-
   const handleLoadingButtonClick = () => {
     dispatch(fetchAllOffers());
-  };
-
-  const setCatalogActiveOfferId = (id: string) => {
-    dispatch(setActiveOfferId(id));
   };
 
   const mainClassName = clsx(
@@ -95,12 +80,7 @@ function MainPage(): JSX.Element {
           )}
 
           {offersLoadingStatus === RequestStatus.Success && filteredOffersCount && (
-            <section className="cities__places places" ref={offersSectionElementRef}>
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{filteredOffersCount} {(filteredOffersCount > 1) ? 'places' : 'place'} to stay in {activeCity}</b>
-              <Sorting />
-              <OffersList offers={filteredAndSortedOffers} variant={OffersListVariant.Rows} setOfferId={setCatalogActiveOfferId} />
-            </section>
+            <CatalogOffers />
           )}
 
           <div className="cities__right-section">
