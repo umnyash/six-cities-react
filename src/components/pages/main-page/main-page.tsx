@@ -10,13 +10,12 @@ import {
   getCity,
   getAllOffersByCity,
   getSortedAllOffersByCity,
-  getActiveOfferId
 } from '../../../store/catalog/catalog.selectors';
 import { setActiveOfferId } from '../../../store/catalog/catalog.slice';
 
 import Button from '../../ui/button';
+import CatalogMap from '../../blocks/catalog-map';
 import CitiesList from '../../ui/cities-list';
-import Map from '../../blocks/map';
 import Sorting from '../../ui/sorting';
 import Spinner from '../../ui/spinner';
 import OffersList, { OffersListVariant } from '../../ui/offers-list';
@@ -30,7 +29,6 @@ function MainPage(): JSX.Element {
   const filteredOffers = useAppSelector(getAllOffersByCity);
   const filteredOffersCount = filteredOffers.length;
   const filteredAndSortedOffers = useAppSelector(getSortedAllOffersByCity);
-  const activeOfferId = useAppSelector(getActiveOfferId);
 
   useEffect(() => {
     dispatch(fetchAllOffers());
@@ -107,12 +105,7 @@ function MainPage(): JSX.Element {
 
           <div className="cities__right-section">
             {offersLoadingStatus === RequestStatus.Success && filteredOffersCount && (
-              <Map
-                className="cities__map"
-                location={filteredOffers[0].city.location}
-                points={filteredOffers}
-                activePointId={activeOfferId}
-              />
+              <CatalogMap />
             )}
           </div>
         </div>
