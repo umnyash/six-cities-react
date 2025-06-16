@@ -7,8 +7,8 @@ import useAppSelector from '../../../hooks/use-app-selector';
 import { fetchAllOffers } from '../../../store/async-actions';
 import { getAllOffersLoadingStatus, getAllOffersByCity } from '../../../store/catalog/catalog.selectors';
 
-import Button from '../../ui/button';
 import CatalogPlaceholder from '../../blocks/catalog-placeholder';
+import CatalogError from '../../blocks/catalog-error';
 import CatalogMap from '../../blocks/catalog-map';
 import CatalogOffers from '../../blocks/catalog-offers';
 import CitiesList from '../../ui/cities-list';
@@ -24,10 +24,6 @@ function MainPage(): JSX.Element {
   useEffect(() => {
     dispatch(fetchAllOffers());
   }, [dispatch]);
-
-  const handleLoadingButtonClick = () => {
-    dispatch(fetchAllOffers());
-  };
 
   const mainClassName = clsx(
     'page__main page__main--index',
@@ -52,18 +48,7 @@ function MainPage(): JSX.Element {
           {offersLoadingStatus === RequestStatus.Pending && <Spinner />}
 
           {offersLoadingStatus === RequestStatus.Error && (
-            <section className="cities__no-places">
-              <div className="cities__status-wrapper tabs__content">
-                <b className="cities__status">Something went wrong</b>
-                <p className="cities__status-description">We couldn&apos;t load the offers. Please try again later.</p>
-                <Button
-                  style={{ marginTop: '20px', minWidth: '200px' }}
-                  onClick={handleLoadingButtonClick}
-                >
-                  Try again
-                </Button>
-              </div>
-            </section>
+            <CatalogError />
           )}
 
           {offersLoadingStatus === RequestStatus.Success && !filteredOffersCount && (
