@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import useAppSelector from '../../../hooks/use-app-selector';
 import useAppDispatch from '../../../hooks/use-app-dispatch';
-import { getCity, getSortedAllOffersByCity } from '../../../store/catalog/catalog.selectors';
+import { getCity, getSortedAllOffersByCity, getSorting } from '../../../store/catalog/catalog.selectors';
 import { setActiveOfferId } from '../../../store/catalog/catalog.slice';
 
 import Sorting from '../../ui/sorting';
@@ -11,6 +11,7 @@ import OffersList, { OffersListVariant } from '../../ui/offers-list';
 function CatalogOffers(): JSX.Element {
   const offersSectionElementRef = useRef<HTMLElement | null>(null);
   const activeCity = useAppSelector(getCity);
+  const sorting = useAppSelector(getSorting);
   const dispatch = useAppDispatch();
 
   const offers = useAppSelector(getSortedAllOffersByCity);
@@ -19,7 +20,7 @@ function CatalogOffers(): JSX.Element {
     if (offersSectionElementRef.current) {
       offersSectionElementRef.current.scrollTop = 0;
     }
-  }, [activeCity]);
+  }, [activeCity, sorting]);
 
   const setCatalogActiveOfferId = (id: string) => {
     dispatch(setActiveOfferId(id));
