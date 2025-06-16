@@ -42,7 +42,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
-      <label className="reviews__label form__label" htmlFor="review">Your review</label>
+      <label className="reviews__label form__label" htmlFor="comment">Your review</label>
       <StarsRating
         value={formData.rating}
         onChange={handleFieldChange}
