@@ -1,15 +1,12 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
-import { RequestStatus } from '../../../const';
+import { RequestStatus, ReviewCommentLength } from '../../../const';
 import useAppDispatch from '../../../hooks/use-app-dispatch';
 import useAppSelector from '../../../hooks/use-app-selector';
 import { getReviewSubmittingStatus } from '../../../store/reviews/reviews.selectors';
 import { submitReview } from '../../../store/async-actions';
 
 import StarsRating from '../stars-rating';
-
-const MIN_COMMENT_LENGTH = 50;
-const MAX_COMMENT_LENGTH = 300;
 
 type ReviewFormProps = {
   offerId: string;
@@ -60,10 +57,10 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50</b>{' '}
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{ReviewCommentLength.Min}</b>{' '}
 
-          {formData.comment.length > MAX_COMMENT_LENGTH && (
-            <>and no more than <b className="reviews__text-amount">300</b>{' '}</>
+          {formData.comment.length > ReviewCommentLength.Max && (
+            <>and no more than <b className="reviews__text-amount">{ReviewCommentLength.Max}</b>{' '}</>
           )}
 
           <b className="reviews__text-amount">characters</b>.
@@ -73,8 +70,8 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
           type="submit"
           disabled={
             !formData.rating ||
-            formData.comment.length < MIN_COMMENT_LENGTH ||
-            formData.comment.length > MAX_COMMENT_LENGTH ||
+            formData.comment.length < ReviewCommentLength.Min ||
+            formData.comment.length > ReviewCommentLength.Max ||
             reviewSubmittingStatus === RequestStatus.Pending
           }
         >

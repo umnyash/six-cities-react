@@ -65,6 +65,11 @@ export enum NameSpace {
   Reviews = 'REVIEWS',
 }
 
+export const ReviewCommentLength = {
+  Min: 50,
+  Max: 300,
+} as const;
+
 export enum FavoriteStatus {
   Off = 0,
   On = 1,
