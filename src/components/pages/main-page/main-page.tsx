@@ -5,13 +5,10 @@ import { RequestStatus } from '../../../const';
 import useAppDispatch from '../../../hooks/use-app-dispatch';
 import useAppSelector from '../../../hooks/use-app-selector';
 import { fetchAllOffers } from '../../../store/async-actions';
-import {
-  getAllOffersLoadingStatus,
-  getCity,
-  getAllOffersByCity,
-} from '../../../store/catalog/catalog.selectors';
+import { getAllOffersLoadingStatus, getAllOffersByCity } from '../../../store/catalog/catalog.selectors';
 
 import Button from '../../ui/button';
+import CatalogPlaceholder from '../../blocks/catalog-placeholder';
 import CatalogMap from '../../blocks/catalog-map';
 import CatalogOffers from '../../blocks/catalog-offers';
 import CitiesList from '../../ui/cities-list';
@@ -21,7 +18,6 @@ function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const offersLoadingStatus = useAppSelector(getAllOffersLoadingStatus);
-  const activeCity = useAppSelector(getCity);
   const filteredOffers = useAppSelector(getAllOffersByCity);
   const filteredOffersCount = filteredOffers.length;
 
@@ -71,12 +67,7 @@ function MainPage(): JSX.Element {
           )}
 
           {offersLoadingStatus === RequestStatus.Success && !filteredOffersCount && (
-            <section className="cities__no-places">
-              <div className="cities__status-wrapper tabs__content">
-                <b className="cities__status">No places to stay available</b>
-                <p className="cities__status-description">We could not find any property available at the moment in {activeCity}</p>
-              </div>
-            </section>
+            <CatalogPlaceholder />
           )}
 
           {offersLoadingStatus === RequestStatus.Success && filteredOffersCount && (
