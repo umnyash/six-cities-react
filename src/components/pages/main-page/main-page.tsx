@@ -45,7 +45,9 @@ function MainPage(): JSX.Element {
       </div>
       <div className="cities">
         <div className={containerClassName}>
-          {offersLoadingStatus === RequestStatus.Pending && <Spinner />}
+          {offersLoadingStatus === RequestStatus.Pending && (
+            <Spinner />
+          )}
 
           {offersLoadingStatus === RequestStatus.Error && (
             <CatalogError />
