@@ -5,6 +5,10 @@ import { fetchFavoritesOnAuth } from './middlewares';
 
 export const api = createAPI();
 
+export type ThunkAPI = {
+  extra: typeof api;
+}
+
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>

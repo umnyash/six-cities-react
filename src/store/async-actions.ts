@@ -1,5 +1,5 @@
-import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { ThunkAPI } from './index';
 import { AuthData, AuthUser, User } from '../types/user';
 import { Offers, CardOffer, PageOffer } from '../types/offers';
 import { Reviews, Review, ReviewContent } from '../types/reviews';
@@ -7,10 +7,6 @@ import { NameSpace, FavoriteStatus } from '../const';
 import { apiPaths } from '../services/api';
 import { saveToken, dropToken } from '../services/token';
 import { omit } from '../util';
-
-type ThunkAPI = {
-  extra: AxiosInstance;
-}
 
 export const checkUserAuth = createAsyncThunk<User, undefined, ThunkAPI>(
   `${NameSpace.User}/checkAuth`,
