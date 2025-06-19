@@ -1,0 +1,74 @@
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import MockAdapter from 'axios-mock-adapter';
+import { Action } from 'redux';
+import thunk from 'redux-thunk';
+import { StatusCodes } from 'http-status-codes';
+import { toast } from 'react-toastify';
+
+import { State } from '../../../types/state';
+import { createAPI, apiPaths } from '../../../services/api';
+import { AppThunkDispatch } from '../../../mocks/types';
+import { getMockOffer } from '../../../mocks/data';
+import { extractActionsTypes } from '../../../mocks/util';
+
+import { fetchOffer } from './fetch-offer';
+
+vi.mock('react-toastify', () => ({
+  toast: {
+    warn: vi.fn(),
+  }
+}));
+
+describe('Async action: fetchOffer', () => {
+  const api = createAPI();
+  const mockAPIAdapter = new MockAdapter(api);
+  const middleware = [thunk.withExtraArgument(api)];
+  const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
+  let store: ReturnType<typeof mockStoreCreator>;
+
+  beforeEach(() => {
+    store = mockStoreCreator({ CATALOG: { offers: [] } });
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('should call "toast.warn" with error message on network failure', async () => {
+    const networkErrorMessage = /Network error/i;
+    mockAPIAdapter.onGet(apiPaths.offer('existingOfferId')).networkError();
+
+    await store.dispatch(fetchOffer('existingOfferId'));
+
+    expect(toast.warn).toHaveBeenCalledTimes(1);
+    expect(toast.warn).toHaveBeenCalledWith(expect.stringMatching(networkErrorMessage));
+  });
+
+  it('should dispatch "fetchOffer.pending", "fetchOffer.fulfilled" and return offer data when server responds with 200', async () => {
+    const mockOffer = getMockOffer();
+    mockAPIAdapter.onGet(apiPaths.offer('existingOfferId')).reply(StatusCodes.OK, mockOffer);
+
+    await store.dispatch(fetchOffer('existingOfferId'));
+    const dispatchedActions = store.getActions();
+    const actionsTypes = extractActionsTypes(dispatchedActions);
+    const fetchOfferFulfilled = dispatchedActions[1] as ReturnType<typeof fetchOffer.fulfilled>;
+
+    expect(actionsTypes).toEqual([
+      fetchOffer.pending.type,
+      fetchOffer.fulfilled.type,
+    ]);
+    expect(fetchOfferFulfilled.payload).toEqual(mockOffer);
+  });
+
+  it('should dispatch "fetchOffer.pending", "fetchOffer.rejected" when server responds with 404', async () => {
+    mockAPIAdapter.onGet(apiPaths.offer('nonExistentOfferId')).reply(StatusCodes.NOT_FOUND);
+
+    await store.dispatch(fetchOffer('nonExistentOfferId'));
+    const actionsTypes = extractActionsTypes(store.getActions());
+
+    expect(actionsTypes).toEqual([
+      fetchOffer.pending.type,
+      fetchOffer.rejected.type,
+    ]);
+  });
+});
