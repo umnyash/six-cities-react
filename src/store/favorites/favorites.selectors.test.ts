@@ -7,14 +7,14 @@ describe('Favorites selectors', () => {
 
   const state = {
     [nameSpace]: {
-      favorites: getMockOffers(4),
+      offers: getMockOffers(4),
       loadingStatus: RequestStatus.Success,
       changingOffersIds: ['id1', 'id2'],
     },
   };
 
   it('should return favorites offers from state', () => {
-    const { favorites } = state[nameSpace];
+    const { offers: favorites } = state[nameSpace];
     const result = getFavorites(state);
     expect(result).toEqual(favorites);
   });

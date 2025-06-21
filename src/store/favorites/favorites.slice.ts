@@ -6,16 +6,16 @@ import { fetchFavorites, changeFavoriteStatus } from '../async-actions';
 import { removeArrayItem } from '../../util';
 
 const initialState: FavoritesState = {
-  favorites: [],
+  offers: [],
   loadingStatus: RequestStatus.None,
   changingOffersIds: [],
 };
 
 const updateFavorites = (state: FavoritesState, offer: CardOffer) => {
   if (offer.isFavorite) {
-    state.favorites.push(offer);
+    state.offers.push(offer);
   } else {
-    removeArrayItem(state.favorites, { id: offer.id });
+    removeArrayItem(state.offers, { id: offer.id });
   }
 };
 
@@ -29,7 +29,7 @@ export const favorites = createSlice({
         state.loadingStatus = RequestStatus.Pending;
       })
       .addCase(fetchFavorites.fulfilled, (state, action) => {
-        state.favorites = action.payload;
+        state.offers = action.payload;
         state.loadingStatus = RequestStatus.Success;
       })
       .addCase(fetchFavorites.rejected, (state) => {

@@ -29,7 +29,7 @@ export type OfferState = {
 }
 
 export type FavoritesState = {
-  favorites: Offers;
+  offers: Offers;
   loadingStatus: RequestStatus;
   changingOffersIds: string[];
 }

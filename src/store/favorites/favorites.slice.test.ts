@@ -7,7 +7,7 @@ import { favorites } from './favorites.slice';
 describe('Favorites slice', () => {
   it('should return current state when action is unknown', () => {
     const expectedState: FavoritesState = {
-      favorites: getMockOffers(4),
+      offers: getMockOffers(4),
       loadingStatus: RequestStatus.Success,
       changingOffersIds: ['id1', 'id2'],
     };
@@ -20,7 +20,7 @@ describe('Favorites slice', () => {
 
   it('should return initial state when state is undefined and action is unknown', () => {
     const expectedState: FavoritesState = {
-      favorites: [],
+      offers: [],
       loadingStatus: RequestStatus.None,
       changingOffersIds: [],
     };
@@ -34,7 +34,7 @@ describe('Favorites slice', () => {
   describe('fetchFavorites', () => {
     it('should set "Pending" loading status on "fetchFavorites.pending" action', () => {
       const expectedState: FavoritesState = {
-        favorites: [],
+        offers: [],
         loadingStatus: RequestStatus.Pending,
         changingOffersIds: [],
       };
@@ -47,12 +47,12 @@ describe('Favorites slice', () => {
     it('should set favorites data and "Success" loading status on "fetchFavorites.fulfilled" action', () => {
       const mockOffers = getMockOffers(4, { isFavorite: true });
       const initialState: FavoritesState = {
-        favorites: [],
+        offers: [],
         loadingStatus: RequestStatus.Pending,
         changingOffersIds: [],
       };
       const expectedState: FavoritesState = {
-        favorites: mockOffers,
+        offers: mockOffers,
         loadingStatus: RequestStatus.Success,
         changingOffersIds: [],
       };
@@ -66,12 +66,12 @@ describe('Favorites slice', () => {
 
     it('should set "Error" loading status on "fetchFavorites.rejected" action', () => {
       const initialState: FavoritesState = {
-        favorites: [],
+        offers: [],
         loadingStatus: RequestStatus.Pending,
         changingOffersIds: [],
       };
       const expectedState: FavoritesState = {
-        favorites: [],
+        offers: [],
         loadingStatus: RequestStatus.Error,
         changingOffersIds: [],
       };
@@ -86,12 +86,12 @@ describe('Favorites slice', () => {
     it('should not modify favorites data and add offer ID to "changingOffersIds" array on "changeFavoriteStatus.pending" action', () => {
       const mockChangingOfferId = 'changing-offer-id';
       const initialState: FavoritesState = {
-        favorites: [],
+        offers: [],
         loadingStatus: RequestStatus.Success,
         changingOffersIds: ['id1', 'id2'],
       };
       const expectedState: FavoritesState = {
-        favorites: [],
+        offers: [],
         loadingStatus: RequestStatus.Success,
         changingOffersIds: ['id1', 'id2', mockChangingOfferId],
       };
@@ -108,12 +108,12 @@ describe('Favorites slice', () => {
         const mockFavoritesOffers = getMockOffers(3, { isFavorite: true });
         const mockChangedOffer = getMockCardOffer({ isFavorite: true });
         const initialState: FavoritesState = {
-          favorites: mockFavoritesOffers,
+          offers: mockFavoritesOffers,
           loadingStatus: RequestStatus.Success,
           changingOffersIds: ['id1', mockChangedOffer.id, 'id2'],
         };
         const expectedState: FavoritesState = {
-          favorites: [...mockFavoritesOffers, mockChangedOffer],
+          offers: [...mockFavoritesOffers, mockChangedOffer],
           loadingStatus: RequestStatus.Success,
           changingOffersIds: ['id1', 'id2'],
         };
@@ -128,12 +128,12 @@ describe('Favorites slice', () => {
       it('should not modify favorites data when adding favorite fails and remove offer ID from "changingOffersIds" array on "changeFavoriteStatus.rejected" action', () => {
         const mockChangingOffer = getMockCardOffer({ isFavorite: false });
         const initialState: FavoritesState = {
-          favorites: [],
+          offers: [],
           loadingStatus: RequestStatus.Success,
           changingOffersIds: ['id1', mockChangingOffer.id, 'id2'],
         };
         const expectedState: FavoritesState = {
-          favorites: [],
+          offers: [],
           loadingStatus: RequestStatus.Success,
           changingOffersIds: ['id1', 'id2'],
         };
@@ -153,12 +153,12 @@ describe('Favorites slice', () => {
         const mockChangedOffer = getMockCardOffer({ isFavorite: true });
 
         const initialState: FavoritesState = {
-          favorites: [...mockPreviousFavoritesOffers, mockChangedOffer, ...mockNextFavoritesOffers],
+          offers: [...mockPreviousFavoritesOffers, mockChangedOffer, ...mockNextFavoritesOffers],
           loadingStatus: RequestStatus.Success,
           changingOffersIds: ['id1', mockChangedOffer.id, 'id2'],
         };
         const expectedState: FavoritesState = {
-          favorites: [...mockPreviousFavoritesOffers, ...mockNextFavoritesOffers],
+          offers: [...mockPreviousFavoritesOffers, ...mockNextFavoritesOffers],
           loadingStatus: RequestStatus.Success,
           changingOffersIds: ['id1', 'id2'],
         };
@@ -173,12 +173,12 @@ describe('Favorites slice', () => {
       it('should not modify favorites data when removing favorite fails and remove offer ID from "changingOffersIds" array on "changeFavoriteStatus.rejected" action', () => {
         const mockChangingOffer = getMockCardOffer({ isFavorite: true });
         const initialState: FavoritesState = {
-          favorites: [mockChangingOffer],
+          offers: [mockChangingOffer],
           loadingStatus: RequestStatus.Success,
           changingOffersIds: ['id1', mockChangingOffer.id, 'id2'],
         };
         const expectedState: FavoritesState = {
-          favorites: [mockChangingOffer],
+          offers: [mockChangingOffer],
           loadingStatus: RequestStatus.Success,
           changingOffersIds: ['id1', 'id2'],
         };
