@@ -1,5 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
+import { Routes, Route } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../../const';
 import useAppSelector from '../../../hooks/use-app-selector';
@@ -19,51 +18,45 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
-    return (
-      <HelmetProvider>
-        <LoadingPage />
-      </HelmetProvider>
-    );
+    return <LoadingPage />;
   }
 
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path={AppRoute.Root} element={<Layout />}>
-            <Route
-              index
-              element={<MainPage />}
-            />
-            <Route
-              path={AppRoute.Offer}
-              element={<OfferPage />}
-            />
-            <Route
-              path={AppRoute.Login}
-              element={
-                <ExclusiveRoute onlyFor={AuthorizationStatus.NoAuth}>
-                  <LoginPage />
-                </ExclusiveRoute>
-              }
-            />
-            <Route
-              path={AppRoute.Favorites}
-              element={
-                <ExclusiveRoute onlyFor={AuthorizationStatus.Auth}>
-                  <FavoritesPage />
-                </ExclusiveRoute>
-              }
-            />
-            <Route
-              path="*"
-              element={<NotFoundPage />}
-            />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </HelmetProvider>
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path={AppRoute.Root} element={<Layout />}>
+          <Route
+            index
+            element={<MainPage />}
+          />
+          <Route
+            path={AppRoute.Offer}
+            element={<OfferPage />}
+          />
+          <Route
+            path={AppRoute.Login}
+            element={
+              <ExclusiveRoute onlyFor={AuthorizationStatus.NoAuth}>
+                <LoginPage />
+              </ExclusiveRoute>
+            }
+          />
+          <Route
+            path={AppRoute.Favorites}
+            element={
+              <ExclusiveRoute onlyFor={AuthorizationStatus.Auth}>
+                <FavoritesPage />
+              </ExclusiveRoute>
+            }
+          />
+          <Route
+            path="*"
+            element={<NotFoundPage />}
+          />
+        </Route>
+      </Routes>
+    </>
   );
 }
 
