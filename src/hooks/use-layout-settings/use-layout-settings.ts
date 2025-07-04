@@ -1,9 +1,9 @@
 import { useMatch } from 'react-router-dom';
 import { AppRoute, PageTitle } from '../../const';
-import useAppSelector from '../../hooks/use-app-selector';
+import { useAppSelector } from '../use-app-selector/use-app-selector';
 import { getFavorites } from '../../store/favorites/favorites.selectors';
 
-const useLayoutSettings = () => {
+export const useLayoutSettings = () => {
   let pageTitle = PageTitle.Root;
   let pageClassName = 'page';
   let withUserNavigation = true;
@@ -43,5 +43,3 @@ const useLayoutSettings = () => {
 
   return { pageTitle, pageClassName, withUserNavigation, withFooter };
 };
-
-export default useLayoutSettings;

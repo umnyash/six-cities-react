@@ -3,8 +3,7 @@ import clsx from 'clsx';
 
 import { CITIES } from '../../../const';
 import { CityName } from '../../../types/offers';
-import useAppSelector from '../../../hooks/use-app-selector';
-import useAppDispatch from '../../../hooks/use-app-dispatch';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getCity } from '../../../store/catalog/catalog.selectors';
 import { setCity } from '../../../store/catalog/catalog.slice';
 

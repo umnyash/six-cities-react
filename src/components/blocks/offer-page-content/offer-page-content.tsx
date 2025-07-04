@@ -1,8 +1,7 @@
 import { NEARBY_OFFERS_COUNT } from '../../../const';
 import { PageOffer } from '../../../types/offers';
-import useAppSelector from '../../../hooks/use-app-selector';
+import { useAppSelector, useArrayRandomIndices } from '../../../hooks';
 import { getNearbyOffers, getNearbyOffersLoadingStatus } from '../../../store/nearby-offers/nearby-offers.selectors';
-import useArrayRandomIndices from '../../../hooks/use-array-random-indices';
 import Offer from '../offer';
 import Offers from '../offers';
 

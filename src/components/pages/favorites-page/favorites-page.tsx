@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import { RequestStatus } from '../../../const';
-import useAppSelector from '../../../hooks/use-app-selector';
+import { useAppSelector } from '../../../hooks';
 import { getFavorites, getFavoritesLoadingStatus } from '../../../store/favorites/favorites.selectors';
 
 import Favorites from '../../blocks/favorites';

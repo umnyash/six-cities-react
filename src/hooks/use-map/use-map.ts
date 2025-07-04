@@ -29,4 +29,4 @@ function useMap<T extends HTMLElement>(mapRef: RefObject<T>, location: Location)
   return map;
 }
 
-export default useMap;
+export { useMap };

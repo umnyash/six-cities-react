@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import clsx from 'clsx';
 
 import { RequestStatus } from '../../../const';
-import useAppDispatch from '../../../hooks/use-app-dispatch';
-import useAppSelector from '../../../hooks/use-app-selector';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllOffers } from '../../../store/async-actions';
 import { getAllOffersLoadingStatus, getAllOffersByCity } from '../../../store/catalog/catalog.selectors';
 

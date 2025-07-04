@@ -2,8 +2,7 @@ import { useState, memo } from 'react';
 import { clsx } from 'clsx';
 
 import { SortingOption } from '../../../const';
-import useAppSelector from '../../../hooks/use-app-selector';
-import useAppDispatch from '../../../hooks/use-app-dispatch';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { setSorting } from '../../../store/catalog/catalog.slice';
 import { getSorting } from '../../../store/catalog/catalog.selectors';
 

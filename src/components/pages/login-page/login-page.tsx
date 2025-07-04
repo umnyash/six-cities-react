@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CITIES, AppRoute } from '../../../const';
 import { CityName } from '../../../types/offers';
 import { getRandomArrayItem } from '../../../util';
-import useAppDispatch from '../../../hooks/use-app-dispatch';
+import { useAppDispatch } from '../../../hooks';
 import { setCity } from '../../../store/catalog/catalog.slice';
 
 import LoginForm from '../../ui/login-form';

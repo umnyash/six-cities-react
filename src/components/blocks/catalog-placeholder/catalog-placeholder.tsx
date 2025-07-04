@@ -1,4 +1,4 @@
-import useAppSelector from '../../../hooks/use-app-selector';
+import { useAppSelector } from '../../../hooks';
 import { getCity } from '../../../store/catalog/catalog.selectors';
 
 function CatalogPlaceholder() {

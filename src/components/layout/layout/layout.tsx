@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-import useLayoutSettings from '../../../hooks/use-layout-settings';
+import { useLayoutSettings } from '../../../hooks';
 
 import Header from '../header';
 import Footer from '../footer';

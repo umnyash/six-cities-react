@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import useAppSelector from '../../../hooks/use-app-selector';
-import useAppDispatch from '../../../hooks/use-app-dispatch';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getCity, getSortedAllOffersByCity, getSorting } from '../../../store/catalog/catalog.selectors';
 import { setActiveOfferId } from '../../../store/catalog/catalog.slice';
 

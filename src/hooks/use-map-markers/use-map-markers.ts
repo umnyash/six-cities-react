@@ -38,4 +38,4 @@ function useMapMarkers(map: Map | null, points: Points, activePointId?: string) 
   }, [map, points, activePointId]);
 }
 
-export default useMapMarkers;
+export { useMapMarkers };

@@ -3,9 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import clsx from 'clsx';
 
 import { Location, Points } from '../../../types/offers';
-import useMap from '../../../hooks/use-map';
-import useMapView from '../../../hooks/use-map-view';
-import useMapMarkers from '../../../hooks/use-map-markers';
+import { useMap, useMapMarkers, useMapView } from '../../../hooks';
 
 type MapProps = {
   className: string;

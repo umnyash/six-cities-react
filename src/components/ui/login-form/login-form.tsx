@@ -1,8 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 
 import { RequestStatus } from '../../../const';
-import useAppDispatch from '../../../hooks/use-app-dispatch';
-import useAppSelector from '../../../hooks/use-app-selector';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { loginUser } from '../../../store/async-actions';
 import { getLoggingInStatus } from '../../../store/user/user.selectors';
 

@@ -3,8 +3,7 @@ import clsx from 'clsx';
 
 import { AppRoute, AuthorizationStatus, FavoriteStatus } from '../../../const';
 import { LocationState } from '../../../types/location';
-import useAppSelector from '../../../hooks/use-app-selector';
-import useAppDispatch from '../../../hooks/use-app-dispatch';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { changeFavoriteStatus } from '../../../store/async-actions';
 import { getAuthorizationStatus } from '../../../store/user/user.selectors';
 import { getChangingOffersIds } from '../../../store/favorites/favorites.selectors';

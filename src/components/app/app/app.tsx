@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../../const';
-import useAppSelector from '../../../hooks/use-app-selector';
+import { useAppSelector } from '../../../hooks';
 import { getAuthorizationStatus } from '../../../store/user/user.selectors';
 
 import Layout from '../../layout/layout';

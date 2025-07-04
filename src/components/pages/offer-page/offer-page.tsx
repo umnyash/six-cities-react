@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { RequestStatus } from '../../../const';
-import useAppDispatch from '../../../hooks/use-app-dispatch';
-import useAppSelector from '../../../hooks/use-app-selector';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchOffer, fetchReviews, fetchNearbyOffers } from '../../../store/async-actions';
 import { getOffer, getOfferLoadingStatus } from '../../../store/offer/offer.selectors';
 

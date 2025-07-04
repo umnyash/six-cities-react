@@ -3,8 +3,7 @@ import { Link, useLocation, Location } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../../const';
 import { LocationState } from '../../../types/location';
-import useAppSelector from '../../../hooks/use-app-selector';
-import useAppDispatch from '../../../hooks/use-app-dispatch';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { logoutUser } from '../../../store/async-actions';
 import { getAuthorizationStatus, getUser } from '../../../store/user/user.selectors';
 import { getFavorites } from '../../../store/favorites/favorites.selectors';

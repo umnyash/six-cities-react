@@ -1,4 +1,4 @@
-import useAppDispatch from '../../../hooks/use-app-dispatch';
+import { useAppDispatch } from '../../../hooks';
 import { fetchAllOffers } from '../../../store/async-actions';
 
 import Button from '../../ui/button';

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import { Offers } from '../../../types/offers';
-import useAppDispatch from '../../../hooks/use-app-dispatch';
+import { useAppDispatch } from '../../../hooks';
 import { fetchFavorites } from '../../../store/async-actions';
 
 import FavoritesList from '../../ui/favorites-list';

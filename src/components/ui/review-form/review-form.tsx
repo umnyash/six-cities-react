@@ -1,8 +1,7 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
 import { RequestStatus, ReviewCommentLength } from '../../../const';
-import useAppDispatch from '../../../hooks/use-app-dispatch';
-import useAppSelector from '../../../hooks/use-app-selector';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getReviewSubmittingStatus } from '../../../store/reviews/reviews.selectors';
 import { submitReview } from '../../../store/async-actions';
 

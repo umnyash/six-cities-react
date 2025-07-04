@@ -15,4 +15,4 @@ function useMapView(map: Map | null, location: Location) {
   }, [map, location]);
 }
 
-export default useMapView;
+export { useMapView };

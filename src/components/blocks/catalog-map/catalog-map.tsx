@@ -1,4 +1,4 @@
-import useAppSelector from '../../../hooks/use-app-selector';
+import { useAppSelector } from '../../../hooks';
 import { getAllOffersByCity, getActiveOfferId } from '../../../store/catalog/catalog.selectors';
 
 import Map from '../map';

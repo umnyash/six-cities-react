@@ -18,4 +18,4 @@ function useArrayRandomIndices(arrayLength: number, count: number, loadingStatus
   return indices;
 }
 
-export default useArrayRandomIndices;
+export { useArrayRandomIndices };
