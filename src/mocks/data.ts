@@ -59,10 +59,11 @@ export const getMockCity = (cityName?: CityName) => ({
   location: getRandomLocation(),
 });
 
-const getMockAuthor = (): Author => ({
+export const getMockAuthor = (preset: Partial<Author> = {}): Author => ({
   name: faker.person.fullName(),
   avatarUrl: faker.system.filePath(),
   isPro: Boolean(getRandomInt(0, 1)),
+  ...preset
 });
 
 export const getMockUser = (): User => ({
