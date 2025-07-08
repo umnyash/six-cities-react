@@ -55,7 +55,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         onChange={handleFieldChange}
       />
       <div className="reviews__button-wrapper">
-        <p className="reviews__help">
+        <p className="reviews__help" data-testid="review-form-help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{ReviewCommentLength.Min}</b>{' '}
 
           {formData.comment.length > ReviewCommentLength.Max && (

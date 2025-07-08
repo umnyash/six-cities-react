@@ -29,7 +29,7 @@ function OffersList(props: OffersListProps): JSX.Element {
     : OfferCardVariant.Default;
 
   return (
-    <div className={listClassName}>
+    <div className={listClassName} data-testid="offers-list">
       {offers.map((offer) => (
         <OfferCard
           key={offer.id}

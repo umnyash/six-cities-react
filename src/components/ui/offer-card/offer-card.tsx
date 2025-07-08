@@ -76,17 +76,18 @@ function OfferCardComponent(props: OfferCardProps): JSX.Element {
       onMouseEnter={handleCardMouseEnter}
       onMouseLeave={handleCardMouseLeave}
     >
-      {isPremium &&
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
-        </div>}
+        </div>
+      )}
 
-      <div className={cardImageWrapperClassName}>
+      <div className={cardImageWrapperClassName} data-testid="place-card-image-wrapper">
         <Link to={link}>
           <img className="place-card__image" src={previewImage} {...imageSizes[variant]} alt="Place image" />
         </Link>
       </div>
-      <div className={cardInfoClassName}>
+      <div className={cardInfoClassName} data-testid="place-card-info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>{' '}

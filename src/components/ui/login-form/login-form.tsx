@@ -40,6 +40,7 @@ function LoginForm(): JSX.Element {
           required
           disabled={loggingInStatus === RequestStatus.Pending}
           onChange={handleFieldChange}
+          data-testid="email-field"
         />
       </div>
       <div className="login__input-wrapper form__input-wrapper">
@@ -56,6 +57,7 @@ function LoginForm(): JSX.Element {
           onChange={handleFieldChange}
           pattern="(?=.*[a-zA-Z])(?=.*\d).*"
           title="Пароль должен состоять минимум из одной буквы и цифры."
+          data-testid="password-field"
         />
       </div>
       <Button

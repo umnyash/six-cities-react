@@ -14,7 +14,7 @@ function StarsRating({ value, onChange, disabled, className }: StarsRatingProps)
   const containerClassName = clsx('form__rating', className);
 
   return (
-    <div className={containerClassName}>
+    <div className={containerClassName} data-testid="stars-rating">
       {RATINGS.map((rating, index) => {
         const ratingValue = (index + 1);
 

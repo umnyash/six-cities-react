@@ -20,9 +20,9 @@ function StarsIcon({ rating, withHiddenValue, size = StarsIconSize.S }: StarsIco
   const ratingLabel = withHiddenValue ? `Rating: ${rating}` : 'Rating';
 
   return (
-    <div className={className}>
-      <span style={{ width: `${roundOffRating(rating) * 20}%` }} />
-      <span className="visually-hidden">{ratingLabel}</span>
+    <div className={className} data-testid="stars-container">
+      <span style={{ width: `${roundOffRating(rating) * 20}%` }} data-testid="active-stars" />
+      <span className="visually-hidden" data-testid="stars-icon-label">{ratingLabel}</span>
     </div>
   );
 }
