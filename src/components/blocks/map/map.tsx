@@ -26,7 +26,7 @@ function Map(props: MapProps): JSX.Element {
   );
 
   return (
-    <section ref={mapRef} className={mapClassName}></section>
+    <section ref={mapRef} className={mapClassName} data-testid="map"></section>
   );
 }
 

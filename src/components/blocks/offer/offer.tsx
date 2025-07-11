@@ -33,7 +33,7 @@ function Offer({ offer, nearbyOffers }: OfferProps): JSX.Element {
   return (
     <section className="offer">
       <div className="offer__gallery-container container">
-        <div className="offer__gallery">
+        <div className="offer__gallery" data-testid="offer-gallery">
           {images.slice(0, OFFER_PHOTOS_MAX_COUNT).map((image) => (
             <div className="offer__image-wrapper" key={image}>
               <img className="offer__image" src={image} alt="Photo studio" />
@@ -54,7 +54,7 @@ function Offer({ offer, nearbyOffers }: OfferProps): JSX.Element {
           </div>
           <div className="offer__rating rating">
             <StarsIcon rating={rating} size={StarsIconSize.L} />
-            <span className="offer__rating-value rating__value">{rating}</span>
+            <span className="offer__rating-value rating__value" data-testid="offer-rating-value">{rating}</span>
           </div>
           <ul className="offer__features">
             <li className="offer__feature offer__feature--entire">
