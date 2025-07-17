@@ -10,7 +10,7 @@ function Layout(): JSX.Element {
   const { pageTitle, pageClassName, withUserNavigation, withFooter } = useLayoutSettings();
 
   return (
-    <div className={pageClassName} style={{ paddingLeft: 'calc(100vw - 100%)' }}>
+    <div className={pageClassName} style={{ paddingLeft: 'calc(100vw - 100%)' }} data-testid="layout">
       <Helmet>
         <title>{pageTitle}</title>
       </Helmet>
