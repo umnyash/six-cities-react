@@ -30,6 +30,7 @@ function LoginPage(): JSX.Element {
               className="locations__item-link"
               to={AppRoute.Root}
               onClick={getCityButtonClickHandler(randomCityName)}
+              data-test-id="login-page-city-link"
             >
               <span>{randomCityName}</span>
             </Link>
