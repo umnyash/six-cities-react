@@ -1,6 +1,7 @@
 import { NearbyOffersState } from '../../types/state';
 import { nearbyOffers } from './nearby-offers.slice';
-import { RequestStatus, FavoriteStatus } from '../../const';
+import { RequestStatus } from '../../const';
+import { FavoriteStatus } from '../../services/api';
 import { getMockOffers, getMockCardOffer } from '../../mocks/data';
 import { fetchNearbyOffers, changeFavoriteStatus } from '../async-actions';
 

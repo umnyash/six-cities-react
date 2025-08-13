@@ -1,8 +1,9 @@
 import { Link, useLocation, Location } from 'react-router-dom';
 import clsx from 'clsx';
 
-import { AppRoute, AuthorizationStatus, FavoriteStatus } from '../../../const';
+import { AppRoute, AuthorizationStatus } from '../../../const';
 import { LocationState } from '../../../types/location';
+import { FavoriteStatus } from '../../../services/api';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { changeFavoriteStatus } from '../../../store/async-actions';
 import { getAuthorizationStatus } from '../../../store/user/user.selectors';

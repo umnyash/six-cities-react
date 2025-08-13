@@ -1,4 +1,4 @@
-import { FavoriteStatus } from '../../const';
+import { FavoriteStatus } from './const';
 
 export const apiPaths = {
   login: () => '/login',

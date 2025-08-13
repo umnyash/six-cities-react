@@ -1,5 +1,6 @@
-import { RequestStatus, FavoriteStatus } from '../../const';
+import { RequestStatus } from '../../const';
 import { FavoritesState } from '../../types/state';
+import { FavoriteStatus } from '../../services/api';
 import { fetchFavorites, changeFavoriteStatus } from '../async-actions';
 import { getMockOffers, getMockCardOffer } from '../../mocks/data';
 import { favorites } from './favorites.slice';

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { NameSpace, FavoriteStatus } from '../../../const';
+import { NameSpace } from '../../../const';
 import { CardOffer } from '../../../types/offers';
 import { ThunkAPI } from '../../index';
-import { apiPaths } from '../../../services/api';
+import { FavoriteStatus, apiPaths } from '../../../services/api';
 
 export const changeFavoriteStatus = createAsyncThunk<
   CardOffer,

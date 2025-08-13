@@ -1,6 +1,7 @@
 import { OfferState } from '../../types/state';
 import { offer } from './offer.slice';
-import { RequestStatus, FavoriteStatus } from '../../const';
+import { RequestStatus } from '../../const';
+import { FavoriteStatus } from '../../services/api';
 import { getMockOffer, getMockCardOffer } from '../../mocks/data';
 import { fetchOffer, changeFavoriteStatus } from '../async-actions';
 

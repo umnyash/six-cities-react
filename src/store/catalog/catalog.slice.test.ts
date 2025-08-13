@@ -1,6 +1,7 @@
 import { CatalogState } from '../../types/state';
 import { catalog, setCity, setSorting, setActiveOfferId } from './catalog.slice';
-import { RequestStatus, CITIES, SortingOption, FavoriteStatus } from '../../const';
+import { RequestStatus, CITIES, SortingOption } from '../../const';
+import { FavoriteStatus } from '../../services/api';
 import { getMockOffers, getMockCardOffer } from '../../mocks/data';
 import { fetchAllOffers, changeFavoriteStatus } from '../async-actions';
 

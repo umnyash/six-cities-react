@@ -4,10 +4,10 @@ import { StatusCodes } from 'http-status-codes';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { APP_ROUTE_PARAM_ID, AppRoute, RequestStatus, AuthorizationStatus, NameSpace, FavoriteStatus } from '../../../const';
+import { APP_ROUTE_PARAM_ID, AppRoute, RequestStatus, AuthorizationStatus, NameSpace } from '../../../const';
 import { State } from '../../../types/state';
 import { LocationState } from '../../../types/location';
-import { apiPaths } from '../../../services/api';
+import { FavoriteStatus, apiPaths } from '../../../services/api';
 import { getMockUser } from '../../../mocks/data';
 import { extractActionsTypes } from '../../../mocks/util';
 import { withHistory, withStore } from '../../../mocks/render-helpers';

@@ -5,9 +5,8 @@ import thunk from 'redux-thunk';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
 
-import { FavoriteStatus } from '../../../const';
 import { State } from '../../../types/state';
-import { createAPI, apiPaths } from '../../../services/api';
+import { FavoriteStatus, apiPaths, createAPI } from '../../../services/api';
 import { AppThunkDispatch } from '../../../mocks/types';
 import { getMockOffer } from '../../../mocks/data';
 import { extractActionsTypes } from '../../../mocks/util';
