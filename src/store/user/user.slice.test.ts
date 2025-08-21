@@ -110,7 +110,7 @@ describe('User slice', () => {
   });
 
   describe('logoutUser', () => {
-    it('should clear user data and set "NO_AUTH" authorization status on "logoutUser.fulfilled" action', () => {
+    it('should clear user data, set "NO_AUTH" authorization status and reset logging in status on "logoutUser.fulfilled" action', () => {
       const initialState: UserState = {
         user: getMockUser(),
         authorizationStatus: AuthorizationStatus.Auth,
@@ -119,7 +119,7 @@ describe('User slice', () => {
       const expectedState: UserState = {
         user: null,
         authorizationStatus: AuthorizationStatus.NoAuth,
-        loggingInStatus: RequestStatus.Success,
+        loggingInStatus: RequestStatus.None,
       };
 
       const result = user.reducer(initialState, logoutUser.fulfilled);
