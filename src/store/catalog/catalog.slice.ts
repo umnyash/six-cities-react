@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus, CITIES, SortingOption } from '../../const';
 import { CatalogState } from '../../types/state';
 import { CardOffer, CityName } from '../../types/offers';
-import { fetchAllOffers, changeFavoriteStatus } from '../async-actions';
+import { fetchAllOffers, changeFavoriteStatus, logoutUser } from '../async-actions';
 
 const initialState: CatalogState = {
   offers: [],
@@ -22,6 +22,12 @@ const updateFavoriteStatus = (state: CatalogState, offer: CardOffer) => {
       throw new Error(`Offer with id ${offer.id} not found in catalog.`);
     }
   }
+};
+
+const resetFavoriteStatuses = (state: CatalogState) => {
+  state.offers.forEach((offer) => {
+    offer.isFavorite = false;
+  });
 };
 
 export const catalog = createSlice({
@@ -53,6 +59,10 @@ export const catalog = createSlice({
 
       .addCase(changeFavoriteStatus.fulfilled, (state, action) => {
         updateFavoriteStatus(state, action.payload);
+      })
+
+      .addCase(logoutUser.fulfilled, (state) => {
+        resetFavoriteStatuses(state);
       });
   },
 });

@@ -3,7 +3,7 @@ import { catalog, setCity, setSorting, setActiveOfferId } from './catalog.slice'
 import { RequestStatus, CITIES, SortingOption } from '../../const';
 import { FavoriteStatus } from '../../services/api';
 import { getMockOffers, getMockCardOffer } from '../../mocks/data';
-import { fetchAllOffers, changeFavoriteStatus } from '../async-actions';
+import { fetchAllOffers, changeFavoriteStatus, logoutUser } from '../async-actions';
 
 describe('Catalog slice', () => {
   it('should return current state when action is unknown', () => {
@@ -182,5 +182,38 @@ describe('Catalog slice', () => {
         ));
       }).not.toThrow();
     });
+  });
+
+  describe('logout', () => {
+    const mockRegularOffers = getMockOffers(2, { isFavorite: false });
+    const mockFavoriteOffers = mockRegularOffers.map((offer) => ({
+      ...offer,
+      isFavorite: true
+    }));
+
+    it.each([
+      [[], []],
+      [mockRegularOffers, mockRegularOffers],
+      [mockFavoriteOffers, mockRegularOffers],
+    ])(
+      'should set offers favorite statuses to false on "logout.fulfilled" action',
+      (initialOffers, expectedOffers) => {
+        const initialState: CatalogState = {
+          offers: initialOffers,
+          loadingStatus: RequestStatus.Success,
+          city: CITIES[0],
+          sorting: SortingOption.Default,
+          activeOfferId: '',
+        };
+        const expectedState: CatalogState = {
+          ...initialState,
+          offers: expectedOffers,
+        };
+
+        const result = catalog.reducer(initialState, logoutUser.fulfilled);
+
+        expect(result).toEqual(expectedState);
+      }
+    );
   });
 });

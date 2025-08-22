@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus } from '../../const';
 import { FavoritesState } from '../../types/state';
 import { CardOffer } from '../../types/offers';
-import { fetchFavorites, changeFavoriteStatus } from '../async-actions';
+import { fetchFavorites, changeFavoriteStatus, logoutUser } from '../async-actions';
 import { removeArrayItem } from '../../util';
 
 const initialState: FavoritesState = {
@@ -35,6 +35,7 @@ export const favorites = createSlice({
       .addCase(fetchFavorites.rejected, (state) => {
         state.loadingStatus = RequestStatus.Error;
       })
+
       .addCase(changeFavoriteStatus.pending, (state, action) => {
         state.changingOffersIds.push(action.meta.arg.offerId);
       })
@@ -44,6 +45,12 @@ export const favorites = createSlice({
       })
       .addCase(changeFavoriteStatus.rejected, (state, action) => {
         removeArrayItem(state.changingOffersIds, action.meta.arg.offerId);
+      })
+
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.offers = [];
+        state.loadingStatus = RequestStatus.None;
+        state.changingOffersIds = [];
       });
   },
 });

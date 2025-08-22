@@ -3,7 +3,7 @@ import { offer } from './offer.slice';
 import { RequestStatus } from '../../const';
 import { FavoriteStatus } from '../../services/api';
 import { getMockOffer, getMockCardOffer } from '../../mocks/data';
-import { fetchOffer, changeFavoriteStatus } from '../async-actions';
+import { fetchOffer, changeFavoriteStatus, logoutUser } from '../async-actions';
 
 describe('Offer slice', () => {
   it('should return current state when action is unknown', () => {
@@ -117,5 +117,32 @@ describe('Offer slice', () => {
 
       expect(result).toEqual(expectedState);
     });
+  });
+
+  describe('logout', () => {
+    const mockRegularOffer = getMockOffer({ isFavorite: false });
+    const mockFavoriteOffer = { ...mockRegularOffer, isFavorite: true };
+
+    it.each([
+      [RequestStatus.None, null, null],
+      [RequestStatus.Success, mockRegularOffer, mockRegularOffer],
+      [RequestStatus.Success, mockFavoriteOffer, mockRegularOffer],
+    ])(
+      'should set offer favorite status to false on "logout.fulfilled" action',
+      (loadingStatus, initialOffer, expectedOffer) => {
+        const initialState: OfferState = {
+          offer: initialOffer,
+          loadingStatus: loadingStatus,
+        };
+        const expectedState: OfferState = {
+          offer: expectedOffer,
+          loadingStatus: loadingStatus,
+        };
+
+        const result = offer.reducer(initialState, logoutUser.fulfilled);
+
+        expect(result).toEqual(expectedState);
+      }
+    );
   });
 });

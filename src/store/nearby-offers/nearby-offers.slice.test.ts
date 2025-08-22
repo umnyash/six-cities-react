@@ -3,7 +3,7 @@ import { nearbyOffers } from './nearby-offers.slice';
 import { RequestStatus } from '../../const';
 import { FavoriteStatus } from '../../services/api';
 import { getMockOffers, getMockCardOffer } from '../../mocks/data';
-import { fetchNearbyOffers, changeFavoriteStatus } from '../async-actions';
+import { fetchNearbyOffers, changeFavoriteStatus, logoutUser } from '../async-actions';
 
 describe('Nearby offers slice', () => {
   it('should return current state when action is unknown', () => {
@@ -101,5 +101,35 @@ describe('Nearby offers slice', () => {
 
       expect(result).toEqual(expectedState);
     });
+  });
+
+  describe('logout', () => {
+    const mockRegularOffers = getMockOffers(2, { isFavorite: false });
+    const mockFavoriteOffers = mockRegularOffers.map((offer) => ({
+      ...offer,
+      isFavorite: true
+    }));
+
+    it.each([
+      [[], []],
+      [mockRegularOffers, mockRegularOffers],
+      [mockFavoriteOffers, mockRegularOffers],
+    ])(
+      'should set offers favorite statuses to false on "logout.fulfilled" action',
+      (initialOffers, expectedOffers) => {
+        const initialState: NearbyOffersState = {
+          offers: initialOffers,
+          loadingStatus: RequestStatus.Success,
+        };
+        const expectedState: NearbyOffersState = {
+          offers: expectedOffers,
+          loadingStatus: RequestStatus.Success,
+        };
+
+        const result = nearbyOffers.reducer(initialState, logoutUser.fulfilled);
+
+        expect(result).toEqual(expectedState);
+      }
+    );
   });
 });

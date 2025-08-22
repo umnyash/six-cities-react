@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus } from '../../const';
 import { OfferState } from '../../types/state';
 import { CardOffer } from '../../types/offers';
-import { fetchOffer, changeFavoriteStatus } from '../async-actions';
+import { fetchOffer, changeFavoriteStatus, logoutUser } from '../async-actions';
 
 const initialState: OfferState = {
   offer: null,
@@ -12,6 +12,12 @@ const initialState: OfferState = {
 const updateFavoriteStatus = (state: OfferState, offer: CardOffer) => {
   if (state.offer?.id === offer.id) {
     state.offer.isFavorite = offer.isFavorite;
+  }
+};
+
+const resetFavoriteStatus = (state: OfferState) => {
+  if (state.offer) {
+    state.offer.isFavorite = false;
   }
 };
 
@@ -35,6 +41,10 @@ export const offer = createSlice({
 
       .addCase(changeFavoriteStatus.fulfilled, (state, action) => {
         updateFavoriteStatus(state, action.payload);
+      })
+
+      .addCase(logoutUser.fulfilled, (state) => {
+        resetFavoriteStatus(state);
       });
   },
 });
