@@ -40,7 +40,10 @@ export const favorites = createSlice({
         state.changingOffersIds.push(action.meta.arg.offerId);
       })
       .addCase(changeFavoriteStatus.fulfilled, (state, action) => {
-        updateFavorites(state, action.payload);
+        if (state.loadingStatus === RequestStatus.Success) {
+          updateFavorites(state, action.payload);
+        }
+
         removeArrayItem(state.changingOffersIds, action.meta.arg.offerId);
       })
       .addCase(changeFavoriteStatus.rejected, (state, action) => {

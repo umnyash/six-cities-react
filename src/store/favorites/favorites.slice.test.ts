@@ -126,6 +126,32 @@ describe('Favorites slice', () => {
         expect(result).toEqual(expectedState);
       });
 
+      it.each([
+        RequestStatus.Pending,
+        RequestStatus.Error,
+      ])(
+        'should not add offer to favorites data when favorites not loaded and adding succeeds on "changeFavoriteStatus.fulfilled" action',
+        (loadingStatus) => {
+          const mockChangedOffer = getMockCardOffer({ isFavorite: true });
+          const initialState: FavoritesState = {
+            offers: [],
+            loadingStatus: loadingStatus,
+            changingOffersIds: [mockChangedOffer.id],
+          };
+          const expectedState: FavoritesState = {
+            offers: [],
+            loadingStatus: loadingStatus,
+            changingOffersIds: [],
+          };
+
+          const result = favorites.reducer(initialState, changeFavoriteStatus.fulfilled(
+            mockChangedOffer, '', { offerId: mockChangedOffer.id, status: FavoriteStatus.On }
+          ));
+
+          expect(result).toEqual(expectedState);
+        }
+      );
+
       it('should not modify favorites data when adding favorite fails and remove offer ID from "changingOffersIds" array on "changeFavoriteStatus.rejected" action', () => {
         const mockChangingOffer = getMockCardOffer({ isFavorite: false });
         const initialState: FavoritesState = {
@@ -170,6 +196,33 @@ describe('Favorites slice', () => {
 
         expect(result).toEqual(expectedState);
       });
+
+      it.each([
+        RequestStatus.Pending,
+        RequestStatus.Error,
+      ])(
+        'should safely handle favorite removal attempt from empty favorites when favorites not loaded on "changeFavoriteStatus.fulfilled" action',
+        (loadingStatus) => {
+          const mockChangedOffer = getMockCardOffer({ isFavorite: true });
+
+          const initialState: FavoritesState = {
+            offers: [],
+            loadingStatus: loadingStatus,
+            changingOffersIds: [mockChangedOffer.id],
+          };
+          const expectedState: FavoritesState = {
+            offers: [],
+            loadingStatus: loadingStatus,
+            changingOffersIds: [],
+          };
+
+          const result = favorites.reducer(initialState, changeFavoriteStatus.fulfilled(
+            { ...mockChangedOffer, isFavorite: false }, '', { offerId: mockChangedOffer.id, status: FavoriteStatus.Off }
+          ));
+
+          expect(result).toEqual(expectedState);
+        }
+      );
 
       it('should not modify favorites data when removing favorite fails and remove offer ID from "changingOffersIds" array on "changeFavoriteStatus.rejected" action', () => {
         const mockChangingOffer = getMockCardOffer({ isFavorite: true });
