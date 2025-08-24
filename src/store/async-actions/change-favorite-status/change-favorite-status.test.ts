@@ -51,7 +51,7 @@ describe('Async action: changeFavoriteStatus', () => {
     const mockChangedOffer = { ...mockOffer, isFavorite: false };
     mockAPIAdapter
       .onPost(apiPaths.favoriteStatus('existingOfferId', FavoriteStatus.Off))
-      .reply(StatusCodes.CREATED, mockChangedOffer);
+      .reply(StatusCodes.OK, mockChangedOffer);
 
     await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.Off }));
     const dispatchedActions = store.getActions();
