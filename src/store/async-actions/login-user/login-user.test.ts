@@ -22,7 +22,7 @@ vi.mock('react-toastify', () => ({
   }
 }));
 
-describe('Async actions', () => {
+describe('Async action: loginUser', () => {
   const api = createAPI();
   const mockAPIAdapter = new MockAdapter(api);
   const middleware = [thunk.withExtraArgument(api)];
