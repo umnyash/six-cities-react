@@ -1,7 +1,7 @@
 import { screen, render, renderHook } from '@testing-library/react';
 import { Map } from 'leaflet';
 
-import { getRandomLocation } from '../../mocks/data';
+import { getRandomLocation } from '../../data/mocks';
 
 import { useMap } from './use-map';
 

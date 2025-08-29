@@ -1,5 +1,5 @@
 import { screen, render } from '@testing-library/react';
-import { getMockAuthor } from '../../../mocks/data';
+import { getMockAuthor } from '../../../data/mocks';
 import OfferHost from './offer-host';
 
 describe('Component: OfferHost', () => {

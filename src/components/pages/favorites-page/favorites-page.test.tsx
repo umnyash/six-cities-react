@@ -2,7 +2,7 @@ import { screen, render } from '@testing-library/react';
 
 import { RequestStatus, NameSpace } from '../../../const';
 import { State } from '../../../types/state';
-import { getMockOffers } from '../../../mocks/data';
+import { getMockOffers } from '../../../data/mocks';
 import { withStore } from '../../../mocks/render-helpers';
 import LoadingPage from '../loading-page';
 import Favorites from '../../blocks/favorites';

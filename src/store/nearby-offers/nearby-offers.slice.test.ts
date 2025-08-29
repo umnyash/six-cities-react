@@ -2,7 +2,7 @@ import { NearbyOffersState } from '../../types/state';
 import { nearbyOffers } from './nearby-offers.slice';
 import { RequestStatus } from '../../const';
 import { FavoriteStatus } from '../../services/api';
-import { getMockOffers, getMockCardOffer } from '../../mocks/data';
+import { getMockOffers, getMockCardOffer } from '../../data/mocks';
 import { fetchNearbyOffers, changeFavoriteStatus, logoutUser } from '../async-actions';
 
 describe('Nearby offers slice', () => {

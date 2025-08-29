@@ -8,7 +8,7 @@ import { APP_ROUTE_PARAM_ID, AppRoute, RequestStatus, AuthorizationStatus, NameS
 import { State } from '../../../types/state';
 import { LocationState } from '../../../types/location';
 import { FavoriteStatus, apiPaths } from '../../../services/api';
-import { getMockUser } from '../../../mocks/data';
+import { getMockUser } from '../../../data/mocks';
 import { extractActionsTypes } from '../../../mocks/util';
 import { withHistory, withStore } from '../../../mocks/render-helpers';
 import { changeFavoriteStatus } from '../../../store/async-actions';

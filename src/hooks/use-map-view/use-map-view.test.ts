@@ -3,7 +3,7 @@ import { Map } from 'leaflet';
 import { Mock } from 'vitest';
 
 import { Location } from '../../types/offers';
-import { getRandomLocation } from '../../mocks/data';
+import { getRandomLocation } from '../../data/mocks';
 
 import { useMapView } from './use-map-view';
 

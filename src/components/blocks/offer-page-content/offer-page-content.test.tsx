@@ -2,7 +2,7 @@ import { screen, render } from '@testing-library/react';
 
 import { NEARBY_OFFERS_COUNT, RequestStatus, NameSpace } from '../../../const';
 import { State } from '../../../types/state';
-import { getMockOffer, getMockOffers } from '../../../mocks/data';
+import { getMockOffer, getMockOffers } from '../../../data/mocks';
 import { withStore } from '../../../mocks/render-helpers';
 import { useArrayRandomIndices } from '../../../hooks';
 import Offer from '../offer';

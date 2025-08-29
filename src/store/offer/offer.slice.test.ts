@@ -2,7 +2,7 @@ import { OfferState } from '../../types/state';
 import { offer } from './offer.slice';
 import { RequestStatus } from '../../const';
 import { FavoriteStatus } from '../../services/api';
-import { getMockOffer, getMockCardOffer } from '../../mocks/data';
+import { getMockOffer, getMockCardOffer } from '../../data/mocks';
 import { fetchOffer, changeFavoriteStatus, logoutUser } from '../async-actions';
 
 describe('Offer slice', () => {

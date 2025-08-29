@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import { AppRoute, RequestStatus, NameSpace, APP_ROUTE_PARAM_ID } from '../../../const';
 import { State } from '../../../types/state';
-import { getMockOffer } from '../../../mocks/data';
+import { getMockOffer } from '../../../data/mocks';
 import { withHistory, withStore } from '../../../mocks/render-helpers';
 import { apiPaths } from '../../../services/api';
 import { extractActionsTypes } from '../../../mocks/util';

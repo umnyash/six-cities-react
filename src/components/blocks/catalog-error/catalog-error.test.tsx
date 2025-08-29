@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { StatusCodes } from 'http-status-codes';
 
 import { apiPaths } from '../../../services/api';
-import { getMockOffers } from '../../../mocks/data';
+import { getMockOffers } from '../../../data/mocks';
 import { extractActionsTypes } from '../../../mocks/util';
 import { withStore } from '../../../mocks/render-helpers';
 import { fetchAllOffers } from '../../../store/async-actions';

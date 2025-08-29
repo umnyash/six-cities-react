@@ -2,7 +2,7 @@ import { screen, render, within } from '@testing-library/react';
 
 import { OFFER_PHOTOS_MAX_COUNT } from '../../../const';
 import { StarsIconSize } from '../../ui/stars-icon';
-import { getMockOffer, getMockOffers } from '../../../mocks/data';
+import { getMockOffer, getMockOffers } from '../../../data/mocks';
 import FavoriteButton from '../../ui/favorite-button';
 import StarsIcon from '../../ui/stars-icon';
 import OfferHost from '../../ui/offer-host';

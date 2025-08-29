@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { State } from '../../../types/state';
 import { createAPI, apiPaths } from '../../../services/api';
 import { AppThunkDispatch } from '../../../mocks/types';
-import { getMockOffers } from '../../../mocks/data';
+import { getMockOffers } from '../../../data/mocks';
 import { extractActionsTypes } from '../../../mocks/util';
 
 import { fetchFavorites } from './fetch-favorites';

@@ -1,6 +1,6 @@
 import { screen, render } from '@testing-library/react';
 
-import { getMockOffers } from '../../../mocks/data';
+import { getMockOffers } from '../../../data/mocks';
 import OffersList from '../../ui/offers-list';
 
 import Offers from './offers';

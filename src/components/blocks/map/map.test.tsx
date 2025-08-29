@@ -1,5 +1,5 @@
 import { screen, render } from '@testing-library/react';
-import { getRandomLocation, getMockPoints } from '../../../mocks/data';
+import { getRandomLocation, getMockPoints } from '../../../data/mocks';
 import { useMap, useMapMarkers, useMapView } from '../../../hooks';
 
 import Map from './map';

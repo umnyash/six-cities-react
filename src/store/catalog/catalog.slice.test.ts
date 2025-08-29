@@ -2,7 +2,7 @@ import { CatalogState } from '../../types/state';
 import { catalog, setCity, setSorting, setActiveOfferId } from './catalog.slice';
 import { RequestStatus, CITIES, SortingOption } from '../../const';
 import { FavoriteStatus } from '../../services/api';
-import { getMockOffers, getMockCardOffer } from '../../mocks/data';
+import { getMockOffers, getMockCardOffer } from '../../data/mocks';
 import { fetchAllOffers, changeFavoriteStatus, logoutUser } from '../async-actions';
 
 describe('Catalog slice', () => {

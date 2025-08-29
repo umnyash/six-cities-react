@@ -2,7 +2,7 @@ import { screen, render } from '@testing-library/react';
 
 import { OffersListVariant } from './const';
 import { OfferCardVariant } from '../offer-card';
-import { getMockOffers } from '../../../mocks/data';
+import { getMockOffers } from '../../../data/mocks';
 import OfferCard from '../offer-card';
 
 import OffersList from './offers-list';

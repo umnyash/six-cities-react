@@ -1,5 +1,5 @@
 import { NameSpace, RequestStatus } from '../../const';
-import { getMockOffers } from '../../mocks/data';
+import { getMockOffers } from '../../data/mocks';
 import { getFavorites, getFavoritesLoadingStatus, getChangingOffersIds } from './favorites.selectors';
 
 describe('Favorites selectors', () => {

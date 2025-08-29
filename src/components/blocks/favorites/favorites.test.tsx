@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import { apiPaths } from '../../../services/api';
 import { Offers } from '../../../types/offers';
-import { getMockOffers } from '../../../mocks/data';
+import { getMockOffers } from '../../../data/mocks';
 import { extractActionsTypes } from '../../../mocks/util';
 import { withStore } from '../../../mocks/render-helpers';
 import { fetchFavorites } from '../../../store/async-actions';

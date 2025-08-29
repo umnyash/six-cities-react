@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { Map, Marker, MarkerOptions, layerGroup } from 'leaflet';
 
-import { getMockPoints } from '../../mocks/data';
+import { getMockPoints } from '../../data/mocks';
 
 import { useMapMarkers } from './use-map-markers';
 

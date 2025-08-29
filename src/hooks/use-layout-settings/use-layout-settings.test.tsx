@@ -5,7 +5,7 @@ import { renderHook } from '@testing-library/react';
 
 import { AppRoute, PageTitle, RequestStatus, NameSpace, APP_ROUTE_PARAM_ID } from '../../const';
 import { State } from '../../types/state';
-import { getMockOffers } from '../../mocks/data';
+import { getMockOffers } from '../../data/mocks';
 import { withHistory, withStore } from '../../mocks/render-helpers';
 
 import { useLayoutSettings } from './use-layout-settings';

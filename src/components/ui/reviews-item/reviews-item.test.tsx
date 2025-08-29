@@ -1,6 +1,6 @@
 import { screen, render } from '@testing-library/react';
 
-import { getMockReview } from '../../../mocks/data';
+import { getMockReview } from '../../../data/mocks';
 import StarsIcon, { StarsIconSize } from '../stars-icon';
 
 import ReviewsItem from './reviews-item';

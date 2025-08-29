@@ -1,6 +1,6 @@
 import { NameSpace, RequestStatus, REVIEWS_MAX_COUNT } from '../../const';
 import { getReviews, getLatestReviews, getReviewSubmittingStatus } from './reviews.selectors';
-import { getMockReviews } from '../../mocks/data';
+import { getMockReviews } from '../../data/mocks';
 
 describe('Reviews selector', () => {
   const nameSpace = NameSpace.Reviews;

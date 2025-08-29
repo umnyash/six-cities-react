@@ -1,7 +1,7 @@
 import { screen, render } from '@testing-library/react';
 
 import { CITIES } from '../../../const';
-import { getMockOffers, getMockCity } from '../../../mocks/data';
+import { getMockOffers, getMockCity } from '../../../data/mocks';
 import { OffersListVariant } from '../offers-list';
 import OffersList from '../offers-list';
 

@@ -1,5 +1,5 @@
 import { screen, render } from '@testing-library/react';
-import { getMockReviews } from '../../../mocks/data';
+import { getMockReviews } from '../../../data/mocks';
 import ReviewsList from './reviews-list';
 
 describe('Component: ReviewsList', () => {

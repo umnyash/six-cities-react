@@ -1,16 +1,10 @@
-import { Offers, BaseOffer, CardOffer, PageOffer, CityName, Points, Location } from '../types/offers';
-import { Author, User, AuthUser } from '../types/user';
-import { Reviews, Review } from '../types/reviews';
 import { faker } from '@faker-js/faker';
-import { getRandomInt, getRandomArrayItem } from '../util';
-import { CITIES, OFFER_PHOTOS_MAX_COUNT, HousingType } from '../const';
-
-const MOCK_ZOOM = 13;
-
-enum MockRating {
-  Min = 1,
-  Max = 5,
-}
+import { CITIES, OFFER_PHOTOS_MAX_COUNT, HousingType } from '../../const';
+import { Offers, BaseOffer, CardOffer, PageOffer, CityName } from '../../types/offers';
+import { getRandomInt, getRandomArrayItem } from '../../util';
+import { getRandomLocation } from './location';
+import { getMockUser } from './user';
+import { getRandomRating } from './rating';
 
 enum MockPrice {
   Min = 100,
@@ -28,7 +22,6 @@ enum MockBedroomsCount {
 }
 
 const getRandomHousingType = () => getRandomArrayItem(Object.values(HousingType));
-const getRandomRating = () => getRandomInt(MockRating.Min, MockRating.Max);
 const getRamdomPrice = () => getRandomInt(MockPrice.Min, MockPrice.Max);
 const getRandomCityName = () => getRandomArrayItem(CITIES);
 const getRandomAdultsMaxCount = () => getRandomInt(MockAdultsCount.Min, MockAdultsCount.Max);
@@ -36,44 +29,9 @@ const getRandomBedroomsCount = () => getRandomInt(MockBedroomsCount.Min, MockBed
 const getImages = () => Array.from({ length: OFFER_PHOTOS_MAX_COUNT }, () => faker.system.filePath());
 const getGoods = () => faker.lorem.words().split(' ');
 
-const getRandomCoordinates = () => ({
-  latitude: faker.location.latitude(),
-  longitude: faker.location.longitude(),
-});
-
-export const getRandomLocation = () => ({
-  zoom: MOCK_ZOOM,
-  ...getRandomCoordinates()
-});
-
-const getMockPoint = (location: Location = getRandomLocation()) => ({
-  id: crypto.randomUUID(),
-  location: location,
-});
-
-export const getMockPoints = (count: number, location?: Location): Points =>
-  Array.from({ length: count }, () => getMockPoint(location));
-
 export const getMockCity = (cityName?: CityName) => ({
   name: cityName ?? getRandomCityName(),
   location: getRandomLocation(),
-});
-
-export const getMockAuthor = (preset: Partial<Author> = {}): Author => ({
-  name: faker.person.fullName(),
-  avatarUrl: faker.system.filePath(),
-  isPro: Boolean(getRandomInt(0, 1)),
-  ...preset
-});
-
-export const getMockUser = (): User => ({
-  email: faker.internet.email(),
-  ...getMockAuthor()
-});
-
-export const getMockAuthUser = (): AuthUser => ({
-  token: 'secret',
-  ...getMockUser()
 });
 
 const getMockBaseOffer = (): BaseOffer => ({
@@ -107,15 +65,3 @@ export const getMockOffer = (preset: Partial<PageOffer> = {}): PageOffer => ({
   ...getMockBaseOffer(),
   ...preset
 });
-
-export const getMockReview = (preset: Partial<Review> = {}): Review => ({
-  id: crypto.randomUUID(),
-  date: faker.date.past().toISOString(),
-  rating: getRandomRating(),
-  comment: faker.lorem.paragraph(),
-  user: getMockAuthor(),
-  ...preset
-});
-
-export const getMockReviews = (count: number): Reviews =>
-  Array.from({ length: count }, () => getMockReview());

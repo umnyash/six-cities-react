@@ -2,7 +2,7 @@ import { RequestStatus } from '../../const';
 import { FavoritesState } from '../../types/state';
 import { FavoriteStatus } from '../../services/api';
 import { fetchFavorites, changeFavoriteStatus } from '../async-actions';
-import { getMockOffers, getMockCardOffer } from '../../mocks/data';
+import { getMockOffers, getMockCardOffer } from '../../data/mocks';
 import { favorites } from './favorites.slice';
 
 describe('Favorites slice', () => {

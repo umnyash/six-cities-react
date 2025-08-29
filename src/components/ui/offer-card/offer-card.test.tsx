@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 
 import { AppRoute, APP_ROUTE_PARAM_ID } from '../../../const';
 import { OfferCardVariant } from './const';
-import { getMockCardOffer } from '../../../mocks/data';
+import { getMockCardOffer } from '../../../data/mocks';
 import { withHistory } from '../../../mocks/render-helpers';
 import FavoriteButton from '../favorite-button';
 import StarsIcon from '../stars-icon';

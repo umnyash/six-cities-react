@@ -1,5 +1,5 @@
 import { NameSpace, RequestStatus } from '../../const';
-import { getMockOffers } from '../../mocks/data';
+import { getMockOffers } from '../../data/mocks';
 import { getNearbyOffers, getNearbyOffersLoadingStatus } from './nearby-offers.selectors';
 
 describe('Nearby offers selectors', () => {

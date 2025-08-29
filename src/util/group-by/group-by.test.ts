@@ -1,4 +1,4 @@
-import { getMockOffers } from '../../mocks/data';
+import { getMockOffers } from '../../data/mocks';
 import { Offers } from '../../types/offers';
 import { HousingType } from '../../const';
 

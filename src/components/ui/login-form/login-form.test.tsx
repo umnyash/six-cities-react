@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 import { RequestStatus, AuthorizationStatus, NameSpace } from '../../../const';
 import { State } from '../../../types/state';
 import { apiPaths } from '../../../services/api';
-import { getMockAuthUser } from '../../../mocks/data';
+import { getMockAuthUser } from '../../../data/mocks';
 import { extractActionsTypes } from '../../../mocks/util';
 import { withStore } from '../../../mocks/render-helpers';
 import { loginUser } from '../../../store/async-actions';

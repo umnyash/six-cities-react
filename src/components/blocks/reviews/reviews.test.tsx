@@ -2,7 +2,7 @@ import { screen, render } from '@testing-library/react';
 
 import { RequestStatus, AuthorizationStatus, NameSpace } from '../../../const';
 import { State } from '../../../types/state';
-import { getMockReviews } from '../../../mocks/data';
+import { getMockReviews } from '../../../data/mocks';
 import { withHistory, withStore } from '../../../mocks/render-helpers';
 
 import Reviews from './reviews';

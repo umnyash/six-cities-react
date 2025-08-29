@@ -1,5 +1,5 @@
 import { NameSpace, RequestStatus, AuthorizationStatus } from '../../const';
-import { getMockUser } from '../../mocks/data';
+import { getMockUser } from '../../data/mocks';
 import { getUser, getAuthorizationStatus, getLoggingInStatus } from './user.selectors';
 
 describe('User selectors', () => {
