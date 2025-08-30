@@ -5,8 +5,8 @@ import { StatusCodes } from 'http-status-codes';
 import { apiPaths } from '../../../services/api';
 import { Offers } from '../../../types/offers';
 import { getMockOffers } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../mocks/util';
-import { withStore } from '../../../mocks/render-helpers';
+import { extractActionsTypes } from '../../../tests/util';
+import { withStore } from '../../../tests/render-helpers';
 import { fetchFavorites } from '../../../store/async-actions';
 import FavoritesList from '../../ui/favorites-list';
 

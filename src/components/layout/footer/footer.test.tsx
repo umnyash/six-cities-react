@@ -1,7 +1,7 @@
 import { screen, render } from '@testing-library/react';
 
 import { AppRoute } from '../../../const';
-import { withHistory } from '../../../mocks/render-helpers';
+import { withHistory } from '../../../tests/render-helpers';
 
 import Footer from './footer';
 

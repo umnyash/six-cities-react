@@ -2,7 +2,7 @@ import { screen, render, waitFor } from '@testing-library/react';
 import { Outlet } from 'react-router-dom';
 
 import { PageTitle } from '../../../const';
-import { withHistory } from '../../../mocks/render-helpers';
+import { withHistory } from '../../../tests/render-helpers';
 import { useLayoutSettings } from '../../../hooks';
 import Header from '../header';
 import Footer from '../footer';

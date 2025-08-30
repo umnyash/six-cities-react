@@ -2,7 +2,7 @@ import { configureMockStore, MockStore } from '@jedmao/redux-mock-store';
 import { AnyAction } from '@reduxjs/toolkit';
 
 import { State } from '../../../types/state';
-import { extractActionsTypes } from '../../../mocks/util';
+import { extractActionsTypes } from '../../../tests/util';
 import { checkUserAuth, loginUser, fetchFavorites } from '../../async-actions';
 
 import { fetchFavoritesOnAuth } from './fetch-favorites-on-auth';

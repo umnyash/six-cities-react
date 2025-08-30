@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { CITIES, RequestStatus, AuthorizationStatus, SortingOption, NameSpace } from '../../../const';
 import { State } from '../../../types/state';
 import { getMockOffers, getMockCity } from '../../../data/mocks';
-import { withHistory, withStore } from '../../../mocks/render-helpers';
+import { withHistory, withStore } from '../../../tests/render-helpers';
 import { setActiveOfferId } from '../../../store/catalog/catalog.slice';
 import Sorting from '../../ui/sorting';
 

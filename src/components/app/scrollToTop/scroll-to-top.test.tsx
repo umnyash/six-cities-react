@@ -2,7 +2,7 @@ import { MemoryHistory, createMemoryHistory } from 'history';
 import { render, act } from '@testing-library/react';
 
 import { AppRoute } from '../../../const';
-import { withHistory } from '../../../mocks/render-helpers';
+import { withHistory } from '../../../tests/render-helpers';
 
 import ScrollToTop from './scroll-to-top';
 

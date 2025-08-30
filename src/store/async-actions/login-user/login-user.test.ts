@@ -9,9 +9,9 @@ import { State } from '../../../types/state';
 import { AuthData, AuthUser } from '../../../types/user';
 import { createAPI, apiPaths } from '../../../services/api';
 import * as tokenStorage from '../../../services/token';
-import { AppThunkDispatch } from '../../../mocks/types';
+import { AppThunkDispatch } from '../../../tests/types';
 import { getMockAuthUser } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../mocks/util';
+import { extractActionsTypes } from '../../../tests/util';
 import { omit } from '../../../util';
 
 import { loginUser } from './login-user';

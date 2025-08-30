@@ -2,7 +2,7 @@ import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { CITIES, RequestStatus, SortingOption, NameSpace } from '../../../const';
-import { withStore } from '../../../mocks/render-helpers';
+import { withStore } from '../../../tests/render-helpers';
 import { setCity } from '../../../store/catalog/catalog.slice';
 
 import CitiesList from './cities-list';

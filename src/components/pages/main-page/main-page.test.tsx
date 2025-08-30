@@ -3,7 +3,7 @@ import { screen, render } from '@testing-library/react';
 import { RequestStatus, NameSpace, CITIES, SortingOption } from '../../../const';
 import { State } from '../../../types/state';
 import { getMockOffers, getMockCity } from '../../../data/mocks';
-import { withStore } from '../../../mocks/render-helpers';
+import { withStore } from '../../../tests/render-helpers';
 import CitiesList from '../../ui/cities-list';
 
 import MainPage from './main-page';

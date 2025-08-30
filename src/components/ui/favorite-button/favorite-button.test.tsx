@@ -9,8 +9,8 @@ import { State } from '../../../types/state';
 import { LocationState } from '../../../types/location';
 import { FavoriteStatus, apiPaths } from '../../../services/api';
 import { getMockUser } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../mocks/util';
-import { withHistory, withStore } from '../../../mocks/render-helpers';
+import { extractActionsTypes } from '../../../tests/util';
+import { withHistory, withStore } from '../../../tests/render-helpers';
 import { changeFavoriteStatus } from '../../../store/async-actions';
 
 import FavoriteButton from './favorite-button';

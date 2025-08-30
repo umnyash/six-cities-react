@@ -1,6 +1,6 @@
 import { render, waitFor } from '@testing-library/react';
 
-import { withHistory } from '../../../mocks/render-helpers';
+import { withHistory } from '../../../tests/render-helpers';
 import Spinner from '../../ui/spinner';
 
 import LoadingPage from './loading-page';

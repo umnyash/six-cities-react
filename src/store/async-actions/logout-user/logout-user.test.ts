@@ -8,8 +8,8 @@ import { toast } from 'react-toastify';
 import { State } from '../../../types/state';
 import { createAPI, apiPaths } from '../../../services/api';
 import * as tokenStorage from '../../../services/token';
-import { AppThunkDispatch } from '../../../mocks/types';
-import { extractActionsTypes } from '../../../mocks/util';
+import { AppThunkDispatch } from '../../../tests/types';
+import { extractActionsTypes } from '../../../tests/util';
 
 import { logoutUser } from './logout-user';
 

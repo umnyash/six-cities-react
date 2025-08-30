@@ -6,8 +6,8 @@ import { RequestStatus, AuthorizationStatus, NameSpace } from '../../../const';
 import { State } from '../../../types/state';
 import { apiPaths } from '../../../services/api';
 import { getMockUser, getMockOffers } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../mocks/util';
-import { withHistory, withStore } from '../../../mocks/render-helpers';
+import { extractActionsTypes } from '../../../tests/util';
+import { withHistory, withStore } from '../../../tests/render-helpers';
 import { logoutUser } from '../../../store/async-actions';
 
 import UserNavigation from './user-navigation';

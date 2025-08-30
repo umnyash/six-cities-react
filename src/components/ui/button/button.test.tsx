@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 
 import { AppRoute } from '../../../const';
 import { ButtonType } from './const';
-import { withHistory } from '../../../mocks/render-helpers';
+import { withHistory } from '../../../tests/render-helpers';
 
 import Button from './button';
 

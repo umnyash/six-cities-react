@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import { RequestStatus, NameSpace, CITIES, SortingOption } from '../../../const';
 import { getMockOffers, getMockCity } from '../../../data/mocks';
-import { withStore } from '../../../mocks/render-helpers';
+import { withStore } from '../../../tests/render-helpers';
 import Map from '../map';
 
 import CatalogMap from './catalog-map';

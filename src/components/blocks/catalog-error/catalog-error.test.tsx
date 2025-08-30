@@ -4,8 +4,8 @@ import { StatusCodes } from 'http-status-codes';
 
 import { apiPaths } from '../../../services/api';
 import { getMockOffers } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../mocks/util';
-import { withStore } from '../../../mocks/render-helpers';
+import { extractActionsTypes } from '../../../tests/util';
+import { withStore } from '../../../tests/render-helpers';
 import { fetchAllOffers } from '../../../store/async-actions';
 
 import CatalogError from './catalog-error';

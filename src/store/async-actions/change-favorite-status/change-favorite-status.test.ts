@@ -7,9 +7,9 @@ import { toast } from 'react-toastify';
 
 import { State } from '../../../types/state';
 import { FavoriteStatus, apiPaths, createAPI } from '../../../services/api';
-import { AppThunkDispatch } from '../../../mocks/types';
+import { AppThunkDispatch } from '../../../tests/types';
 import { getMockOffer } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../mocks/util';
+import { extractActionsTypes } from '../../../tests/util';
 
 import { changeFavoriteStatus } from './change-favorite-status';
 

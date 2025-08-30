@@ -1,7 +1,7 @@
 import { screen, render } from '@testing-library/react';
 
 import { RequestStatus, NameSpace, CITIES, SortingOption } from '../../../const';
-import { withStore } from '../../../mocks/render-helpers';
+import { withStore } from '../../../tests/render-helpers';
 
 import CatalogPlaceholder from './catalog-placeholder';
 

@@ -2,7 +2,7 @@ import { screen, render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { RequestStatus, NameSpace, CITIES, SortingOption } from '../../../const';
-import { withStore } from '../../../mocks/render-helpers';
+import { withStore } from '../../../tests/render-helpers';
 import { setSorting } from '../../../store/catalog/catalog.slice';
 
 import Sorting from './sorting';

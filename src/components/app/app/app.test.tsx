@@ -3,7 +3,7 @@ import { screen, render } from '@testing-library/react';
 
 import { AppRoute, RequestStatus, AuthorizationStatus, NameSpace } from '../../../const';
 import { State } from '../../../types/state';
-import { withHistory, withStore } from '../../../mocks/render-helpers';
+import { withHistory, withStore } from '../../../tests/render-helpers';
 
 import App from './app';
 

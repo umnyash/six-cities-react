@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import { AppRoute, RequestStatus, NameSpace, CITIES, SortingOption } from '../../../const';
 import { CityName } from '../../../types/offers';
-import { withHistory, withStore } from '../../../mocks/render-helpers';
+import { withHistory, withStore } from '../../../tests/render-helpers';
 import { setCity } from '../../../store/catalog/catalog.slice';
 import LoginForm from '../../ui/login-form';
 
