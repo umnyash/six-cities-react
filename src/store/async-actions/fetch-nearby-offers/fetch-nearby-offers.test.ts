@@ -1,15 +1,9 @@
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import MockAdapter from 'axios-mock-adapter';
-import { Action } from 'redux';
-import thunk from 'redux-thunk';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
 
-import { State } from '../../../types/state';
-import { createAPI, apiPaths } from '../../../services/api';
-import { AppThunkDispatch } from '../../../tests/types';
+import { apiPaths } from '../../../services/api';
 import { getMockOffers } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../tests/util';
+import { createMockStore, extractActionsTypes } from '../../../tests/util';
 
 import { fetchNearbyOffers } from './fetch-nearby-offers';
 
@@ -20,17 +14,11 @@ vi.mock('react-toastify', () => ({
 }));
 
 describe('Async action: fetchNearbyOffers', () => {
-  const api = createAPI();
-  const mockAPIAdapter = new MockAdapter(api);
-  const middleware = [thunk.withExtraArgument(api)];
-  const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
-  let store: ReturnType<typeof mockStoreCreator>;
+  let mockStore: ReturnType<typeof createMockStore>['mockStore'];
+  let mockAPIAdapter: ReturnType<typeof createMockStore>['mockAPIAdapter'];
 
   beforeEach(() => {
-    store = mockStoreCreator({ CATALOG: { offers: [] } });
-  });
-
-  afterEach(() => {
+    ({ mockStore, mockAPIAdapter } = createMockStore());
     vi.clearAllMocks();
   });
 
@@ -38,7 +26,7 @@ describe('Async action: fetchNearbyOffers', () => {
     const networkErrorMessage = /Network error/i;
     mockAPIAdapter.onGet(apiPaths.nearbyOffers('existingOfferId')).networkError();
 
-    await store.dispatch(fetchNearbyOffers('existingOfferId'));
+    await mockStore.dispatch(fetchNearbyOffers('existingOfferId'));
 
     expect(toast.warn).toHaveBeenCalledTimes(1);
     expect(toast.warn).toHaveBeenCalledWith(expect.stringMatching(networkErrorMessage));
@@ -48,8 +36,8 @@ describe('Async action: fetchNearbyOffers', () => {
     const mockOffers = getMockOffers(2);
     mockAPIAdapter.onGet(apiPaths.nearbyOffers('existingOfferId')).reply(StatusCodes.OK, mockOffers);
 
-    await store.dispatch(fetchNearbyOffers('existingOfferId'));
-    const dispatchedAcitons = store.getActions();
+    await mockStore.dispatch(fetchNearbyOffers('existingOfferId'));
+    const dispatchedAcitons = mockStore.getActions();
     const actionsTypes = extractActionsTypes(dispatchedAcitons);
     const fetchNearbyOffersFulfilled = dispatchedAcitons[1] as ReturnType<typeof fetchNearbyOffers.fulfilled>;
 
@@ -63,8 +51,8 @@ describe('Async action: fetchNearbyOffers', () => {
   it('should dispatch "fetchNearbyOffers.pending" and "fetchNearbyOffers.rejected" when server responds with 404', async () => {
     mockAPIAdapter.onGet(apiPaths.nearbyOffers('nonExistentOfferId')).reply(StatusCodes.NOT_FOUND);
 
-    await store.dispatch(fetchNearbyOffers('nonExistentOfferId'));
-    const actionsTypes = extractActionsTypes(store.getActions());
+    await mockStore.dispatch(fetchNearbyOffers('nonExistentOfferId'));
+    const actionsTypes = extractActionsTypes(mockStore.getActions());
 
     expect(actionsTypes).toEqual([
       fetchNearbyOffers.pending.type,

@@ -1,17 +1,11 @@
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import MockAdapter from 'axios-mock-adapter';
-import { Action } from 'redux';
-import thunk from 'redux-thunk';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
 
-import { State } from '../../../types/state';
 import { AuthData, AuthUser } from '../../../types/user';
-import { createAPI, apiPaths } from '../../../services/api';
+import { apiPaths } from '../../../services/api';
 import * as tokenStorage from '../../../services/token';
-import { AppThunkDispatch } from '../../../tests/types';
 import { getMockAuthUser } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../tests/util';
+import { createMockStore, extractActionsTypes } from '../../../tests/util';
 import { omit } from '../../../util';
 
 import { loginUser } from './login-user';
@@ -23,17 +17,11 @@ vi.mock('react-toastify', () => ({
 }));
 
 describe('Async action: loginUser', () => {
-  const api = createAPI();
-  const mockAPIAdapter = new MockAdapter(api);
-  const middleware = [thunk.withExtraArgument(api)];
-  const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
-  let store: ReturnType<typeof mockStoreCreator>;
+  let mockStore: ReturnType<typeof createMockStore>['mockStore'];
+  let mockAPIAdapter: ReturnType<typeof createMockStore>['mockAPIAdapter'];
 
   beforeEach(() => {
-    store = mockStoreCreator({ CATALOG: { offers: [] } });
-  });
-
-  afterEach(() => {
+    ({ mockStore, mockAPIAdapter } = createMockStore());
     vi.clearAllMocks();
   });
 
@@ -42,7 +30,7 @@ describe('Async action: loginUser', () => {
     const mockAuthData: AuthData = { email: 'test@test.com', password: 'abc123' };
     mockAPIAdapter.onPost(apiPaths.login()).networkError();
 
-    await store.dispatch(loginUser(mockAuthData));
+    await mockStore.dispatch(loginUser(mockAuthData));
 
     expect(toast.warn).toHaveBeenCalledTimes(1);
     expect(toast.warn).toHaveBeenCalledWith(expect.stringMatching(networkErrorMessage));
@@ -54,8 +42,8 @@ describe('Async action: loginUser', () => {
     const mockUser = omit(mockAuthUser, 'token');
     mockAPIAdapter.onPost(apiPaths.login()).reply(StatusCodes.CREATED, mockAuthUser);
 
-    await store.dispatch(loginUser(mockAuthData));
-    const dispatchedActions = store.getActions();
+    await mockStore.dispatch(loginUser(mockAuthData));
+    const dispatchedActions = mockStore.getActions();
     const actionsTypes = extractActionsTypes(dispatchedActions);
     const loginUserFulfilled = dispatchedActions[1] as ReturnType<typeof loginUser.fulfilled>;
 
@@ -72,7 +60,7 @@ describe('Async action: loginUser', () => {
     mockAPIAdapter.onPost(apiPaths.login()).reply(StatusCodes.CREATED, mockAuthUser);
     const mockSaveToken = vi.spyOn(tokenStorage, 'saveToken');
 
-    await store.dispatch(loginUser(mockAuthData));
+    await mockStore.dispatch(loginUser(mockAuthData));
 
     expect(mockSaveToken).toHaveBeenCalledTimes(1);
     expect(mockSaveToken).toHaveBeenCalledWith(mockAuthUser.token);
@@ -82,8 +70,8 @@ describe('Async action: loginUser', () => {
     const mockInvalidAuthData: AuthData = { email: 'test', password: '0000' };
     mockAPIAdapter.onPost(apiPaths.login()).reply(StatusCodes.BAD_REQUEST);
 
-    await store.dispatch(loginUser(mockInvalidAuthData));
-    const actionsTypes = extractActionsTypes(store.getActions());
+    await mockStore.dispatch(loginUser(mockInvalidAuthData));
+    const actionsTypes = extractActionsTypes(mockStore.getActions());
 
     expect(actionsTypes).toEqual([
       loginUser.pending.type,
@@ -96,7 +84,7 @@ describe('Async action: loginUser', () => {
     const errorMessage = 'bad request';
     mockAPIAdapter.onPost(apiPaths.login()).reply(StatusCodes.BAD_REQUEST, { message: errorMessage });
 
-    await store.dispatch(loginUser(mockInvalidAuthData));
+    await mockStore.dispatch(loginUser(mockInvalidAuthData));
 
     expect(toast.warn).toHaveBeenCalledTimes(1);
     expect(toast.warn).toHaveBeenCalledWith(errorMessage);

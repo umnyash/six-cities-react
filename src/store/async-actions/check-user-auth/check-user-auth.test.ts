@@ -1,16 +1,10 @@
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import MockAdapter from 'axios-mock-adapter';
-import { Action } from 'redux';
-import thunk from 'redux-thunk';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
 
-import { State } from '../../../types/state';
 import { AuthUser } from '../../../types/user';
-import { createAPI, apiPaths } from '../../../services/api';
-import { AppThunkDispatch } from '../../../tests/types';
+import { apiPaths } from '../../../services/api';
 import { getMockAuthUser } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../tests/util';
+import { createMockStore, extractActionsTypes } from '../../../tests/util';
 import { omit } from '../../../util';
 
 import { checkUserAuth } from './check-user-auth';
@@ -22,17 +16,11 @@ vi.mock('react-toastify', () => ({
 }));
 
 describe('Async action: checkUserAuth', () => {
-  const api = createAPI();
-  const mockAPIAdapter = new MockAdapter(api);
-  const middleware = [thunk.withExtraArgument(api)];
-  const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
-  let store: ReturnType<typeof mockStoreCreator>;
+  let mockStore: ReturnType<typeof createMockStore>['mockStore'];
+  let mockAPIAdapter: ReturnType<typeof createMockStore>['mockAPIAdapter'];
 
   beforeEach(() => {
-    store = mockStoreCreator({ CATALOG: { offers: [] } });
-  });
-
-  afterEach(() => {
+    ({ mockStore, mockAPIAdapter } = createMockStore());
     vi.clearAllMocks();
   });
 
@@ -40,7 +28,7 @@ describe('Async action: checkUserAuth', () => {
     const networkErrorMessage = /Network error/i;
     mockAPIAdapter.onGet(apiPaths.login()).networkError();
 
-    await store.dispatch(checkUserAuth());
+    await mockStore.dispatch(checkUserAuth());
 
     expect(toast.warn).toHaveBeenCalledTimes(1);
     expect(toast.warn).toHaveBeenCalledWith(expect.stringMatching(networkErrorMessage));
@@ -51,8 +39,8 @@ describe('Async action: checkUserAuth', () => {
     const mockUser = omit(mockAuthUser, 'token');
     mockAPIAdapter.onGet(apiPaths.login()).reply(StatusCodes.OK, mockAuthUser);
 
-    await store.dispatch(checkUserAuth());
-    const dispatchedActions = store.getActions();
+    await mockStore.dispatch(checkUserAuth());
+    const dispatchedActions = mockStore.getActions();
     const actionsTypes = extractActionsTypes(dispatchedActions);
     const checkUserAuthFulfilled = dispatchedActions[1] as ReturnType<typeof checkUserAuth.fulfilled>;
 
@@ -66,8 +54,8 @@ describe('Async action: checkUserAuth', () => {
   it('should dispatch "checkUserAuth.pending" and "checkUserAuth.rejected" when server responds with 401', async () => {
     mockAPIAdapter.onGet(apiPaths.login()).reply(StatusCodes.UNAUTHORIZED);
 
-    await store.dispatch(checkUserAuth());
-    const actionsTypes = extractActionsTypes(store.getActions());
+    await mockStore.dispatch(checkUserAuth());
+    const actionsTypes = extractActionsTypes(mockStore.getActions());
 
     expect(actionsTypes).toEqual([
       checkUserAuth.pending.type,

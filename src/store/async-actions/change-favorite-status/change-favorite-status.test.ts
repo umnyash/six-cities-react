@@ -1,15 +1,9 @@
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import MockAdapter from 'axios-mock-adapter';
-import { Action } from 'redux';
-import thunk from 'redux-thunk';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
 
-import { State } from '../../../types/state';
-import { FavoriteStatus, apiPaths, createAPI } from '../../../services/api';
-import { AppThunkDispatch } from '../../../tests/types';
+import { FavoriteStatus, apiPaths } from '../../../services/api';
 import { getMockOffer } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../tests/util';
+import { createMockStore, extractActionsTypes } from '../../../tests/util';
 
 import { changeFavoriteStatus } from './change-favorite-status';
 
@@ -20,17 +14,11 @@ vi.mock('react-toastify', () => ({
 }));
 
 describe('Async action: changeFavoriteStatus', () => {
-  const api = createAPI();
-  const mockAPIAdapter = new MockAdapter(api);
-  const middleware = [thunk.withExtraArgument(api)];
-  const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
-  let store: ReturnType<typeof mockStoreCreator>;
+  let mockStore: ReturnType<typeof createMockStore>['mockStore'];
+  let mockAPIAdapter: ReturnType<typeof createMockStore>['mockAPIAdapter'];
 
   beforeEach(() => {
-    store = mockStoreCreator({ CATALOG: { offers: [] } });
-  });
-
-  afterEach(() => {
+    ({ mockStore, mockAPIAdapter } = createMockStore());
     vi.clearAllMocks();
   });
 
@@ -40,7 +28,7 @@ describe('Async action: changeFavoriteStatus', () => {
       .onPost(apiPaths.favoriteStatus('existingOfferId', FavoriteStatus.Off))
       .networkError();
 
-    await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.Off }));
+    await mockStore.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.Off }));
 
     expect(toast.warn).toHaveBeenCalledTimes(1);
     expect(toast.warn).toHaveBeenCalledWith(expect.stringMatching(networkErrorMessage));
@@ -53,8 +41,8 @@ describe('Async action: changeFavoriteStatus', () => {
       .onPost(apiPaths.favoriteStatus('existingOfferId', FavoriteStatus.Off))
       .reply(StatusCodes.OK, mockChangedOffer);
 
-    await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.Off }));
-    const dispatchedActions = store.getActions();
+    await mockStore.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.Off }));
+    const dispatchedActions = mockStore.getActions();
     const actionsTypes = extractActionsTypes(dispatchedActions);
     const changeFavoriteStatusFulfilled = dispatchedActions[1] as ReturnType<typeof changeFavoriteStatus.fulfilled>;
 
@@ -72,8 +60,8 @@ describe('Async action: changeFavoriteStatus', () => {
       .onPost(apiPaths.favoriteStatus('existingOfferId', FavoriteStatus.On))
       .reply(StatusCodes.CREATED, mockChangedOffer);
 
-    await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.On }));
-    const dispatchedActions = store.getActions();
+    await mockStore.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.On }));
+    const dispatchedActions = mockStore.getActions();
     const actionsTypes = extractActionsTypes(dispatchedActions);
     const changeFavoriteStatusFulfilled = dispatchedActions[1] as ReturnType<typeof changeFavoriteStatus.fulfilled>;
 
@@ -90,8 +78,8 @@ describe('Async action: changeFavoriteStatus', () => {
       .onPost(apiPaths.favoriteStatus('existingOfferId', wrongFavoriteStatus))
       .reply(StatusCodes.BAD_REQUEST);
 
-    await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: wrongFavoriteStatus }));
-    const actionsTypes = extractActionsTypes(store.getActions());
+    await mockStore.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: wrongFavoriteStatus }));
+    const actionsTypes = extractActionsTypes(mockStore.getActions());
 
     expect(actionsTypes).toEqual([
       changeFavoriteStatus.pending.type,
@@ -106,7 +94,7 @@ describe('Async action: changeFavoriteStatus', () => {
       .onPost(apiPaths.favoriteStatus('existingOfferId', wrongFavoriteStatus))
       .reply(StatusCodes.BAD_REQUEST, { message: errorMessage });
 
-    await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: wrongFavoriteStatus }));
+    await mockStore.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: wrongFavoriteStatus }));
 
     expect(toast.warn).toHaveBeenCalledTimes(1);
     expect(toast.warn).toHaveBeenCalledWith(errorMessage);
@@ -117,8 +105,8 @@ describe('Async action: changeFavoriteStatus', () => {
       .onPost(apiPaths.favoriteStatus('existingOfferId', FavoriteStatus.On))
       .reply(StatusCodes.UNAUTHORIZED);
 
-    await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.On }));
-    const actionsTypes = extractActionsTypes(store.getActions());
+    await mockStore.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: FavoriteStatus.On }));
+    const actionsTypes = extractActionsTypes(mockStore.getActions());
 
     expect(actionsTypes).toEqual([
       changeFavoriteStatus.pending.type,
@@ -131,8 +119,8 @@ describe('Async action: changeFavoriteStatus', () => {
       .onPost(apiPaths.favoriteStatus('nonExistentOfferId', FavoriteStatus.On))
       .reply(StatusCodes.NOT_FOUND);
 
-    await store.dispatch(changeFavoriteStatus({ offerId: 'nonExistentOfferId', status: FavoriteStatus.On }));
-    const actionsTypes = extractActionsTypes(store.getActions());
+    await mockStore.dispatch(changeFavoriteStatus({ offerId: 'nonExistentOfferId', status: FavoriteStatus.On }));
+    const actionsTypes = extractActionsTypes(mockStore.getActions());
 
     expect(actionsTypes).toEqual([
       changeFavoriteStatus.pending.type,
@@ -147,8 +135,8 @@ describe('Async action: changeFavoriteStatus', () => {
       .onPost(apiPaths.favoriteStatus('existingOfferId', targetFavoriteStatus))
       .reply(StatusCodes.CONFLICT);
 
-    await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: targetFavoriteStatus }));
-    const actionsTypes = extractActionsTypes(store.getActions());
+    await mockStore.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: targetFavoriteStatus }));
+    const actionsTypes = extractActionsTypes(mockStore.getActions());
 
     expect(actionsTypes).toEqual([
       changeFavoriteStatus.pending.type,
@@ -164,7 +152,7 @@ describe('Async action: changeFavoriteStatus', () => {
       .onPost(apiPaths.favoriteStatus('existingOfferId', targetFavoriteStatus))
       .reply(StatusCodes.CONFLICT, { message: errorMessage });
 
-    await store.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: targetFavoriteStatus }));
+    await mockStore.dispatch(changeFavoriteStatus({ offerId: 'existingOfferId', status: targetFavoriteStatus }));
 
     expect(toast.warn).toHaveBeenCalledTimes(1);
     expect(toast.warn).toHaveBeenCalledWith(errorMessage);

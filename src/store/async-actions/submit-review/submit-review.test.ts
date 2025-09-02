@@ -1,15 +1,9 @@
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import MockAdapter from 'axios-mock-adapter';
-import { Action } from 'redux';
-import thunk from 'redux-thunk';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
 
-import { State } from '../../../types/state';
-import { createAPI, apiPaths } from '../../../services/api';
-import { AppThunkDispatch } from '../../../tests/types';
+import { apiPaths } from '../../../services/api';
 import { getMockReview } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../tests/util';
+import { createMockStore, extractActionsTypes } from '../../../tests/util';
 
 import { submitReview } from './submit-review';
 
@@ -20,17 +14,11 @@ vi.mock('react-toastify', () => ({
 }));
 
 describe('Async action: submitReview', () => {
-  const api = createAPI();
-  const mockAPIAdapter = new MockAdapter(api);
-  const middleware = [thunk.withExtraArgument(api)];
-  const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
-  let store: ReturnType<typeof mockStoreCreator>;
+  let mockStore: ReturnType<typeof createMockStore>['mockStore'];
+  let mockAPIAdapter: ReturnType<typeof createMockStore>['mockAPIAdapter'];
 
   beforeEach(() => {
-    store = mockStoreCreator({ CATALOG: { offers: [] } });
-  });
-
-  afterEach(() => {
+    ({ mockStore, mockAPIAdapter } = createMockStore());
     vi.clearAllMocks();
   });
 
@@ -40,7 +28,7 @@ describe('Async action: submitReview', () => {
     const mockNewReviewContent = { rating: mockNewReview.rating, comment: mockNewReview.comment };
     mockAPIAdapter.onPost(apiPaths.reviews('existingOfferId')).networkError();
 
-    await store.dispatch(submitReview({ offerId: 'existingOfferId', content: mockNewReviewContent }));
+    await mockStore.dispatch(submitReview({ offerId: 'existingOfferId', content: mockNewReviewContent }));
 
     expect(toast.warn).toHaveBeenCalledTimes(1);
     expect(toast.warn).toHaveBeenCalledWith(expect.stringMatching(networkErrorMessage));
@@ -51,8 +39,8 @@ describe('Async action: submitReview', () => {
     const mockNewReviewContent = { rating: mockNewReview.rating, comment: mockNewReview.comment };
     mockAPIAdapter.onPost(apiPaths.reviews('existingOfferId')).reply(StatusCodes.CREATED, mockNewReview);
 
-    await store.dispatch(submitReview({ offerId: 'existingOfferId', content: mockNewReviewContent }));
-    const dispatchedActions = store.getActions();
+    await mockStore.dispatch(submitReview({ offerId: 'existingOfferId', content: mockNewReviewContent }));
+    const dispatchedActions = mockStore.getActions();
     const actionsTypes = extractActionsTypes(dispatchedActions);
     const submitReviewFulfilled = dispatchedActions[1] as ReturnType<typeof submitReview.fulfilled>;
 
@@ -67,8 +55,8 @@ describe('Async action: submitReview', () => {
     const mockReviewContent = { rating: 0, comment: 'comment text with invalid length' };
     mockAPIAdapter.onPost(apiPaths.reviews('nonExistentOfferId')).reply(StatusCodes.BAD_REQUEST);
 
-    await store.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
-    const actionsTypes = extractActionsTypes(store.getActions());
+    await mockStore.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
+    const actionsTypes = extractActionsTypes(mockStore.getActions());
 
     expect(actionsTypes).toEqual([
       submitReview.pending.type,
@@ -83,7 +71,7 @@ describe('Async action: submitReview', () => {
       .onPost(apiPaths.reviews('nonExistentOfferId'))
       .reply(StatusCodes.BAD_REQUEST, { message: errorMessage });
 
-    await store.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
+    await mockStore.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
 
     expect(toast.warn).toHaveBeenCalledTimes(1);
     expect(toast.warn).toHaveBeenCalledWith(errorMessage);
@@ -93,8 +81,8 @@ describe('Async action: submitReview', () => {
     const mockReviewContent = { rating: 5, comment: 'comment text with valid length' };
     mockAPIAdapter.onPost(apiPaths.reviews('nonExistentOfferId')).reply(StatusCodes.UNAUTHORIZED);
 
-    await store.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
-    const actionsTypes = extractActionsTypes(store.getActions());
+    await mockStore.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
+    const actionsTypes = extractActionsTypes(mockStore.getActions());
 
     expect(actionsTypes).toEqual([
       submitReview.pending.type,
@@ -106,8 +94,8 @@ describe('Async action: submitReview', () => {
     const mockReviewContent = { rating: 5, comment: 'comment text with valid length' };
     mockAPIAdapter.onPost(apiPaths.reviews('nonExistentOfferId')).reply(StatusCodes.NOT_FOUND);
 
-    await store.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
-    const actionsTypes = extractActionsTypes(store.getActions());
+    await mockStore.dispatch(submitReview({ offerId: 'nonExistentOfferId', content: mockReviewContent }));
+    const actionsTypes = extractActionsTypes(mockStore.getActions());
 
     expect(actionsTypes).toEqual([
       submitReview.pending.type,

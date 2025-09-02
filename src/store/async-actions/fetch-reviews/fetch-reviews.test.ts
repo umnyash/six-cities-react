@@ -1,15 +1,9 @@
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import MockAdapter from 'axios-mock-adapter';
-import { Action } from 'redux';
-import thunk from 'redux-thunk';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
 
-import { State } from '../../../types/state';
-import { createAPI, apiPaths } from '../../../services/api';
-import { AppThunkDispatch } from '../../../tests/types';
+import { apiPaths } from '../../../services/api';
 import { getMockReviews } from '../../../data/mocks';
-import { extractActionsTypes } from '../../../tests/util';
+import { createMockStore, extractActionsTypes } from '../../../tests/util';
 
 import { fetchReviews } from './fetch-reviews';
 
@@ -20,17 +14,11 @@ vi.mock('react-toastify', () => ({
 }));
 
 describe('Async action: fetchReviews', () => {
-  const api = createAPI();
-  const mockAPIAdapter = new MockAdapter(api);
-  const middleware = [thunk.withExtraArgument(api)];
-  const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
-  let store: ReturnType<typeof mockStoreCreator>;
+  let mockStore: ReturnType<typeof createMockStore>['mockStore'];
+  let mockAPIAdapter: ReturnType<typeof createMockStore>['mockAPIAdapter'];
 
   beforeEach(() => {
-    store = mockStoreCreator({ CATALOG: { offers: [] } });
-  });
-
-  afterEach(() => {
+    ({ mockStore, mockAPIAdapter } = createMockStore());
     vi.clearAllMocks();
   });
 
@@ -38,7 +26,7 @@ describe('Async action: fetchReviews', () => {
     const networkErrorMessage = /Network error/i;
     mockAPIAdapter.onGet(apiPaths.reviews('existingOfferId')).networkError();
 
-    await store.dispatch(fetchReviews('existingOfferId'));
+    await mockStore.dispatch(fetchReviews('existingOfferId'));
 
     expect(toast.warn).toHaveBeenCalledTimes(1);
     expect(toast.warn).toHaveBeenCalledWith(expect.stringMatching(networkErrorMessage));
@@ -48,8 +36,8 @@ describe('Async action: fetchReviews', () => {
     const mockReviews = getMockReviews(2);
     mockAPIAdapter.onGet(apiPaths.reviews('existingOfferId')).reply(StatusCodes.OK, mockReviews);
 
-    await store.dispatch(fetchReviews('existingOfferId'));
-    const dispatchedActions = store.getActions();
+    await mockStore.dispatch(fetchReviews('existingOfferId'));
+    const dispatchedActions = mockStore.getActions();
     const actionsTypes = extractActionsTypes(dispatchedActions);
     const fetchReviewsFulfilled = dispatchedActions[1] as ReturnType<typeof fetchReviews.fulfilled>;
 
@@ -63,8 +51,8 @@ describe('Async action: fetchReviews', () => {
   it('should dispatch "fetchReviews.pending" and "fetchReviews.rejected" when server responds with 404', async () => {
     mockAPIAdapter.onGet(apiPaths.reviews('nonExistentOfferId')).reply(StatusCodes.NOT_FOUND);
 
-    await store.dispatch(fetchReviews('nonExistentOfferId'));
-    const actionsTypes = extractActionsTypes(store.getActions());
+    await mockStore.dispatch(fetchReviews('nonExistentOfferId'));
+    const actionsTypes = extractActionsTypes(mockStore.getActions());
 
     expect(actionsTypes).toEqual([
       fetchReviews.pending.type,
