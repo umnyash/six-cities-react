@@ -9,7 +9,7 @@ type StateSlice = Pick<State, NameSpace.Catalog>;
 export const getAllOffers = (state: StateSlice) => state[sliceName].offers;
 
 export const getAllOffersLoadingStatus = (state: StateSlice) => state[sliceName].loadingStatus;
-export const getCity = (state: StateSlice) => state[sliceName].city;
+export const getCityFilter = (state: StateSlice) => state[sliceName].filter.city;
 export const getSorting = (state: StateSlice) => state[sliceName].sorting;
 export const getActiveOfferId = (state: StateSlice) => state[sliceName].activeOfferId;
 
@@ -19,7 +19,7 @@ export const getAllOffersGroupedByCity = createSelector(
 );
 
 export const getAllOffersByCity = createSelector(
-  [getAllOffersGroupedByCity, getCity],
+  [getAllOffersGroupedByCity, getCityFilter],
   (groupedOffers, city) => groupedOffers[city] ?? []
 );
 

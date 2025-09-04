@@ -4,16 +4,16 @@ import clsx from 'clsx';
 import { CITIES } from '../../../const';
 import { CityName } from '../../../types/offers';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { getCity } from '../../../store/catalog/catalog.selectors';
-import { setCity } from '../../../store/catalog/catalog.slice';
+import { getCityFilter } from '../../../store/catalog/catalog.selectors';
+import { setCityFilter } from '../../../store/catalog/catalog.slice';
 
 function CitiesListComponent(): JSX.Element {
-  const activeCity = useAppSelector(getCity);
+  const activeCity = useAppSelector(getCityFilter);
   const dispatch = useAppDispatch();
 
   const getLinkClickHandler = (cityName: CityName) => (evt: MouseEvent) => {
     evt.preventDefault();
-    dispatch(setCity(cityName));
+    dispatch(setCityFilter(cityName));
   };
 
   return (

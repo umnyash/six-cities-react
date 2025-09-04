@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 
 import { CITIES, RequestStatus, SortingOption, NameSpace } from '../../../const';
 import { withStore } from '../../../tests/render-helpers';
-import { setCity } from '../../../store/catalog/catalog.slice';
+import { setCityFilter } from '../../../store/catalog/catalog.slice';
 
 import CitiesList from './cities-list';
 
@@ -15,7 +15,9 @@ describe('Component: CitiesList', () => {
     [NameSpace.Catalog]: {
       offers: [],
       loadingStatus: RequestStatus.None,
-      city: activeCity,
+      filter: {
+        city: activeCity,
+      },
       sorting: SortingOption.Default,
       activeOfferId: '',
     }
@@ -37,7 +39,7 @@ describe('Component: CitiesList', () => {
     expect(screen.queryByRole('link', { name: activeCity })).not.toBeInTheDocument();
   });
 
-  it('should dispatch "setCity" when user clicked on not active link', async () => {
+  it('should dispatch "setCityFilter" when user clicked on not active link', async () => {
     const { withStoreComponent, mockStore } = withStore(<CitiesList />, mockInitialState);
 
     render(withStoreComponent);
@@ -46,7 +48,7 @@ describe('Component: CitiesList', () => {
 
     expect(dispatchedActions).toHaveLength(1);
     expect(dispatchedActions[0]).toEqual({
-      type: setCity.type,
+      type: setCityFilter.type,
       payload: notActiveCity
     });
   });

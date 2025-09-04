@@ -20,7 +20,9 @@ describe('Component: CatalogMap', () => {
       [NameSpace.Catalog]: {
         offers: mockOffers,
         loadingStatus: RequestStatus.None,
-        city: activeCity,
+        filter: {
+          city: activeCity,
+        },
         sorting: SortingOption.Default,
         activeOfferId,
       }

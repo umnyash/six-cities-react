@@ -13,7 +13,9 @@ export type UserState = {
 export type CatalogState = {
   offers: Offers;
   loadingStatus: RequestStatus;
-  city: CityName;
+  filter: {
+    city: CityName;
+  };
   sorting: SortingOption;
   activeOfferId: string;
 }

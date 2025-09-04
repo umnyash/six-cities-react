@@ -1,8 +1,8 @@
 import { useAppSelector } from '../../../hooks';
-import { getCity } from '../../../store/catalog/catalog.selectors';
+import { getCityFilter } from '../../../store/catalog/catalog.selectors';
 
 function CatalogPlaceholder() {
-  const activeCity = useAppSelector(getCity);
+  const activeCity = useAppSelector(getCityFilter);
 
   return (
     <section className="cities__no-places">

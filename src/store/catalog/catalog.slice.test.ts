@@ -1,5 +1,5 @@
 import { CatalogState } from '../../types/state';
-import { catalog, setCity, setSorting, setActiveOfferId } from './catalog.slice';
+import { catalog, setCityFilter, setSorting, setActiveOfferId } from './catalog.slice';
 import { RequestStatus, CITIES, SortingOption } from '../../const';
 import { FavoriteStatus } from '../../services/api';
 import { getMockOffers, getMockCardOffer } from '../../data/mocks';
@@ -10,7 +10,9 @@ describe('Catalog slice', () => {
     const expectedState: CatalogState = {
       offers: getMockOffers(3),
       loadingStatus: RequestStatus.Success,
-      city: CITIES[2],
+      filter: {
+        city: CITIES[2],
+      },
       sorting: SortingOption.PriceAsc,
       activeOfferId: '68a9fb53-f459-43be-b062-c23bc10d3067',
     };
@@ -25,7 +27,9 @@ describe('Catalog slice', () => {
     const initialState: CatalogState = {
       offers: [],
       loadingStatus: RequestStatus.None,
-      city: CITIES[0],
+      filter: {
+        city: CITIES[0],
+      },
       sorting: SortingOption.Default,
       activeOfferId: '',
     };
@@ -36,16 +40,18 @@ describe('Catalog slice', () => {
     expect(result).toEqual(initialState);
   });
 
-  it('should change city on "setCity" action', () => {
+  it('should change city filter on "setCityFilter" action', () => {
     const expectedState: CatalogState = {
       offers: [],
       loadingStatus: RequestStatus.None,
-      city: CITIES[3],
+      filter: {
+        city: CITIES[3],
+      },
       sorting: SortingOption.Default,
       activeOfferId: '',
     };
 
-    const result = catalog.reducer(undefined, setCity(CITIES[3]));
+    const result = catalog.reducer(undefined, setCityFilter(CITIES[3]));
 
     expect(result).toEqual(expectedState);
   });
@@ -54,7 +60,9 @@ describe('Catalog slice', () => {
     const expectedState: CatalogState = {
       offers: [],
       loadingStatus: RequestStatus.None,
-      city: CITIES[0],
+      filter: {
+        city: CITIES[0],
+      },
       sorting: SortingOption.RatingDesc,
       activeOfferId: '',
     };
@@ -68,7 +76,9 @@ describe('Catalog slice', () => {
     const expectedState: CatalogState = {
       offers: [],
       loadingStatus: RequestStatus.None,
-      city: CITIES[0],
+      filter: {
+        city: CITIES[0],
+      },
       sorting: SortingOption.Default,
       activeOfferId: 'c207bc3e-93ca-43e5-b9b9-e84476a946b6',
     };
@@ -83,7 +93,9 @@ describe('Catalog slice', () => {
       const expectedState: CatalogState = {
         offers: [],
         loadingStatus: RequestStatus.Pending,
-        city: CITIES[0],
+        filter: {
+          city: CITIES[0],
+        },
         sorting: SortingOption.Default,
         activeOfferId: '',
       };
@@ -97,7 +109,9 @@ describe('Catalog slice', () => {
       const initialState: CatalogState = {
         offers: [],
         loadingStatus: RequestStatus.Pending,
-        city: CITIES[0],
+        filter: {
+          city: CITIES[0],
+        },
         sorting: SortingOption.Default,
         activeOfferId: '',
       };
@@ -105,7 +119,9 @@ describe('Catalog slice', () => {
       const expectedState: CatalogState = {
         offers: mockOffers,
         loadingStatus: RequestStatus.Success,
-        city: CITIES[0],
+        filter: {
+          city: CITIES[0],
+        },
         sorting: SortingOption.Default,
         activeOfferId: '',
       };
@@ -121,14 +137,18 @@ describe('Catalog slice', () => {
       const initialState: CatalogState = {
         offers: [],
         loadingStatus: RequestStatus.Pending,
-        city: CITIES[0],
+        filter: {
+          city: CITIES[0],
+        },
         sorting: SortingOption.Default,
         activeOfferId: '',
       };
       const expectedState: CatalogState = {
         offers: [],
         loadingStatus: RequestStatus.Error,
-        city: CITIES[0],
+        filter: {
+          city: CITIES[0],
+        },
         sorting: SortingOption.Default,
         activeOfferId: '',
       };
@@ -146,7 +166,9 @@ describe('Catalog slice', () => {
       const initialState: CatalogState = {
         offers: [...mockOffers, mockTargetOffer],
         loadingStatus: RequestStatus.Success,
-        city: CITIES[0],
+        filter: {
+          city: CITIES[0],
+        },
         sorting: SortingOption.Default,
         activeOfferId: '',
       };
@@ -154,7 +176,9 @@ describe('Catalog slice', () => {
       const expectedState: CatalogState = {
         offers: [...mockOffers, mockTargetChangedOffer],
         loadingStatus: RequestStatus.Success,
-        city: CITIES[0],
+        filter: {
+          city: CITIES[0],
+        },
         sorting: SortingOption.Default,
         activeOfferId: '',
       };
@@ -171,7 +195,9 @@ describe('Catalog slice', () => {
       const initialState: CatalogState = {
         offers: [],
         loadingStatus: RequestStatus.None,
-        city: CITIES[0],
+        filter: {
+          city: CITIES[0],
+        },
         sorting: SortingOption.Default,
         activeOfferId: '',
       };
@@ -201,7 +227,9 @@ describe('Catalog slice', () => {
         const initialState: CatalogState = {
           offers: initialOffers,
           loadingStatus: RequestStatus.Success,
-          city: CITIES[0],
+          filter: {
+            city: CITIES[0],
+          },
           sorting: SortingOption.Default,
           activeOfferId: '',
         };

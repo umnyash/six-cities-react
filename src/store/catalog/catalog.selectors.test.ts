@@ -4,7 +4,7 @@ import { getMockOffers, getMockCity } from '../../data/mocks';
 import {
   getAllOffers,
   getAllOffersLoadingStatus,
-  getCity,
+  getCityFilter,
   getSorting,
   getAllOffersGroupedByCity,
   getAllOffersByCity,
@@ -26,7 +26,9 @@ describe('Catalog selectors', () => {
     [nameSpace]: {
       offers: mockAllOffers,
       loadingStatus: RequestStatus.Success,
-      city: activeCity,
+      filter: {
+        city: activeCity,
+      },
       sorting: SortingOption.Default,
       activeOfferId: 'd7cc86a5-ea62-4e5f-821c-5cb6318eb004',
     }
@@ -46,8 +48,8 @@ describe('Catalog selectors', () => {
     });
 
     it('should return city from state', () => {
-      const { city } = state[nameSpace];
-      const result = getCity(state);
+      const { filter: { city } } = state[nameSpace];
+      const result = getCityFilter(state);
       expect(result).toBe(city);
     });
 

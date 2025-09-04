@@ -4,7 +4,7 @@ import { CITIES, AppRoute } from '../../../const';
 import { CityName } from '../../../types/offers';
 import { getRandomArrayItem } from '../../../util';
 import { useAppDispatch } from '../../../hooks';
-import { setCity } from '../../../store/catalog/catalog.slice';
+import { setCityFilter } from '../../../store/catalog/catalog.slice';
 
 import LoginForm from '../../ui/login-form';
 
@@ -14,7 +14,7 @@ function LoginPage(): JSX.Element {
   const randomCityName = getRandomArrayItem(CITIES);
 
   const getCityButtonClickHandler = (cityName: CityName) => () => {
-    dispatch(setCity(cityName));
+    dispatch(setCityFilter(cityName));
   };
 
   return (

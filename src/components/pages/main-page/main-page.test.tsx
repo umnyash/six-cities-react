@@ -41,7 +41,9 @@ describe('Component: MainPage', () => {
       [NameSpace.Catalog]: {
         offers: [],
         loadingStatus: RequestStatus.None,
-        city: activeCity,
+        filter: {
+          city: activeCity,
+        },
         sorting: SortingOption.Default,
         activeOfferId: '',
       }

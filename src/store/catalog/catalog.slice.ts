@@ -7,7 +7,9 @@ import { fetchAllOffers, changeFavoriteStatus, logoutUser } from '../async-actio
 const initialState: CatalogState = {
   offers: [],
   loadingStatus: RequestStatus.None,
-  city: CITIES[0],
+  filter: {
+    city: CITIES[0],
+  },
   sorting: SortingOption.Default,
   activeOfferId: '',
 };
@@ -34,8 +36,8 @@ export const catalog = createSlice({
   name: NameSpace.Catalog,
   initialState,
   reducers: {
-    setCity: (state, action: PayloadAction<CityName>) => {
-      state.city = action.payload;
+    setCityFilter: (state, action: PayloadAction<CityName>) => {
+      state.filter.city = action.payload;
     },
     setSorting: (state, action: PayloadAction<SortingOption>) => {
       state.sorting = action.payload;
@@ -67,4 +69,4 @@ export const catalog = createSlice({
   },
 });
 
-export const { setCity, setSorting, setActiveOfferId } = catalog.actions;
+export const { setCityFilter, setSorting, setActiveOfferId } = catalog.actions;

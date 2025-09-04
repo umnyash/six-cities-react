@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 import { AppRoute, RequestStatus, NameSpace, CITIES, SortingOption } from '../../../const';
 import { CityName } from '../../../types/offers';
 import { withHistory, withStore } from '../../../tests/render-helpers';
-import { setCity } from '../../../store/catalog/catalog.slice';
+import { setCityFilter } from '../../../store/catalog/catalog.slice';
 import LoginForm from '../../ui/login-form';
 
 import LoginPage from './login-page';
@@ -22,7 +22,9 @@ describe('Component: LoginPage', () => {
     [NameSpace.Catalog]: {
       offers: [],
       loadingStatus: RequestStatus.None,
-      city: CITIES[0],
+      filter: {
+        city: CITIES[0],
+      },
       sorting: SortingOption.Default,
       activeOfferId: '',
     }
@@ -60,7 +62,7 @@ describe('Component: LoginPage', () => {
     });
   });
 
-  it('should dispatch "setCity" when user clicked on city link', async () => {
+  it('should dispatch "setCityFilter" when user clicked on city link', async () => {
     const withHistoryComponent = withHistory(<LoginPage />);
     const { withStoreComponent, mockStore } = withStore(withHistoryComponent, mockInitialState);
 
@@ -71,7 +73,7 @@ describe('Component: LoginPage', () => {
 
     expect(dispatchedActions).toHaveLength(1);
     expect(dispatchedActions[0]).toEqual({
-      type: setCity.type,
+      type: setCityFilter.type,
       payload: link.textContent
     });
   });
