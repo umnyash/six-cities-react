@@ -1,10 +1,10 @@
 import { useAppSelector } from '../../../hooks';
-import { getAllOffersByCity, getActiveOfferId } from '../../../store/catalog/catalog.selectors';
+import { getFilteredOffers, getActiveOfferId } from '../../../store/catalog/catalog.selectors';
 
 import Map from '../map';
 
 function CatalogMap() {
-  const offers = useAppSelector(getAllOffersByCity);
+  const offers = useAppSelector(getFilteredOffers);
   const activeOfferId = useAppSelector(getActiveOfferId);
 
   return (

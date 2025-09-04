@@ -18,13 +18,13 @@ export const getAllOffersGroupedByCity = createSelector(
   (offers) => groupBy(offers, (offer) => offer.city.name)
 );
 
-export const getAllOffersByCity = createSelector(
+export const getFilteredOffers = createSelector(
   [getAllOffersGroupedByCity, getCityFilter],
   (groupedOffers, city) => groupedOffers[city] ?? []
 );
 
-export const getSortedAllOffersByCity = createSelector(
-  [getAllOffersByCity, getSorting],
+export const getSortedOffers = createSelector(
+  [getFilteredOffers, getSorting],
 
   (offersByCity, sortingOption) => {
     switch (sortingOption) {

@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { RequestStatus } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { fetchAllOffers } from '../../../store/async-actions';
-import { getAllOffersLoadingStatus, getAllOffersByCity } from '../../../store/catalog/catalog.selectors';
+import { getAllOffersLoadingStatus, getFilteredOffers } from '../../../store/catalog/catalog.selectors';
 
 import CatalogPlaceholder from '../../blocks/catalog-placeholder';
 import CatalogError from '../../blocks/catalog-error';
@@ -17,7 +17,7 @@ function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const offersLoadingStatus = useAppSelector(getAllOffersLoadingStatus);
-  const filteredOffers = useAppSelector(getAllOffersByCity);
+  const filteredOffers = useAppSelector(getFilteredOffers);
   const filteredOffersCount = filteredOffers.length;
 
   useEffect(() => {

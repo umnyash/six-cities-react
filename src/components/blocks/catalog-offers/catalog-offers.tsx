@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { getCityFilter, getSortedAllOffersByCity, getSorting } from '../../../store/catalog/catalog.selectors';
+import { getCityFilter, getSortedOffers, getSorting } from '../../../store/catalog/catalog.selectors';
 import { setActiveOfferId } from '../../../store/catalog/catalog.slice';
 
 import Sorting from '../../ui/sorting';
@@ -13,7 +13,7 @@ function CatalogOffers(): JSX.Element {
   const sorting = useAppSelector(getSorting);
   const dispatch = useAppDispatch();
 
-  const offers = useAppSelector(getSortedAllOffersByCity);
+  const offers = useAppSelector(getSortedOffers);
 
   useEffect(() => {
     if (offersSectionElementRef.current) {

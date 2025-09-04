@@ -7,8 +7,8 @@ import {
   getCityFilter,
   getSorting,
   getAllOffersGroupedByCity,
-  getAllOffersByCity,
-  getSortedAllOffersByCity,
+  getFilteredOffers,
+  getSortedOffers,
   getActiveOfferId,
 } from './catalog.selectors';
 
@@ -88,7 +88,7 @@ describe('Catalog selectors', () => {
 
     it('should return all offers by city from state', () => {
       const expectedOffers = mockAllOffers.filter((offer) => offer.city.name === activeCity);
-      const resultOffers = getAllOffersByCity(state);
+      const resultOffers = getFilteredOffers(state);
       expect(resultOffers).toEqual(expectedOffers);
     });
 
@@ -98,7 +98,7 @@ describe('Catalog selectors', () => {
       it('should return offers sorted by price ascending', () => {
         const expectedOffers = allOffersByCity.toSorted((a, b) => a.price - b.price);
 
-        const resultOffers = getSortedAllOffersByCity({
+        const resultOffers = getSortedOffers({
           [nameSpace]: { ...state[nameSpace], sorting: SortingOption.PriceAsc }
         });
 
@@ -108,7 +108,7 @@ describe('Catalog selectors', () => {
       it('should return offers sorted by price descending', () => {
         const expectedOffers = allOffersByCity.toSorted((a, b) => b.price - a.price);
 
-        const resultOffers = getSortedAllOffersByCity({
+        const resultOffers = getSortedOffers({
           [nameSpace]: { ...state[nameSpace], sorting: SortingOption.PriceDesc }
         });
 
@@ -118,7 +118,7 @@ describe('Catalog selectors', () => {
       it('should return offers sorted by rating descending', () => {
         const expectedOffers = allOffersByCity.toSorted((a, b) => b.rating - a.rating);
 
-        const resultOffers = getSortedAllOffersByCity({
+        const resultOffers = getSortedOffers({
           [nameSpace]: { ...state[nameSpace], sorting: SortingOption.RatingDesc }
         });
 
@@ -126,7 +126,7 @@ describe('Catalog selectors', () => {
       });
 
       it('should return unsorted offers', () => {
-        const resultOffers = getSortedAllOffersByCity({
+        const resultOffers = getSortedOffers({
           [nameSpace]: { ...state[nameSpace], sorting: SortingOption.Default }
         });
 
