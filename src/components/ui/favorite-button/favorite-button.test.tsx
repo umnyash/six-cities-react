@@ -76,56 +76,50 @@ describe('Component: FavoriteButton', () => {
   });
 
   describe('button', () => {
-    const inactiveButtonText = 'Add to bookmarks';
-    const activeButtonText = 'Bookmarked';
+    const buttonText = 'Add to bookmarks';
 
     it.each([
-      ['inactive', false, inactiveButtonText],
-      ['actvie', true, activeButtonText]
+      ['inactive', false],
+      ['actvie', true]
     ])(
       'should render %s button when authorization status is "AUTH" and isActive prop is %s',
-      (_, isActive, expectedButtonText) => {
+      (_, isActive) => {
         const withHistoryComponent = withHistory(<FavoriteButton offerId='some-id' isActive={isActive} />);
         const { withStoreComponent } = withStore(withHistoryComponent, mockInitialState);
 
         render(withStoreComponent);
-        const button = screen.getByRole('button', { name: expectedButtonText });
+        const buttonElement = screen.getByRole('button', { name: buttonText });
 
-        expect(button).toHaveAttribute('aria-pressed', String(isActive));
+        expect(buttonElement).toHaveAttribute('aria-pressed', String(isActive));
       }
     );
 
     it.each([
       {
         initialIsActive: false,
-        initialText: inactiveButtonText,
         targetState: 'active',
         targetIsActive: true,
-        targetText: 'Bookmarked',
       },
       {
         initialIsActive: true,
-        initialText: activeButtonText,
         targetState: 'inactive',
         targetIsActive: false,
-        targetText: 'Add to bookmarks',
       },
     ])(
       'should make button $targetState when isActive prop changes to $targetIsActive',
-      ({ initialIsActive, initialText, targetIsActive, targetText }) => {
+      ({ initialIsActive, targetIsActive }) => {
         const { rerender } = render(
           withStore(
             withHistory(<FavoriteButton offerId="some-id" isActive={initialIsActive} />), mockInitialState
           ).withStoreComponent
         );
-        const buttonElement = screen.getByRole('button', { name: initialText });
+        const buttonElement = screen.getByRole('button', { name: buttonText });
         rerender(
           withStore(
             withHistory(<FavoriteButton offerId="some-id" isActive={targetIsActive} />), mockInitialState
           ).withStoreComponent
         );
 
-        expect(buttonElement).toHaveTextContent(targetText);
         expect(buttonElement).toHaveAttribute('aria-pressed', String(targetIsActive));
         if (targetIsActive) {
           expect(buttonElement).toHaveClass('offer__bookmark-button--active');

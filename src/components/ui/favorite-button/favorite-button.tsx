@@ -50,7 +50,7 @@ function FavoriteButton({ offerId, className, isActive = false }: FavoriteButton
         <svg className="offer__bookmark-icon" width="100%" height="100%">
           <use xlinkHref="#icon-bookmark" />
         </svg>
-        <span className="visually-hidden">{isActive ? 'Bookmarked' : 'Add to bookmarks'}</span>
+        <span className="visually-hidden">Add to bookmarks</span>
       </button>
     );
   }
